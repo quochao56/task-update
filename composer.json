@@ -28,7 +28,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "QH\\Product\\": "packages/product/src/",
             "QH\\Core\\": "packages/core/",
-            "QH\\Dashboard\\": "packages/dashboard/",
+            "QH\\Dashboard\\": "packages/dashboard/src/",
             "QH\\Blog\\": "packages/blog/"
         }
     },

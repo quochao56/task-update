@@ -4,17 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b
+class ComposerStaticInitcde3cffedf562fc9896005799068e81b
 {
     public static $prefixLengthsPsr4 = array (
         'Q' => 
         array (
-            'QH\\Product\\' => 11,
+            'QH\\Dashboard\\' => 13,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'QH\\Product\\' => 
+        'QH\\Dashboard\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -22,15 +22,15 @@ class ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'QH\\Product\\Providers\\Category\\CategorySeviceProvider' => __DIR__ . '/../..' . '/src/Providers/Category/CategorySeviceProvider.php',
+        'QH\\Dashboard\\src\\Providers\\DashboardServiceProvider' => __DIR__ . '/../..' . '/src/Providers/DashboardServiceProvider.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitcde3cffedf562fc9896005799068e81b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitcde3cffedf562fc9896005799068e81b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitcde3cffedf562fc9896005799068e81b::$classMap;
 
         }, null, ClassLoader::class);
     }

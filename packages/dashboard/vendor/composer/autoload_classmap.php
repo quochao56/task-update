@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'QH\\Product\\Providers\\Category\\CategorySeviceProvider' => $baseDir . '/src/Providers/Category/CategorySeviceProvider.php',
+    'QH\\Dashboard\\src\\Providers\\DashboardServiceProvider' => $baseDir . '/src/Providers/DashboardServiceProvider.php',
 );

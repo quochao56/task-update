@@ -1,12 +1,12 @@
 {
-    "name": "qh/product",
+    "name": "qh/dashboard",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {},
     "autoload": {
         "psr-4": {
-            "QH\\Product\\": "src/"
+            "QH\\Dashboard\\": "src/"
         },
         "classmap": [
             "src/Providers"
