@@ -1,0 +1,7 @@
+{
+    "name": "qh/product",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {}
+}
