@@ -1,6 +1,6 @@
-@extends('dashboard::master')
+@extends('admin.main')
 
 @section('content')
-    <!-- Nội dung của trang product -->
-    <h1>Xin chao toi la admin</h1>
+    Danh sách
 @endsection
+

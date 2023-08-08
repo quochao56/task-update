@@ -27,9 +27,9 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "QH\\Product\\": "packages/product/src/",
-            "QH\\Core\\": "packages/core/",
+            "QH\\Core\\": "packages/core/src/",
             "QH\\Dashboard\\": "packages/dashboard/src/",
-            "QH\\Blog\\": "packages/blog/"
+            "QH\\Blog\\": "packages/blog/src/"
         }
     },
     "autoload-dev": {

@@ -1,16 +1,27 @@
 {
     "name": "qh/product",
+    "description" : "Category-Product-Purchase",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+
+    },
     "autoload": {
         "psr-4": {
-            "QH\\Product\\": "src/"
+            "QH\\Product\\": "/src",
+            "QH\\Core\\": "/src",
+            "QH\\Blog\\": "/src"
         },
         "classmap": [
             "src/Providers"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/*"
+        }
+    ]
 
 }
