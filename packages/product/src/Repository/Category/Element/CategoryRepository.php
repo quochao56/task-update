@@ -2,8 +2,8 @@
 
 namespace QH\Product\Repository\Category\Element;
 
-use QH\Blog\Entity\Category;
 use QH\Core\base\Repository\BaseRepository;
+use QH\Product\Models\Category\Category;
 use QH\Product\Repository\Category\Interface\CategoryRepositoryInterface;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface

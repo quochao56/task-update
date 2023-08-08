@@ -10,8 +10,7 @@
     "autoload": {
         "psr-4": {
             "QH\\Product\\": "/src",
-            "QH\\Core\\": "/src",
-            "QH\\Blog\\": "/src"
+            "QH\\Core\\": "/src"
         },
         "classmap": [
             "src/Providers"

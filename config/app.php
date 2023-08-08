@@ -171,7 +171,8 @@ return [
         QH\Product\Providers\Category\CategoryServiceProvider::class,
         QH\Core\Providers\CoreServiceProvider::class,
         QH\Dashboard\Providers\DashboardServiceProvider::class,
-        QH\Product\Providers\Product\ProductServiceProvider::class
+        QH\Product\Providers\Product\ProductServiceProvider::class,
+        QH\Product\Providers\Purchase\PurchaseServiceProvider::class
     ])->toArray(),
 
     /*

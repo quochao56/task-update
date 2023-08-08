@@ -3,6 +3,8 @@
 namespace QH\Product\Providers\Product;
 
 use Illuminate\Support\ServiceProvider;
+use QH\Product\Repository\Product\Element\ProductRepository;
+use QH\Product\Repository\Product\Interface\ProductRepositoryInterface;
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,8 @@ class ProductServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(ProductRepositoryInterface::class,ProductRepository::class);
+
     }
 
     /**
@@ -20,5 +23,9 @@ class ProductServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations/product');
+
+        $this->publishes([
+            __DIR__ . '/../../resources/views/product' => resource_path('views/admin/product'),
+        ]);
     }
 }

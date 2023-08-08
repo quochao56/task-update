@@ -1,10 +1,10 @@
 <?php
 
-namespace QH\Blog\Entity;
+namespace QH\Product\Models\Category;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Qh\Product\Models\Product;
+use QH\Product\Models\Product\Product;
 
 class Category extends Model
 {

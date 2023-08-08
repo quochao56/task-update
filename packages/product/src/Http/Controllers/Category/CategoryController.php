@@ -4,7 +4,7 @@ namespace QH\Product\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use QH\Blog\Entity\Category;
+use QH\Product\Models\Category\Category;
 use QH\Product\Repository\Category\Interface\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
