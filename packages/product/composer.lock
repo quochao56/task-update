@@ -1,0 +1,53 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "da64aaa1a9eeb724f27337dee75b495f",
+    "packages": [
+        {
+            "name": "qh/core",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../../packages/core",
+                "reference": "2989b119fc5982aa7415f434ff6c118c55393bc9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "QH\\Core\\Providers\\CoreServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "QH\\Core\\": "src"
+                },
+                "classmap": [
+                    "src/Providers"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Core",
+            "transport-options": {
+                "relative": true
+            }
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "qh/core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

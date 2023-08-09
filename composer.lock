@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09c421846388604849fd191397c978a2",
+    "content-hash": "8c7f60fcd3539faa96b2bbcd7db93ad0",
     "packages": [
         {
             "name": "brick/math",
@@ -2918,7 +2918,10 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "b222842fa14b8020ac22f5a0ab242f5206a540cb"
+                "reference": "ef6f2088ca0e89e4c3169423f0dd237de366240a"
+            },
+            "require": {
+                "qh/core": "dev-main"
             },
             "type": "library",
             "extra": {
@@ -2933,8 +2936,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "QH\\Product\\": "src",
-                    "QH\\Core\\": "src"
+                    "QH\\Product\\": "src"
                 },
                 "classmap": [
                     "src/Providers"
@@ -8186,9 +8188,8 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "qh/core": 20,
         "qh/dashboard": 20,
         "qh/customer": 20,
         "qh/product": 20

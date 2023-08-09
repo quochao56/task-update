@@ -1,0 +1,41 @@
+{
+    "packages": [
+        {
+            "name": "qh/core",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../../packages/core",
+                "reference": "2989b119fc5982aa7415f434ff6c118c55393bc9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "QH\\Core\\Providers\\CoreServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "QH\\Core\\": "src"
+                },
+                "classmap": [
+                    "src/Providers"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Core",
+            "transport-options": {
+                "relative": true
+            },
+            "install-path": "../qh/core"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

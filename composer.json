@@ -13,7 +13,6 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "qh/core": "*@dev",
         "qh/dashboard": "*@dev",
         "qh/customer": "*@dev",
         "qh/product": "*@dev"
@@ -69,7 +68,7 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
         {

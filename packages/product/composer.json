@@ -5,11 +5,11 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
+        "qh/core": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "QH\\Product\\": "src",
-            "QH\\Core\\": "src"
+            "QH\\Product\\": "src"
         },
         "classmap": [
             "src/Providers"
@@ -22,8 +22,13 @@
                 "QH\\Product\\Providers\\Product\\ProductServiceProvider",
                 "QH\\Product\\Providers\\Purchase\\PurchaseServiceProvider",
                 "QH\\Product\\Providers\\Sale\\SaleServiceProvider"
-
             ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../packages/*"
+        }
+    ]
 }

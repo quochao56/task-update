@@ -7,4 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'QH\\Core\\Providers\\CoreServiceProvider' => $vendorDir . '/qh/core/src/Providers/CoreServiceProvider.php',
+    'QH\\Product\\Providers\\Category\\CategoryServiceProvider' => $baseDir . '/src/Providers/Category/CategoryServiceProvider.php',
+    'QH\\Product\\Providers\\Product\\ProductServiceProvider' => $baseDir . '/src/Providers/Product/ProductServiceProvider.php',
+    'QH\\Product\\Providers\\Purchase\\PurchaseServiceProvider' => $baseDir . '/src/Providers/Purchase/PurchaseServiceProvider.php',
+    'QH\\Product\\Providers\\Sale\\SaleServiceProvider' => $baseDir . '/src/Providers/Sale/SaleServiceProvider.php',
 );
