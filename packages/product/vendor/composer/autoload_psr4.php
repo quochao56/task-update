@@ -6,6 +6,4 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'QH\\Product\\' => array($baseDir . '/src'),
-    'QH\\Core\\' => array($baseDir . '/src'),
 );

@@ -5,7 +5,7 @@ namespace QH\Product\Repository\Purchase\Element;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use QH\Core\base\Repository\BaseRepository;
+use QH\Core\Base\Repository\BaseRepository;
 use QH\Product\Models\Product\Product;
 use QH\Product\Models\Purchase\Purchase;
 use QH\Product\Models\Purchase\PurchaseProduct;

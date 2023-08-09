@@ -48,6 +48,6 @@
     </table>
 
     <div class="card-footer clearfix">
-        {!! $products->links("pagination") !!}
+        {!! $products->links("admin.pagination") !!}
     </div>
 @endsection

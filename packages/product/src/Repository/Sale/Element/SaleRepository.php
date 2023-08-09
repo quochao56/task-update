@@ -5,11 +5,9 @@ namespace QH\Product\Repository\Sale\Element;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use QH\Core\base\Repository\BaseRepository;
+use QH\Core\Base\Repository\BaseRepository;
 use QH\Customer\Models\Customer;
 use QH\Product\Models\Product\Product;
-use QH\Product\Models\Purchase\Purchase;
-use QH\Product\Models\Purchase\PurchaseProduct;
 use QH\Product\Models\Sale\Sale;
 use QH\Product\Models\Sale\SaleProduct;
 use QH\Product\Repository\Sale\Interface\SaleRepositoryInterface;
@@ -50,6 +48,7 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
             $items = Session::get('export');
 
             if (is_null($items)) {
+                Session::flash("error","Không có món hàng nào");
                 return false;
             }
 //          store customer
@@ -60,6 +59,7 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
             $customer = Customer::where('email',$email)
                                 ->where('phone', $phone)
                                 ->first();
+
             if($customer){
                 $customer->update([
                     'name' => $name,
@@ -72,6 +72,14 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
                     'phone' => $phone,
                     'address' => $address
                 ]);
+                if(Customer::where('phone',$customer->phone)->first()->id != $customer->id){
+                    Session::flash("error", "Số điện thoại này đã có người sử dụng");
+                    return false;
+                }
+                elseif(Customer::where('email',$customer->email)->first()->id != $customer->id){
+                    Session::flash("error", "Email này đã có người sử dụng");
+                    return false;
+                }
             }
 //            store Purchase
             $sale = new Sale();

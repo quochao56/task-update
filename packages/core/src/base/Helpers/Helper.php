@@ -1,5 +1,5 @@
 <?php
-namespace QH\Core\base\Helpers;
+namespace QH\Core\Base\Helpers;
 class Helper{
     public static function active($active): string
     {

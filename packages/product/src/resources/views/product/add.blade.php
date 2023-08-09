@@ -1,6 +1,6 @@
 @extends('admin.main')
 @section('head')
-<script src="/ckeditor/ckeditor.js"></script>
+<script src="{{asset('qh/dashboard/ckeditor/ckeditor.js')}}"></script>
 @endsection
 @section('content')
 <form action="" method="POST" enctype="multipart/form-data">
@@ -29,20 +29,20 @@
                 @endforeach
             </select>
         </div>
-        <div class="form-group">
-            <label>Author ID</label>
-            <select class="form-control" name="author_id" value="{{ old('author_id') }}">
-                <option value="0"> Author </option>
-                @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->id }} - {{ $user->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Author Type</label>
-            <input type="text" value="{{ old('author_type') }}" name="author_type" id="" class="form-control">
+{{--        <div class="form-group">--}}
+{{--            <label>Author ID</label>--}}
+{{--            <select class="form-control" name="author_id" value="{{ old('author_id') }}">--}}
+{{--                <option value="0"> Author </option>--}}
+{{--                @foreach($users as $user)--}}
+{{--                <option value="{{ $user->id }}">{{ $user->id }} - {{ $user->name }}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        </div>--}}
+{{--        <div class="form-group">--}}
+{{--            <label>Author Type</label>--}}
+{{--            <input type="text" value="{{ old('author_type') }}" name="author_type" id="" class="form-control">--}}
 
-        </div>
+{{--        </div>--}}
 
         <div class="form-group">
             <label>Mô Tả Chi Tiết</label>

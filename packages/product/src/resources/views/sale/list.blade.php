@@ -4,6 +4,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Customer</th>
                 <th>Total Quantity</th>
                 <th>Shipping Cost</th>
                 <th>Total Amount</th>
@@ -14,21 +15,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($purchases as $purchase)
+            @foreach ($sales as $sale)
             <tr>
-                <td>{{ $purchase->id }}</td>
-                <td>{{ $purchase->total_qty}}</td>
-                <td>{{ $purchase->shipping_cost}}</td>
-                <td>{{ $purchase->total_amount}}</td>
-                <td>{{ $purchase->note}}</td>
-                <td>{!! \QH\Order\Helpers\Helper::active($purchase->status)  !!}</td>
-                <td>{{ $purchase->created_at}}</td>
+                <td>{{ $sale->id }}</td>
+                <td>{{ $sale->customer->name }}</td>
+                <td>{{ $sale->total_qty}}</td>
+                <td>{{ $sale->shipping_cost}}</td>
+                <td>{{ $sale->total_amount}}</td>
+                <td>{{ $sale->note}}</td>
+                <td>{!! \QH\Core\Base\Helpers\Helper::active($sale->status)  !!}</td>
+                <td>{{ $sale->created_at}}</td>
                 <td>
-                    <a href="{{ route('admin.orders.detail', $purchase->id) }}"><i class="fa-solid fa-circle-info" style="color: #e6ea10;"></i></a>
+                    <a href="{{ route('admin.sale.detail', $sale->id) }}"><i class="fa-solid fa-circle-info" style="color: #e6ea10;"></i></a>
                 </td>
             </tr>
             @endforeach
 
         </tbody>
     </table>
+    <div>
+        {!! $sales->links('admin.pagination') !!}
+    </div>
 @endsection

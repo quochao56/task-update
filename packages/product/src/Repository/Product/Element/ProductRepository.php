@@ -4,7 +4,7 @@ namespace QH\Product\Repository\Product\Element;
 
 use App\Models\User;
 use Illuminate\Support\Facades\File;
-use QH\Core\base\Repository\BaseRepository;
+use QH\Core\Base\Repository\BaseRepository;
 use QH\Product\Models\Category\Category;
 use QH\Product\Models\Product\Product;
 use QH\Product\Repository\Product\Interface\ProductRepositoryInterface;

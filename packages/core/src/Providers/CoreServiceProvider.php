@@ -3,7 +3,7 @@
 namespace QH\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use QH\Core\base\Repository\BaseRepository;
+use QH\Core\Base\Repository\BaseRepository;
 use QH\Core\Base\Repository\RepositoryInterface;
 
 class CoreServiceProvider extends ServiceProvider

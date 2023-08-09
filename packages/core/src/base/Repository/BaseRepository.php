@@ -1,6 +1,6 @@
 <?php
 
-namespace QH\Core\base\Repository;
+namespace QH\Core\Base\Repository;
 
 abstract class BaseRepository implements RepositoryInterface
 {

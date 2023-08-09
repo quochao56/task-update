@@ -6,37 +6,13 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b
 {
-    public static $prefixLengthsPsr4 = array (
-        'Q' => 
-        array (
-            'QH\\Product\\' => 11,
-            'QH\\Core\\' => 8,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'QH\\Product\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
-        'QH\\Core\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
-    );
-
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'QH\\Product\\Providers\\Category\\CategoryServiceProvider' => __DIR__ . '/../..' . '/src/Providers/Category/CategoryServiceProvider.php',
-        'QH\\Product\\Providers\\Product\\ProductServiceProvider' => __DIR__ . '/../..' . '/src/Providers/Product/ProductServiceProvider.php',
-        'QH\\Product\\Providers\\Purchase\\PurchaseServiceProvider' => __DIR__ . '/../..' . '/src/Providers/Purchase/PurchaseServiceProvider.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit4dc75f4d8d8f2e13ee5aee5e1d8a2b3b::$classMap;
 
         }, null, ClassLoader::class);

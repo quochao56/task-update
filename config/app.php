@@ -167,14 +167,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        QH\Product\Providers\Category\CategoryServiceProvider::class,
-        QH\Core\Providers\CoreServiceProvider::class,
-        QH\Dashboard\Providers\DashboardServiceProvider::class,
-        QH\Product\Providers\Product\ProductServiceProvider::class,
-        QH\Product\Providers\Purchase\PurchaseServiceProvider::class,
-        QH\Product\Providers\Sale\SaleServiceProvider::class,
-        QH\Customer\Providers\CustomerServiceProvider::class
+        App\Providers\RouteServiceProvider::class
     ])->toArray(),
 
     /*
