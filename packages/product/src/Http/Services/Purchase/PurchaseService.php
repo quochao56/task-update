@@ -9,7 +9,7 @@ class PurchaseService
 {
     public function create($request)
     {
-        // take two data quantity and product id to insert to session carts
+        // take two data quantity and product id to insert to session import
         $qty = (int) $request->input('num_product');
         $product_id = (int) $request->input('product_id');
 
@@ -17,34 +17,34 @@ class PurchaseService
             Session::flash('error', 'Số lượng hoặc Sản phẩm không chính xác');
             return false;
         }
-        $carts = Session::get('carts');
+        $import = Session::get('import');
 
-        if (is_null($carts)) {
-            Session::put('carts', [
+        if (is_null($import)) {
+            Session::put('import', [
                 $product_id => $qty,
             ]);
             return true;
         }
-        $exists = Arr::exists($carts, $product_id);
+        $exists = Arr::exists($import, $product_id);
         if ($exists) {
-            $carts[$product_id] = $carts[$product_id] + $qty;
-            Session::put('carts', $carts);
+            $import[$product_id] += $qty;
+            Session::put('import', $import);
             return true;
         }
 
-        $carts[$product_id] = $qty;
-        Session::put('carts', $carts);
+        $import[$product_id] = $qty;
+        Session::put('import', $import);
 
         return true;
     }
     public function getProduct()
     {
-        $carts = Session::get('carts');
-        if (is_null($carts)) {
+        $import = Session::get('import');
+        if (is_null($import)) {
             return [];
         }
 
-        $productId = array_keys($carts);
+        $productId = array_keys($import);
         return Product::select('id', 'name', 'price', 'thumb')
             ->whereIn('id', $productId)
             ->get();
@@ -52,17 +52,17 @@ class PurchaseService
 
     public function update($request)
     {
-        Session::put('carts', $request->input('num_product'));
+        Session::put('import', $request->input('num_product'));
 
         return true;
     }
 
     public function remove($id)
     {
-        $carts = Session::get('carts');
-        unset($carts[$id]);
+        $import = Session::get('import');
+        unset($import[$id]);
 
-        Session::put('carts', $carts);
+        Session::put('import', $import);
         return true;
     }
 }

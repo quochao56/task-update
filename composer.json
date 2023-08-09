@@ -29,7 +29,8 @@
             "QH\\Product\\": "packages/product/src/",
             "QH\\Core\\": "packages/core/src/",
             "QH\\Dashboard\\": "packages/dashboard/src/",
-            "QH\\Blog\\": "packages/blog/src/"
+            "QH\\Blog\\": "packages/blog/src/",
+            "QH\\Customer\\" : "packages/customer/src"
         }
     },
     "autoload-dev": {

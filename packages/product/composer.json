@@ -5,22 +5,26 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-
+        "php": "^7.4 || ^8.0",
+        "laravel/framework": "^8.0"
     },
     "autoload": {
         "psr-4": {
-            "QH\\Product\\": "/src",
-            "QH\\Core\\": "/src"
+            "QH\\Product\\": "src",
+            "QH\\Core\\": "src"
         },
         "classmap": [
             "src/Providers"
         ]
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../packages/*"
+    "extra": {
+        "laravel": {
+            "providers" : [
+                "QH\\Product\\Providers\\Category\\CategoryServiceProvider",
+                "QH\\Product\\Providers\\Product\\ProductServiceProvider",
+                "QH\\Product\\Providers\\Purchase\\PurchaseServiceProvider"
+            ]
         }
-    ]
+    }
 
 }

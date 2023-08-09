@@ -11,7 +11,7 @@ class Purchase extends Model
 
     protected $fillable = [
         'total_qty',
-        'shipping_cose',
+        'shipping_cost',
         'total_amount',
         'note',
         'purchase_date'

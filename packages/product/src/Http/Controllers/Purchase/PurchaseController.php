@@ -30,7 +30,7 @@ class PurchaseController extends Controller
             'title' => 'Danh sánh sản phẩm',
             'products' => $products,
             'products_selected' =>$products_selected,
-            'carts' => Session::get('carts')
+            'import' => Session::get('import')
         ]);
     }
     public function create(Request $request){
@@ -64,7 +64,7 @@ class PurchaseController extends Controller
     public function list(){
         $purchases = $this->purchaseRepo->getAllPurchases();
         return view('admin.purchase.list', [
-            'title' => 'Danh sánh đơn hàng',
+            'title' => 'Danh sánh nhập hàng',
             'purchases' => $purchases
         ]);
     }
@@ -72,7 +72,7 @@ class PurchaseController extends Controller
     public function detail($id){
         $purchases = $this->purchaseRepo->getPurchaseProduct($id);
         return view('admin.purchase.detail', [
-            'title' => 'Chi tiết đơn hàng',
+            'title' => 'Chi tiết nhập hàng',
             'purchases' => $purchases,
         ]);
     }

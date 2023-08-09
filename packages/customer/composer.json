@@ -1,12 +1,16 @@
 {
-    "name": "qh/dashboard",
+    "name": "qh/customer",
+    "description" : "Custome",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "laravel/framework": "^8.0"
+    },
     "autoload": {
         "psr-4": {
-            "QH\\Dashboard\\": "src/"
+            "QH\\Customer\\": "src"
         },
         "classmap": [
             "src/Providers"
@@ -15,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers" : [
-                "QH\\Dashboard\\Providers\\DashboardServiceProvider"
+                "QH\\Customer\\Providers\\CustomerServiceProvider"
             ]
         }
     }

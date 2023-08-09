@@ -4,6 +4,7 @@ use QH\Product\Http\Controllers\Category\CategoryController;
 use QH\Product\Http\Controllers\Product\ProductController;
 use QH\Product\Http\Controllers\Product\UploadController;
 use QH\Product\Http\Controllers\Purchase\PurchaseController;
+use QH\Product\Http\Controllers\Sale\SaleController;
 
 //Category
 Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
@@ -51,6 +52,24 @@ Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
             Route::get('destroy/{id}', [PurchaseController::class, 'destroy'])->name('admin.orders.destroy');
 
             Route::post('/update', [PurchaseController::class, 'update'])->name('admin.orders.update');
+        });
+    });
+});
+
+// Sale
+Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
+    Route::prefix('/admin')->group(function () {
+        Route::prefix('sale')->group(function () {
+            Route::get('/', [SaleController::class, 'index'])->name('admin.sale.index');
+            // add product into session
+            Route::post('/add-product', [SaleController::class, 'create'])->name('admin.sale.add_product');
+            Route::get('/list', [SaleController::class, 'list'])->name('admin.sale.list');
+//             store product into db
+            Route::post('/store', [SaleController::class, 'store'])->name('admin.sale.store');
+            Route::get('/detail/{id}', [SaleController::class, 'detail'])->name('admin.sale.detail');
+            Route::get('destroy/{id}', [SaleController::class, 'destroy'])->name('admin.sale.destroy');
+//
+            Route::post('/update', [SaleController::class, 'update'])->name('admin.sale.update');
         });
     });
 });

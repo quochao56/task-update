@@ -1,6 +1,6 @@
 <?php
 namespace QH\Core\base\Helpers;
-class OrderHelper{
+class Helper{
     public static function active($active): string
     {
         return $active === 'pending' ? '<span class="btn btn-warning btn-xs">Pending</span>'

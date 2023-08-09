@@ -40,7 +40,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
         try {
             DB::beginTransaction();
 
-            $items = Session::get('carts');
+            $items = Session::get('import');
 
             if (is_null($items)) {
                 return false;
@@ -59,7 +59,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
             DB::commit();
             Session::flash('success', 'Đặt Hàng Thành Công');
 
-            Session::forget('carts');
+            Session::forget('import');
         } catch (\Exception $err) {
             DB::rollBack();
             Session::flash('error', 'Đặt Hàng Lỗi, Vui lòng thử lại sau');
