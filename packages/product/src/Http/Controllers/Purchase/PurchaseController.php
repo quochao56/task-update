@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use QH\Product\Http\Services\Purchase\PurchaseService;
-use QH\Product\Repository\Product\Interface\ProductRepositoryInterface;
-use QH\Product\Repository\Purchase\Interface\PurchaseRepositoryInterface;
+use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
+use QH\Product\Repositories\Purchase\Interface\PurchaseRepositoryInterface;
 
 
 class PurchaseController extends Controller

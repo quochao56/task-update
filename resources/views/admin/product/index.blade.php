@@ -7,13 +7,10 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Category ID</th>
-                <th>Author ID</th>
-                <th>Author Type</th>
-                <th>Content</th>
+                <th>Category</th>
                 <th>Thumb</th>
-                <th>Created</th>
-                <th>Updated</th>
+                <th>Created At</th>
+                <th>Updated At</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -24,10 +21,7 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->qty }}</td>
-                    <td>{{ $product->category->id }}</td>
-                    <td>{{ $product->user->id }}</td>
-                    <td>{{ $product->author_type }}</td>
-                    <td>{{ $product->content }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td><img src="{{ $product->thumb }}"
                         width="60" alt=""></td>
                     <td>{{ $product->created_at }}</td>

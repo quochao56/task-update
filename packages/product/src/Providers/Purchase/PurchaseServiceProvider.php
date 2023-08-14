@@ -3,8 +3,8 @@
 namespace QH\Product\Providers\Purchase;
 
 use Illuminate\Support\ServiceProvider;
-use QH\Product\Repository\Purchase\Element\PurchaseRepository;
-use QH\Product\Repository\Purchase\Interface\PurchaseRepositoryInterface;
+use QH\Product\Repositories\Purchase\Element\PurchaseRepository;
+use QH\Product\Repositories\Purchase\Interface\PurchaseRepositoryInterface;
 
 class PurchaseServiceProvider extends ServiceProvider
 {
@@ -22,10 +22,10 @@ class PurchaseServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations/purchase');
+        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations/purchase');
 
         $this->publishes([
-            __DIR__ . '/../../resources/views/purchase' => resource_path('views/admin/purchase'),
+            __DIR__ . '/../../../resources/views/purchase' => resource_path('views/admin/purchase'),
         ]);
     }
 }

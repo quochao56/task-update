@@ -23,7 +23,7 @@
                 <td>{{ $sale->shipping_cost}}</td>
                 <td>{{ $sale->total_amount}}</td>
                 <td>{{ $sale->note}}</td>
-                <td>{!! \QH\Core\Base\Helpers\Helper::active($sale->status)  !!}</td>
+                <td>{!! \QH\Product\Helpers\Helper::active($sale->status)  !!}</td>
                 <td>{{ $sale->created_at}}</td>
                 <td>
                     <a href="{{ route('admin.sale.detail', $sale->id) }}"><i class="fa-solid fa-circle-info" style="color: #e6ea10;"></i></a>

@@ -4,8 +4,9 @@ namespace QH\Product\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use QH\Product\Http\Requests\Category\CategoryRequest;
 use QH\Product\Models\Category\Category;
-use QH\Product\Repository\Category\Interface\CategoryRepositoryInterface;
+use QH\Product\Repositories\Category\Interface\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
@@ -40,15 +41,10 @@ class CategoryController extends Controller
         ));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-
         $request->except('_token');
-        $data = $request->all();
+        $data = $request;
         try {
             $this->categoryRepo->create($data);
             session()->flash('success', 'Thêm Danh Mục Thành Công');
@@ -59,12 +55,8 @@ class CategoryController extends Controller
         return redirect()->route("admin.category.index");
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
         $data = $request->all();
         try {
             $this->categoryRepo->update($category, $data);

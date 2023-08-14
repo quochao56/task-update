@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use QH\Product\Http\Requests\Sale\SaleRequest;
 use QH\Product\Http\Services\Sale\SaleService;
-use QH\Product\Repository\Product\Interface\ProductRepositoryInterface;
-use QH\Product\Repository\Sale\Interface\SaleRepositoryInterface;
+use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
+use QH\Product\Repositories\Sale\Interface\SaleRepositoryInterface;
+use Ramsey\Uuid\Rfc4122\Validator;
 
 class SaleController extends Controller
 {
@@ -47,13 +49,8 @@ class SaleController extends Controller
         return redirect()->back();
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|digits:10',
-            'address' => 'required'
-        ]);
+    public function store(SaleRequest $request){
+
         $this->saleRepo->storeSale($request);
 
         return redirect()->back();

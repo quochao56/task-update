@@ -3,8 +3,8 @@
 namespace QH\Product\Providers\Sale;
 
 use Illuminate\Support\ServiceProvider;
-use QH\Product\Repository\Sale\Element\SaleRepository;
-use QH\Product\Repository\Sale\Interface\SaleRepositoryInterface;
+use QH\Product\Repositories\Sale\Element\SaleRepository;
+use QH\Product\Repositories\Sale\Interface\SaleRepositoryInterface;
 
 class SaleServiceProvider extends ServiceProvider
 {
@@ -22,10 +22,10 @@ class SaleServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations/sale');
+        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations/sale');
 
         $this->publishes([
-            __DIR__ . '/../../resources/views/sale' => resource_path('views/admin/sale'),
+            __DIR__ . '/../../../resources/views/sale' => resource_path('views/admin/sale'),
         ]);
     }
 }

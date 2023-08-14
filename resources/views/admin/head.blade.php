@@ -11,6 +11,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset("qh/dashboard/template/admin/dist/css/adminlte.min.css")}}">
 
+<script src="{{asset('qh/product/assets/scripts/jquery-3.7.0.min.js')}}"></script>
+<script src="{{asset('qh/product/assets/js/main.js')}}"></script>
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('head')
