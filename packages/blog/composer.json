@@ -1,0 +1,25 @@
+{
+    "name": "qh/blog",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "qh/core": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "QH\\Blog\\": "src/"
+        },
+        "classmap": [
+            "src/Providers"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers" : [
+                "QH\\Blog\\Providers\\BlogServiceProvider"
+            ]
+        }
+    }
+
+}

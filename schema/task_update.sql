@@ -150,7 +150,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Table structure for table `blog`
 --
 
 CREATE TABLE `products` (
@@ -168,7 +168,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `products`
+-- Dumping data for table `blog`
 --
 
 INSERT INTO `products` (`id`, `name`, `thumb`, `price`, `qty`, `content`, `category_id`, `author_id`, `author_type`, `created_at`, `updated_at`) VALUES
@@ -399,7 +399,7 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `products`
+-- Indexes for table `blog`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
@@ -477,7 +477,7 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `products`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
@@ -517,7 +517,7 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `products`
+-- Constraints for table `blog`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,

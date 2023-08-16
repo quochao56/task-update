@@ -13,8 +13,9 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "qh/dashboard": "*@dev",
+        "qh/blog": "dev-main",
         "qh/customer": "*@dev",
+        "qh/dashboard": "*@dev",
         "qh/product": "*@dev"
     },
     "require-dev": {

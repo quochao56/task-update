@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('total_amount');
             $table->timestamps();
             $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('blog')->onDelete('cascade');
         });
     }
 

@@ -92,7 +92,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{-- ps products selected --}}
+                    {{-- ps blog selected --}}
                     @foreach ($products_selected as $ps)
                         @php
                             $priceEnd = $ps->price * $import[$ps->id];
