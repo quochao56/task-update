@@ -28,7 +28,7 @@ class PurchaseController extends Controller
 
         return view('admin.purchase.index', [
             'title' => 'Danh sánh sản phẩm',
-            'blog' => $products,
+            'products' => $products,
             'products_selected' =>$products_selected,
             'import' => Session::get('import')
         ]);

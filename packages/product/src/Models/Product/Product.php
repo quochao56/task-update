@@ -2,11 +2,12 @@
 
 namespace QH\Product\Models\Product;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use QH\Order\Models\PurchaseProduct;
+use QH\Product\Models\Purchase\PurchaseProduct;
 use QH\Product\Models\Category\Category;
+use App\Models\User;
+
 
 class Product extends Model
 {

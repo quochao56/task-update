@@ -28,11 +28,12 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
     }
 
     public function getAllSales(){
-        return $this->model->orderByDesc('created_at')->paginate(5);
+        return $this->model->with('customer')->orderByDesc('created_at')->paginate(5);
     }
     public function getCustomerSale($id){
         return SaleProduct::with('sale.customer')
             ->with('product')
+            ->with('customer')
             ->where('sale_id', $id)
             ->first()
             ->sale

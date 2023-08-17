@@ -28,7 +28,7 @@ class ProductController extends Controller
 
         return view('admin.product.index', [
             'title' => 'Danh sánh sản phẩm',
-            'blog' => $products,
+            'products' => $products,
         ]);
     }
 

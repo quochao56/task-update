@@ -17,6 +17,7 @@
         "qh/customer": "*@dev",
         "qh/dashboard": "*@dev",
         "qh/product": "*@dev",
+        "qh/admin": "*@dev",
         "qh/user": "*@dev"
     },
     "require-dev": {

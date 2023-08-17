@@ -29,7 +29,7 @@ class SaleController extends Controller
         $products_selected = $this->saleRepo->getProduct();
         return view('admin.sale.index', [
             'title' => 'Danh sánh sản phẩm',
-            'blog' => $products,
+            'products' => $products,
             'products_selected' =>$products_selected,
             'export' => Session::get('export')
         ]);

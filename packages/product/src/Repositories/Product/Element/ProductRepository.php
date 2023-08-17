@@ -2,14 +2,13 @@
 
 namespace QH\Product\Repositories\Product\Element;
 
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use QH\Core\Base\Repository\BaseRepository;
-use QH\Product\Http\Services\Product\UploadService;
 use QH\Product\Models\Category\Category;
 use QH\Product\Models\Product\Product;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
+use App\Models\User;
+
 
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
