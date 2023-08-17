@@ -1,13 +1,20 @@
 <?php
 
-use QH\Blog\Http\Controllers\Admin\PagesController;
-use QH\Blog\Http\Controllers\Admin\PostsController;
+use QH\Blog\Http\Controllers\PostsController;
 
-Route::get('/blog', [PagesController::class, 'dashboard'])->name('blog');
-
-
-//Route::resource('/user/blog', PostsController::class);
-
-Route::prefix('/user/blog')->name('user.blog.')->group(function(){
-   Route::get('/',[PostsController::class,'index']);
+Route::middleware(['web'])->group(function () {
+    Route::get('/index', [PostsController::class, 'dashboard'])->name('index');
+    Route::prefix('/user/blog')->name('user.blog.')->group(function () {
+        Route::get('/', [PostsController::class, 'index']);
+        Route::get('/show/{slug}', [PostsController::class, 'show'])->name('show');
+        Route::middleware('auth')->group(function () {
+            Route::get('/create', [PostsController::class, 'create'])->name('create');
+            Route::post('/store', [PostsController::class, 'store'])->name('store');
+            Route::get('/edit/{slug}', [PostsController::class, 'edit'])->name('edit');
+            Route::put('/update/{slug}', [PostsController::class, 'update'])->name('update');
+            Route::delete('/destroy/{slug}', [PostsController::class, 'destroy'])->name('destroy');
+        });
+    });
 });
+
+

@@ -1,0 +1,26 @@
+{
+    "name": "qh/user",
+    "description" : "User",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "QH\\User\\": "src"
+        },
+        "classmap": [
+            "src/Provider"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers" : [
+                "QH\\User\\Provider\\UserServiceProvider"
+            ]
+        }
+    }
+
+}

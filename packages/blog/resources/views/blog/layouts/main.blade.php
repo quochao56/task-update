@@ -8,12 +8,9 @@
     @include('blog.layouts.head')
 </head>
 <body>
-<header>
-    <div>
-        @include('blog.layouts.navbar')
-    </div>
-</header>
+    @include('blog.layouts.navbar')
 
+    @include('blog.layouts.alert')
 <div>
     @yield('content')
 </div>

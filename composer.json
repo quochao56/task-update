@@ -16,9 +16,13 @@
         "qh/blog": "dev-main",
         "qh/customer": "*@dev",
         "qh/dashboard": "*@dev",
-        "qh/product": "*@dev"
+        "qh/product": "*@dev",
+        "qh/user": "*@dev"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
+        "barryvdh/laravel-ide-helper": "^2.13",
+        "beyondcode/laravel-query-detector": "^1.7",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.22",
         "laravel/pint": "^1.0",

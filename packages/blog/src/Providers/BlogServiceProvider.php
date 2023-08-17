@@ -3,6 +3,8 @@
 namespace QH\Blog\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use QH\Blog\Repositories\Elements\PostRepository;
+use QH\Blog\Repositories\Interface\PostRepositoryInterface;
 
 class BlogServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,7 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(PostRepositoryInterface::class, PostRepository::class);
     }
 
     /**
@@ -25,5 +27,8 @@ class BlogServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../resources/views/' => resource_path('views/'),
         ]);
+        $this->publishes([
+            __DIR__ . '/../../public' => public_path('qh/blog/'),
+        ], 'public');
     }
 }
