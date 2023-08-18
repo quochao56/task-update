@@ -16,7 +16,9 @@
     "extra": {
         "laravel": {
             "providers" : [
-                "QH\\Core\\Providers\\CoreServiceProvider"
+                "QH\\Core\\Providers\\Core\\CoreServiceProvider",
+                "QH\\Core\\Providers\\User\\UserServiceProvider",
+                "QH\\Core\\Providers\\Admin\\AdminServiceProvider"
             ]
         }
     }

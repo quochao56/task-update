@@ -1,6 +1,6 @@
 <?php
 
-namespace QH\Core\Providers;
+namespace QH\Core\Providers\Core;
 
 use Illuminate\Support\ServiceProvider;
 use QH\Core\Base\Repository\BaseRepository;

@@ -39,10 +39,10 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                    <li><a class="dropdown-item" href="{{ route('user.logout') }}"
                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                     </li>
-                                    <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                                    <form id="logout-form" method="POST" action="{{ route('user.logout') }}">
                                         @csrf
                                     </form>
                                 </ul>

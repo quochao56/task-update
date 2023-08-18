@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         $url = '';
         if($request->user()->role === 'admin'){
-            $url = '/admin/category';
+            $url = '/admin/home';
         }elseif ($request->user()->role === 'agent'){
             $url = '/index';
         }elseif($request->user()->role === 'user'){

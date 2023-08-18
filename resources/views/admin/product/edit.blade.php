@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('admin.layouts.main')
 @section('head')
     <script src="{{asset('qh/dashboard/ckeditor/ckeditor.js')}}"></script>
 @endsection

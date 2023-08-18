@@ -3,17 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin | Dashboard</title>
+    <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <h2 class="mt-3">Admin Dashboard</h2>
+        <h2 class="mt-3">Dashboard</h2>
         <div class="col-md-5">
             @if(Session::has('success'))
                 <div class="alert alert-light" role="alert">{{Session::get('success')}}</div>
@@ -27,15 +26,15 @@
                 <tr>
                 <tr>
                     <td>
-                        {{Auth::guard('admin')->user()->name}}
+                        {{Auth::guard('web')->user()->name}}
                     </td>
                     <td>
-                        {{Auth::guard('admin')->user()->email}}
+                        {{Auth::guard('web')->user()->email}}
                     </td>
                     <td>
-                        <a href="{{route('admin.logout')}}"
+                        <a href="{{route('user.logout')}}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                        <form action="{{route('admin.logout')}}" method="POST" id="logout-form">
+                        <form action="{{route('user.logout')}}" method="POST" id="logout-form">
                             @csrf
                         </form>
                     </td>

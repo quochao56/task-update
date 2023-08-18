@@ -7,7 +7,7 @@ use QH\Product\Http\Controllers\Purchase\PurchaseController;
 use QH\Product\Http\Controllers\Sale\SaleController;
 
 //Category
-Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
+Route::middleware(['auth:admin', 'web'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::prefix('category')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('admin.category.index');
@@ -21,7 +21,7 @@ Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
 });
 
 //Product
-Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
+Route::middleware(['auth:admin', 'web'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.product.index');
@@ -37,7 +37,7 @@ Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
 });
 
 // Purchase
-Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
+Route::middleware(['auth:admin', 'web'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::prefix('orders')->group(function () {
             Route::get('/', [PurchaseController::class, 'index'])->name('admin.orders.index');
@@ -55,7 +55,7 @@ Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
 });
 
 // Sale
-Route::middleware(['auth', 'web', 'role:admin'])->group(function () {
+Route::middleware(['auth:admin', 'web'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::prefix('sale')->group(function () {
             Route::get('/', [SaleController::class, 'index'])->name('admin.sale.index');

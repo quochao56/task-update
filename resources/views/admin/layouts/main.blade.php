@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('admin.head')
+    @include('admin.layouts.head')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -22,18 +22,19 @@
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
-                    <a href="{{ route('logout') }}"
+                    <a href="{{ route('admin.logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 </li>
-                <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                <form id="logout-form" method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                 </form>
+
             </ul>
         </nav>
         <!-- /.navbar -->
 
 
-        @include('admin.slidebar')
+        @include('admin.layouts.slidebar')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -41,14 +42,14 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    @include('admin.alert')
+                    @include('admin.layouts.alert')
                     <div class="row">
                         <!-- left column -->
                         <div class="col-md-12">
                             <!-- jquery validation -->
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{ $title }}</h3>
+                                    <h3 class="card-title">{{ $title ?? 'Opsgreat' }}</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 @yield('content')
@@ -87,7 +88,7 @@
 
 
 
-    @include('admin.footer')
+    @include('admin.layouts.footer')
 </body>
 
 </html>

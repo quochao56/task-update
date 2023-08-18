@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('admin.layouts.main')
 @section('content')
     <style>
         .summary-info {
@@ -58,7 +58,7 @@
     </table>
 
     <div class="card-footer clearfix">
-        {!! $products->links('admin.pagination') !!}
+        {!! $products->links('admin.layouts.pagination') !!}
     </div>
     <div class="row">
         <div class="col-md-9">

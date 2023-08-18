@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('admin.layouts.main')
 @section('content')
     <table class="table">
         <thead>
@@ -33,6 +33,6 @@
         </tbody>
     </table>
     <div>
-        {!! $purchases->links('admin.pagination') !!}
+        {!! $purchases->links('admin.layouts.pagination') !!}
     </div>
 @endsection

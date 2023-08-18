@@ -1,6 +1,6 @@
 <?php
 
-namespace QH\Admin\Model;
+namespace QH\Core\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

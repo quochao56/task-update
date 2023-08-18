@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('admin.layouts.main')
 @section('content')
     <table class="table">
         <thead>
@@ -42,6 +42,6 @@
     </table>
 
     <div class="card-footer clearfix">
-        {!! $products->links("admin.pagination") !!}
+        {!! $products->links("admin.layouts.pagination") !!}
     </div>
 @endsection

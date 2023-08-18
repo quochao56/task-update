@@ -1,6 +1,6 @@
 <?php
 
-namespace QH\User\Provider;
+namespace QH\Core\Providers\User;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +19,6 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations/user');
     }
 }

@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('admin.layouts.main')
 @section('content')
     <div class="card card-cyan mt-2">
         <div class="card-header">
