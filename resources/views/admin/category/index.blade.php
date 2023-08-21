@@ -5,6 +5,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Description</th>
             <th>Created</th>
             <th>Updated</th>
@@ -16,6 +17,7 @@
             <tr>
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->name }}</td>
+                <td>{!! \QH\Product\Helpers\Helper::status($category->status)  !!}</td>
                 <td>{{ $category->description }}</td>
                 <td>{{ $category->created_at }}</td>
                 <td>{{ $category->updated_at }}</td>

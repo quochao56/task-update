@@ -4,14 +4,17 @@ namespace QH\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use QH\Blog\Http\Services\PostsService;
 use QH\Blog\Models\Post;
 use QH\Blog\Repositories\Interface\PostRepositoryInterface;
 
 class PostsController extends Controller
 {
     protected $postRepository;
-    public function __construct(PostRepositoryInterface $postRepository){
+    protected $postService;
+    public function __construct(PostsService $postService,PostRepositoryInterface $postRepository){
         $this->postRepository = $postRepository;
+        $this->postService = $postService;
 //        $this->middleware('auth',['except'=>['/user/blog/index','/user/blog/show']]);
     }
     public function dashboard(){
@@ -47,23 +50,10 @@ class PostsController extends Controller
             'description' => 'required',
             'content' => 'required',
             'thumb' => 'required|mimes:jpg,png,jpeg|max:5048',
+            'status' => 'required'
         ]);
-
-        $slug = \Str::Slug($request->title, '-');
-        $newImageName = uniqid() . '-' . $slug . '.' . $request->thumb->extension();
-
-        $request->thumb->move(public_path('qh/blog/images'), $newImageName);
-
-        $request->except('_token');
-        $data = [
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => $slug,
-            'content' => $request->input('content'),
-            'thumb' => $newImageName,
-            'user_id' => auth()->user()->id
-        ];
         try {
+            $data = $this->postService->storePost($request);
             $this->postRepository->create($data);
             session()->flash('success', 'Create the post successfully');
         } catch (\Exception $err) {
@@ -101,20 +91,11 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required|unique:posts,title,' . $slug . ',slug',
             'content' => 'required',
+            'status' => 'required',
             'description' => 'required',
         ]);
-
-        $newSlug = \Str::Slug($request->title, '-');
-
-        $request->except('_token');
-        $data = [
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => $newSlug,
-            'content' => $request->input('content'),
-            'user_id' => $request->input('user_id')
-        ];
         try {
+            $data = $this->postService->updatePost($request);
             $this->postRepository->updatePost($slug,$data);
             session()->flash('success', 'Update the post successfully');
         } catch (\Exception $err) {

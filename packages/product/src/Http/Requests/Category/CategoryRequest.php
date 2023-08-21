@@ -3,6 +3,7 @@
 namespace QH\Product\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoryRequest extends FormRequest
 {
@@ -21,8 +22,9 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $category = $this->route('category');
         return [
-            'name' => 'required',
+            'name' => ['required',Rule::unique('categories', 'name')->ignore($category)],
             'description' => 'required',
         ];
     }
@@ -31,6 +33,7 @@ class CategoryRequest extends FormRequest
         return [
             'name.required' => ':attribute không được trống',
             'description.required' => ':attribute không được trống',
+            'name.unique' => ':attribute đã tồn tại'
         ];
     }
     public function attributes()

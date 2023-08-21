@@ -20,11 +20,13 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         if(\Auth::user()->role === 'admin'){
             return $this->model->with('user')->orderBy('updated_at', 'DESC')->paginate(5);
         }
-        return $this->model->with('user')->where('user_id',\Auth::user()->id)->orderBy('updated_at', 'DESC')->paginate(3);
+        return $this->model->with('user')
+            ->where('user_id',\Auth::user()->id)
+            ->orderBy('updated_at', 'DESC')->paginate(3);
     }
 
     public function getSomePosts(){
-        return $this->model->with('user')->orderBy('updated_at', 'DESC')->paginate(3);
+        return $this->model->with('user')->where('status', 'active')->orderBy('updated_at', 'DESC')->paginate(3);
     }
 
     public function getPostBySlug($slug)

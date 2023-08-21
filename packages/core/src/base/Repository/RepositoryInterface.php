@@ -16,6 +16,12 @@ interface RepositoryInterface
      * @return mixed
      */
     public function find($id);
+    /**
+     * Get one
+     * @param $slug
+     * @return mixed
+     */
+    public function findBySlug($slug);
 
     /**
      * Create
@@ -26,16 +32,18 @@ interface RepositoryInterface
 
     /**
      * Update
-     * @param $id
+     * @param $slug
      * @param array $attributes
      * @return mixed
      */
-    public function update($id, $attributes = []);
+    public function update($slug, $attributes = []);
 
     /**
      * Delete
      * @param $id
      * @return mixed
      */
-    public function delete($id);
+    public function delete($slug);
+
+
 }

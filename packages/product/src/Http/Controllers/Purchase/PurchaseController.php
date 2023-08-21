@@ -12,18 +12,16 @@ use QH\Product\Repositories\Purchase\Interface\PurchaseRepositoryInterface;
 
 class PurchaseController extends Controller
 {
-    protected $productRepo;
     protected $purchaseService;
     protected $purchaseRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo, PurchaseService $purchaseService, PurchaseRepositoryInterface $purchaseRepo)
+    public function __construct(PurchaseService $purchaseService, PurchaseRepositoryInterface $purchaseRepo)
     {
-        $this->productRepo = $productRepo;
         $this->purchaseService = $purchaseService;
         $this->purchaseRepo = $purchaseRepo;
     }
     public function index(){
-        $products = $this->productRepo->getAllProducts();
+        $products = $this->purchaseRepo->getActiveProducts();
         $products_selected = $this->purchaseService->getProduct();
 
         return view('admin.purchase.index', [

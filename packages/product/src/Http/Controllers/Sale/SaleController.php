@@ -13,19 +13,16 @@ use QH\Product\Repositories\Sale\Interface\SaleRepositoryInterface;
 use Ramsey\Uuid\Rfc4122\Validator;
 
 class SaleController extends Controller
-{
-    protected $productRepo;
-    protected $saleService;
+{    protected $saleService;
     protected $saleRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo, SaleService $saleService, SaleRepositoryInterface $saleRepo)
+    public function __construct(SaleService $saleService, SaleRepositoryInterface $saleRepo)
     {
-        $this->productRepo = $productRepo;
         $this->saleService = $saleService;
         $this->saleRepo = $saleRepo;
     }
     public function index(){
-        $products = $this->productRepo->getAllProducts();
+        $products = $this->saleRepo->getActiveProducts();
         $products_selected = $this->saleRepo->getProduct();
         return view('admin.sale.index', [
             'title' => 'Danh sánh sản phẩm',

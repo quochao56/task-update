@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('author_type');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

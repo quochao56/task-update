@@ -38,10 +38,18 @@ abstract class BaseRepository implements RepositoryInterface
         return $result;
     }
 
+    public function findBySlug($slug)
+    {
+        $result = $this->model->where('slug', $slug)->first();
+
+        return $result;
+    }
+
     public function create($attributes = [])
     {
         return $this->model->create($attributes);
     }
+
 
     public function update($model, $attributes = [])
     {
@@ -65,4 +73,6 @@ abstract class BaseRepository implements RepositoryInterface
 
         return false;
     }
+
+
 }

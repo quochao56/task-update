@@ -3,6 +3,7 @@
 namespace QH\Product\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -13,8 +14,10 @@ class UpdateProductRequest extends FormRequest
 
     public function rules(): array
     {
+        $product = $this->route('product');
+
         return [
-            'name' => 'required',
+            'name' => ['required',Rule::unique('products', 'name')->ignore($product)],
             'file' => 'image|mimes:jpg,jpeg,png',
             'price' => 'required|numeric|gt:0',
             'qty' => 'required|numeric|gt:0',
@@ -27,6 +30,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name.required' => ':attribute không được trống',
+            'name.unique' => ':attribute đã tồn tại',
             'content.required' => ':attribute không được trống',
             'qty.required' => ':attribute không được trống',
             'category_id' => [

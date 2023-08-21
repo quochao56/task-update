@@ -5,6 +5,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Status</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Category</th>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
+                    <td>{!! \QH\Product\Helpers\Helper::status($product->status)  !!}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->qty }}</td>
                     <td>{{ $product->category->name }}</td>

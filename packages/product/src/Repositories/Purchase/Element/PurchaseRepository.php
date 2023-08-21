@@ -30,6 +30,10 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
         return PurchaseProduct::where('purchase_id', $id)->get();
     }
 
+    public function getActiveProducts()
+    {
+        return Product::with("category")->with("user")->where('status','active')->orderByDesc("id")->paginate(3);
+    }
     public function getAllPurchases(){
         return Purchase::orderByDesc('created_at')->paginate(5);
     }

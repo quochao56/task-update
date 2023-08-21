@@ -66,13 +66,27 @@
             <p class="text-danger">{{$message}}</p>
             @enderror
         </div>
+        <div class="form-group">
+            <label>Kích Hoạt</label>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" value="active" type="radio" id="active"
+                       name="status" {{ $product->status === 'active' ? 'checked=""' : '' }}>
+                <label for="active" class="custom-control-label">Có</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" value="inactive" type="radio" id="no_active"
+                       name="status" {{ $product->status === 'inactive' ? 'checked=""' : '' }}>
+                <label for="no_active" class="custom-control-label">Không</label>
+            </div>
+            @error("active")
+            <p class="text-danger">{{$message}}</p>
+            @enderror
+        </div>
         <div  class="form-group">
             <input type="hidden" name="thumb" id="thumb">
             @error("thumb")
             <p class="text-danger">{{$message}}</p>
             @enderror
-
-
         </div>
     </div>
 

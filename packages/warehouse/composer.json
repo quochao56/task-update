@@ -1,0 +1,25 @@
+{
+    "name": "qh/warehouse",
+    "description" : "Core",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": { },
+    "autoload": {
+        "psr-4": {
+            "QH\\Warehouse\\": "src"
+        },
+        "classmap": [
+            "src/Providers"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers" : [
+                "QH\\Warehouse\\Providers\\Store\\StoreServiceProvider",
+                "QH\\Core\\Providers\\Warehouse\\WarehouseServiceProvider"
+            ]
+        }
+    }
+
+}

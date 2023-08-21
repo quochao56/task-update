@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use QH\Product\Http\Requests\Product\CreateProductRequest;
 use QH\Product\Http\Requests\Product\UpdateProductRequest;
 use QH\Product\Http\Services\Product\UploadService;
+use QH\Product\Http\Services\Service;
 use QH\Product\Models\Product\Product;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 
@@ -15,8 +16,11 @@ class ProductController extends Controller
     protected $productRepo;
     protected $uploadService;
 
-    public function __construct(ProductRepositoryInterface $productRepo, UploadService $uploadService)
+    public $service;
+
+    public function __construct(ProductRepositoryInterface $productRepo, UploadService $uploadService, Service $service)
     {
+        $this->service = $service;
         $this->productRepo = $productRepo;
         $this->uploadService = $uploadService;
 
@@ -34,7 +38,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = $this->productRepo->getAllCategories();
+        $categories = $this->productRepo->getActiveCategories();
         $users = $this->productRepo->getAllUsers();
         return view('admin.product.add', [
             'title' => 'Thêm sản phẩm mới',
@@ -47,7 +51,9 @@ class ProductController extends Controller
     {
         try {
             $request = $this->uploadService->uploadImage($request);
-            $result = $this->productRepo->createProduct($request);
+            $data = $request;
+            $data['slug'] = $this->service->createSlug($request->input('name'));
+            $result = $this->productRepo->createProduct($data);
             if ($result) {
                 session()->flash('success', 'Thêm Sản phẩm Thành Công');
             }
@@ -85,7 +91,7 @@ class ProductController extends Controller
 
         $data = $data->all(); // Verify the modified data
         try {
-            $product = $this->productRepo->updateProduct($product, $data);
+            $this->productRepo->updateProduct($product, $data);
             session()->flash('success', 'Sửa Sản phẩm Thành Công');
         } catch (\Exception $err) {
             session()->flash('error', $err->getMessage());

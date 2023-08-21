@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    @if(Auth::check() || auth()->user()->name === 'admin')
+    @if(Auth::check() || auth()->user()->role === 'admin')
         <div class="py-2 container">
             <div class="row">
                 <div class="col-md-6">
