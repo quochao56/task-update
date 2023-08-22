@@ -47,7 +47,7 @@ class SaleService
     public function remove($id)
     {
         $export  = Session::get('export');
-        unset($export [$id]);
+        unset($export[$id]);
 
         Session::put('export', $export );
         return true;

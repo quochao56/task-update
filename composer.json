@@ -16,7 +16,8 @@
         "qh/blog": "dev-main",
         "qh/customer": "*@dev",
         "qh/dashboard": "*@dev",
-        "qh/product": "*@dev"
+        "qh/product": "*@dev",
+        "qh/warehouse": "*@dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

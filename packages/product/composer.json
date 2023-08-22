@@ -5,7 +5,9 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "qh/core": "dev-main"
+        "qh/core": "dev-main",
+        "qh/warehouse": "dev-main",
+        "qh/dashboard": "dev-main"
     },
     "autoload": {
         "psr-4": {

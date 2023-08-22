@@ -28,7 +28,8 @@ class PurchaseController extends Controller
             'title' => 'Danh sánh sản phẩm',
             'products' => $products,
             'products_selected' =>$products_selected,
-            'import' => Session::get('import')
+            'importStore' => Session::get('import'),
+            'warehouses' => $this->purchaseRepo->getAllWarehouses()
         ]);
     }
     public function create(Request $request){
@@ -47,7 +48,7 @@ class PurchaseController extends Controller
     }
 
     public function store(Request $request){
-        $request->only(['note','qty','total_amount']);
+        $request->only(['note','qty','total_amount','warehouse_id']);
         $this->purchaseRepo->storePurchase($request);
 
         return redirect()->back();

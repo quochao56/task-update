@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb2fb2cbd7faa1667afaf85311d6f533",
+    "content-hash": "973b1f8001f8d1ad7bde2a5f6756090f",
     "packages": [
         {
             "name": "brick/math",
@@ -3034,6 +3034,39 @@
                 "MIT"
             ],
             "description": "Category-Product-Purchase",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "qh/warehouse",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/warehouse",
+                "reference": "663a15e5b21bf6b2f9eed61e9836387b600f1d3f"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "QH\\Warehouse\\Providers\\Store\\StoreServiceProvider",
+                        "QH\\Warehouse\\Providers\\Warehouse\\WarehouseServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "QH\\Warehouse\\": "src"
+                },
+                "classmap": [
+                    "src/Providers"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Core",
             "transport-options": {
                 "relative": true
             }
@@ -9333,7 +9366,8 @@
         "qh/blog": 20,
         "qh/customer": 20,
         "qh/dashboard": 20,
-        "qh/product": 20
+        "qh/product": 20,
+        "qh/warehouse": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

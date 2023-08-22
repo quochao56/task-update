@@ -4,7 +4,11 @@
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
-    "require": { },
+    "require": {
+        "qh/core": "dev-main",
+        "qh/product": "dev-main",
+        "qh/dashboard": "dev-main"
+    },
     "autoload": {
         "psr-4": {
             "QH\\Warehouse\\": "src"
@@ -17,7 +21,7 @@
         "laravel": {
             "providers" : [
                 "QH\\Warehouse\\Providers\\Store\\StoreServiceProvider",
-                "QH\\Core\\Providers\\Warehouse\\WarehouseServiceProvider"
+                "QH\\Warehouse\\Providers\\Warehouse\\WarehouseServiceProvider"
             ]
         }
     }

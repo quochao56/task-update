@@ -8,6 +8,9 @@ use QH\Core\Models\Admin;
 use QH\Product\Models\Purchase\PurchaseProduct;
 use QH\Product\Models\Category\Category;
 use App\Models\User;
+use QH\Warehouse\Models\ProductStore;
+use QH\Warehouse\Models\ProductWarehouse;
+use QH\Warehouse\Models\Warehouse;
 
 
 class Product extends Model
@@ -36,5 +39,14 @@ class Product extends Model
     }
     public function purchaseProducts(){
         return $this->hasMany(PurchaseProduct::class, 'product_id');
+    }
+
+    public function productStores(){
+        return $this->hasMany(ProductStore::class, 'product_id');
+
+    }
+    public function productWarehouses(){
+        return $this->hasMany(ProductWarehouse::class, 'product_id');
+
     }
 }

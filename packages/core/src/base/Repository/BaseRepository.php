@@ -30,6 +30,9 @@ abstract class BaseRepository implements RepositoryInterface
     {
         return $this->model->all();
     }
+    public function getActive(){
+        return $this->model->where('status','active')->get();
+    }
 
     public function find($id)
     {
