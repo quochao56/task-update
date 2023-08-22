@@ -4,7 +4,7 @@
 
 /**
  * @summary     FixedHeader
- * @description Fix a table's header or footer, so it is always visible while
+ * @description Fix a table's header or footer.blade.php, so it is always visible while
  *              scrolling
  * @version     3.2.1
  * @file        dataTables.fixedHeader.js
@@ -175,9 +175,9 @@ $.extend( FixedHeader.prototype, {
 	{
 		return this.s.enable;
 	},
-	
+
 	/**
-	 * Set header offset 
+	 * Set header offset
 	 *
 	 * @param  {int} new value for headerOffset
 	 */
@@ -190,9 +190,9 @@ $.extend( FixedHeader.prototype, {
 
 		return this.c.headerOffset;
 	},
-	
+
 	/**
-	 * Set footer offset
+	 * Set footer.blade.php offset
 	 *
 	 * @param  {int} new value for footerOffset
 	 */
@@ -206,7 +206,7 @@ $.extend( FixedHeader.prototype, {
 		return this.c.footerOffset;
 	},
 
-	
+
 	/**
 	 * Recalculate the position of the fixed elements and force them into place
 	 */
@@ -235,7 +235,7 @@ $.extend( FixedHeader.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Constructor
 	 */
-	
+
 	/**
 	 * FixedHeader constructor - adding the required event listeners and
 	 * simple initialisation
@@ -293,7 +293,7 @@ $.extend( FixedHeader.prototype, {
 	 * which is moved into a clone of the table element, and moved around the
 	 * document to give the fixed effect.
 	 *
-	 * @param  {string}  item  'header' or 'footer'
+	 * @param  {string}  item  'header' or 'footer.blade.php'
 	 * @param  {boolean} force Force the clone to happen, or allow automatic
 	 *   decision (reuse existing if available)
 	 * @private
@@ -306,11 +306,11 @@ $.extend( FixedHeader.prototype, {
 			this.dom.thead :
 			this.dom.tfoot;
 
-		// If footer and scrolling is enabled then we don't clone
+		// If footer.blade.php and scrolling is enabled then we don't clone
 		// Instead the table's height is decreased accordingly - see `_scroll()`
 		if (item === 'footer' && this._scrollEnabled()) {
 			return;
-		}	
+		}
 
 		if ( ! force && itemDom.floating ) {
 			// existing floating element - reuse it
@@ -326,7 +326,7 @@ $.extend( FixedHeader.prototype, {
 				itemDom.floating.remove();
 			}
 
-			var tableNode = $(dt.table().node()); 
+			var tableNode = $(dt.table().node());
 			var scrollBody = $(tableNode.parent());
 			var scrollEnabled = this._scrollEnabled();
 
@@ -389,8 +389,8 @@ $.extend( FixedHeader.prototype, {
 
 	/**
 	 * This method sets the sticky position of the header elements to match fixed columns
-	 * @param {JQuery<HTMLElement>} el 
-	 * @param {string} sign 
+	 * @param {JQuery<HTMLElement>} el
+	 * @param {string} sign
 	 */
 	_stickyPosition(el, sign) {
 		if (this._scrollEnabled()) {
@@ -418,8 +418,8 @@ $.extend( FixedHeader.prototype, {
 
 	/**
 	 * Copy widths from the cells in one element to another. This is required
-	 * for the footer as the footer in the main table takes its sizes from the
-	 * header columns. That isn't present in the footer so to have it still
+	 * for the footer.blade.php as the footer.blade.php in the main table takes its sizes from the
+	 * header columns. That isn't present in the footer.blade.php so to have it still
 	 * align correctly, the sizes need to be copied over. It is also required
 	 * for the header when auto width is not enabled
 	 *
@@ -453,11 +453,11 @@ $.extend( FixedHeader.prototype, {
 
 	/**
 	 * Remove assigned widths from the cells in an element. This is required
-	 * when inserting the footer back into the main table so the size is defined
+	 * when inserting the footer.blade.php back into the main table so the size is defined
 	 * by the header columns and also when auto width is disabled in the
 	 * DataTable.
 	 *
-	 * @param  {string} item The `header` or `footer`
+	 * @param  {string} item The `header` or `footer.blade.php`
 	 * @private
 	 */
 	_unsize: function ( item ) {
@@ -478,7 +478,7 @@ $.extend( FixedHeader.prototype, {
 	 * Reposition the floating elements to take account of horizontal page
 	 * scroll
 	 *
-	 * @param  {string} item       The `header` or `footer`
+	 * @param  {string} item       The `header` or `footer.blade.php`
 	 * @param  {int}    scrollLeft Document scrollLeft
 	 * @private
 	 */
@@ -508,9 +508,9 @@ $.extend( FixedHeader.prototype, {
 	 * * `in` - Floating over the DataTable
 	 * * `below` - (Header only) Fixed to the bottom of the table body
 	 * * `above` - (Footer only) Fixed to the top of the table body
-	 * 
+	 *
 	 * @param  {string}  mode        Mode that the item should be shown in
-	 * @param  {string}  item        'header' or 'footer'
+	 * @param  {string}  item        'header' or 'footer.blade.php'
 	 * @param  {boolean} forceChange Force a redraw of the mode, even if already
 	 *     in that mode.
 	 * @private
@@ -524,11 +524,11 @@ $.extend( FixedHeader.prototype, {
 		// Just determine if scroll is enabled once
 		var scrollEnabled = this._scrollEnabled();
 
-		// If footer and scrolling is enabled then we don't clone
+		// If footer.blade.php and scrolling is enabled then we don't clone
 		// Instead the table's height is decreased accordingly - see `_scroll()`
 		if (item === 'footer' && scrollEnabled) {
 			return;
-		}		
+		}
 
 		// It isn't trivial to add a !important css attribute...
 		var importantWidth = function (w) {
@@ -593,18 +593,18 @@ $.extend( FixedHeader.prototype, {
 			var bodyTop = scrollEnabled ? scrollOffset.top : position.tbodyTop;
 			var bodyBottom = scrollEnabled ? scrollOffset.top + scrollBody.outerHeight() : position.tfootTop
 
-			// Calculate the amount that the footer or header needs to be shuffled
+			// Calculate the amount that the footer.blade.php or header needs to be shuffled
 			var shuffle = item === 'footer' ?
-				// footer and top of body isn't on screen
+				// footer.blade.php and top of body isn't on screen
 				bodyTop > windowBottom ?
-					// Yes - push the footer below
+					// Yes - push the footer.blade.php below
 					position.tfootHeight :
 					// No - bottom set to the gap between the top of the body and the bottom of the window
 					bodyTop + position.tfootHeight - windowBottom :
 				// Otherwise must be a header so get the difference from the bottom of the
 				//  desired floating header and the bottom of the table body
 				windowTop + this.c.headerOffset + position.theadHeight - bodyBottom
-				
+
 			// Set the top or bottom based off of the offset and the shuffle value
 			var prop = item === 'header' ? 'top' : 'bottom';
 			var val = this.c[item+'Offset'] - (shuffle > 0 ? shuffle : 0);
@@ -638,8 +638,8 @@ $.extend( FixedHeader.prototype, {
 
 			importantWidth(position.width);
 		}
-		else if ( mode === 'above' ) { // only used for the footer
-			// Fix the position of the floating footer at top of the table body
+		else if ( mode === 'above' ) { // only used for the footer.blade.php
+			// Fix the position of the floating footer.blade.php at top of the table body
 			this._clone( item, forceChange );
 
 			itemDom.floating.addClass( 'fixedHeader-locked' );
@@ -679,7 +679,7 @@ $.extend( FixedHeader.prototype, {
 		var tableNode = $(table.node());
 		var scrollEnabled = this._scrollEnabled();
 
-		// Need to use the header and footer that are in the main table,
+		// Need to use the header and footer.blade.php that are in the main table,
 		// regardless of if they are clones, since they hold the positions we
 		// want to measure from
 		var thead = $(dt.table().header());
@@ -814,25 +814,25 @@ $.extend( FixedHeader.prototype, {
 			else {
 				footerMode = 'above';
 			}
-			
+
 			if ( forceChange || footerMode !== this.s.footerMode ) {
 				this._modeChange( footerMode, 'footer', forceChange );
 			}
 
 			this._horizontal( 'footer', windowLeft );
-			
+
 			var getOffsetHeight = (el) => {
 				return {
 					offset: el.offset(),
 					height: el.outerHeight()
 				}
 			}
-		
+
 			header = this.dom.header.floating ? getOffsetHeight(this.dom.header.floating) : getOffsetHeight(this.dom.thead);
 			footer = this.dom.footer.floating ? getOffsetHeight(this.dom.footer.floating) : getOffsetHeight(this.dom.tfoot);
 
-			// If scrolling is enabled and the footer is off the screen
-			if (scrollEnabled && footer.offset.top > windowTop){// && footer.offset.top >= windowBottom) {
+			// If scrolling is enabled and the footer.blade.php is off the screen
+			if (scrollEnabled && footer.offset.top > windowTop){// && footer.blade.php.offset.top >= windowBottom) {
 				// Calculate the gap between the top of the scrollBody and the top of the window
 				var overlap = windowTop - scrollOffset.top;
 				// The new height is the bottom of the window
@@ -847,7 +847,7 @@ $.extend( FixedHeader.prototype, {
 						header.offset.top +
 						// The header height if the standard header is present
 						(overlap < -header.height ? header.height : 0) +
-						// And the height of the footer
+						// And the height of the footer.blade.php
 						footer.height
 					)
 
@@ -857,11 +857,11 @@ $.extend( FixedHeader.prototype, {
 				}
 
 				// At the end of the above calculation the space between the header (top of the page if floating)
-				// and the point just above the footer should be the new value for the height of the table.
+				// and the point just above the footer.blade.php should be the new value for the height of the table.
 				scrollBody.outerHeight(newHeight);
-				
+
 				// Need some rounding here as sometimes very small decimal places are encountered
-				// If the actual height is bigger or equal to the height we just applied then the footer is "Floating"
+				// If the actual height is bigger or equal to the height we just applied then the footer.blade.php is "Floating"
 				if(Math.round(scrollBody.outerHeight()) >= Math.round(newHeight)) {
 					$(this.dom.tfoot.parent()).addClass("fixedHeader-floating");
 				}

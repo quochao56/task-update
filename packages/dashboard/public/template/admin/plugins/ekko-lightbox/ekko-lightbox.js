@@ -55,7 +55,7 @@ var Lightbox = (function ($) {
        _$modalContent: The .modal-content
        _$modalBody: The .modal-body
        _$modalHeader: The .modal-header
-       _$modalFooter: The .modal-footer
+       _$modalFooter: The .modal-footer.blade.php
     _$lightboxContainerOne: Container of the first lightbox element
     _$lightboxContainerTwo: Container of the second lightbox element
     _$lightboxBody: First element in the container
@@ -100,7 +100,7 @@ var Lightbox = (function ($) {
 			var btn = '<button type="button" class="close" data-dismiss="modal" aria-label="' + this._config.strings.close + '"><span aria-hidden="true">&times;</span></button>';
 
 			var header = '<div class="modal-header' + (this._config.title || this._config.alwaysShowClose ? '' : ' hide') + '">' + (this._isBootstrap3 ? btn + h4 : h4 + btn) + '</div>';
-			var footer = '<div class="modal-footer' + (this._config.footer ? '' : ' hide') + '">' + (this._config.footer || "&nbsp;") + '</div>';
+			var footer = '<div class="modal-footer.blade.php' + (this._config.footer ? '' : ' hide') + '">' + (this._config.footer || "&nbsp;") + '</div>';
 			var body = '<div class="modal-body"><div class="ekko-lightbox-container"><div class="ekko-lightbox-item fade in show"></div><div class="ekko-lightbox-item fade"></div></div></div>';
 			var dialog = '<div class="modal-dialog" role="document"><div class="modal-content">' + header + body + footer + '</div></div>';
 			$(this._config.doc.body).append('<div id="' + this._modalId + '" class="ekko-lightbox modal fade" tabindex="-1" tabindex="-1" role="dialog" aria-hidden="true">' + dialog + '</div>');
@@ -110,7 +110,7 @@ var Lightbox = (function ($) {
 			this._$modalContent = this._$modal.find('.modal-content').first();
 			this._$modalBody = this._$modal.find('.modal-body').first();
 			this._$modalHeader = this._$modal.find('.modal-header').first();
-			this._$modalFooter = this._$modal.find('.modal-footer').first();
+			this._$modalFooter = this._$modal.find('.modal-footer.blade.php').first();
 
 			this._$lightboxContainer = this._$modalBody.find('.ekko-lightbox-container').first();
 			this._$lightboxBodyOne = this._$lightboxContainer.find('> div:first-child').first();

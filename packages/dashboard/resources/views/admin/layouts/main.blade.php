@@ -87,7 +87,7 @@
 
 
 
-    @include('admin.footer')
+    @include('admin.footer.blade.php')
 </body>
 
 </html>

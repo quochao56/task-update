@@ -1528,7 +1528,7 @@ function getAlpha(string) {
 // generators
 function hexString(rgba, a) {
    var a = (a !== undefined && rgba.length === 3) ? a : rgba[3];
-   return "#" + hexDouble(rgba[0]) 
+   return "#" + hexDouble(rgba[0])
               + hexDouble(rgba[1])
               + hexDouble(rgba[2])
               + (
@@ -8679,7 +8679,7 @@ var exports$4 = core_element.extend({
 		return getBeforeAfterBodyLines(this._options.callbacks.afterBody.apply(this, arguments));
 	},
 
-	// Get the footer and beforeFooter and afterFooter lines
+	// Get the footer.blade.php and beforeFooter and afterFooter lines
 	// Args are: (tooltipItem, data)
 	getFooter: function() {
 		var me = this;

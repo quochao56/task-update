@@ -129,7 +129,7 @@
                 headerHeight = header.outerHeight() + 1;
                 parentDiv = $(header.closest('div.dataTables_scroll')).css('position', 'relative');
             }
-            // Get the footer and it's height
+            // Get the footer.blade.php and it's height
             var footer = this.s.dt.column(0).footer();
             var footerHeight = null;
             if (footer !== null) {
@@ -154,7 +154,7 @@
                     invisibles++;
                     continue;
                 }
-                // Get the columns header and footer element
+                // Get the columns header and footer.blade.php element
                 var colHeader = $(column.header());
                 var colFooter = $(column.footer());
                 // If i is less than the value of left then this column should be fixed left
@@ -175,7 +175,7 @@
                             .css(this._getCellCSS(false, distLeft, 'left'))
                             .addClass(this.classes.fixedLeft);
                     }
-                    // Add the css for the header and the footer
+                    // Add the css for the header and the footer.blade.php
                     colHeader
                         .css(this._getCellCSS(true, distLeft, 'left'))
                         .addClass(this.classes.fixedLeft);
@@ -201,7 +201,7 @@
                             .css(this._clearCellCSS('left'))
                             .removeClass(this.classes.fixedLeft);
                     }
-                    // Make sure the footer for this column isn't fixed left
+                    // Make sure the footer.blade.php for this column isn't fixed left
                     if (colFooter.hasClass(this.classes.fixedLeft)) {
                         colFooter
                             .css(this._clearCellCSS('left'))
@@ -220,7 +220,7 @@
                     parentDiv.append(this.dom.rightTopBlocker);
                 }
             }
-            // If there is a footer with the index class and reading rtl then add left bottom blocker
+            // If there is a footer.blade.php with the index class and reading rtl then add left bottom blocker
             if (footer !== null && !footer.hasClass('index')) {
                 if (this.s.rtl) {
                     this.dom.leftBottomBlocker.outerHeight(footerHeight);
@@ -235,7 +235,7 @@
             invisibles = 0;
             for (var i = numCols - 1; i >= 0; i--) {
                 var column = this.s.dt.column(i);
-                // Get the columns header and footer element
+                // Get the columns header and footer.blade.php element
                 var colHeader = $(column.header());
                 var colFooter = $(column.footer());
                 if (!column.visible()) {
@@ -259,7 +259,7 @@
                             .css(this._getCellCSS(false, distRight, 'right'))
                             .addClass(this.classes.fixedRight);
                     }
-                    // Add the css for the header and the footer
+                    // Add the css for the header and the footer.blade.php
                     colHeader
                         .css(this._getCellCSS(true, distRight, 'right'))
                         .addClass(this.classes.fixedRight);
@@ -285,7 +285,7 @@
                             .css(this._clearCellCSS('right'))
                             .removeClass(this.classes.fixedRight);
                     }
-                    // Make sure the footer for this column isn't fixed right
+                    // Make sure the footer.blade.php for this column isn't fixed right
                     if (colFooter.hasClass(this.classes.fixedRight)) {
                         colFooter
                             .css(this._clearCellCSS('right'))
@@ -304,7 +304,7 @@
                     parentDiv.append(this.dom.leftTopBlocker);
                 }
             }
-            // If there is a footer with the index class and reading rtl then add right bottom blocker
+            // If there is a footer.blade.php with the index class and reading rtl then add right bottom blocker
             if (footer) {
                 if (!this.s.rtl) {
                     this.dom.rightBottomBlocker.outerHeight(footerHeight);
@@ -317,9 +317,9 @@
             }
         };
         /**
-         * Gets the correct CSS for the cell, header or footer based on options provided
+         * Gets the correct CSS for the cell, header or footer.blade.php based on options provided
          *
-         * @param header Whether this cell is a header or a footer
+         * @param header Whether this cell is a header or a footer.blade.php
          * @param dist The distance that the cell should be moved away from the edge
          * @param lr Indicator of fixing to the left or the right
          * @returns An object containing the correct css

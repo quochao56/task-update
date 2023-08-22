@@ -212,7 +212,7 @@
   var SELECTOR_CARD = "." + CLASS_NAME_CARD;
   var SELECTOR_CARD_HEADER = '.card-header';
   var SELECTOR_CARD_BODY = '.card-body';
-  var SELECTOR_CARD_FOOTER = '.card-footer';
+  var SELECTOR_CARD_FOOTER = '.card-footer.blade.php';
   var Default$b = {
     animationSpeed: 'normal',
     collapseTrigger: SELECTOR_DATA_COLLAPSE,
@@ -428,7 +428,7 @@
   var SELECTOR_CONTROL_SIDEBAR_CONTENT$1 = '.control-sidebar-content';
   var SELECTOR_DATA_TOGGLE$4 = '[data-widget="control-sidebar"]';
   var SELECTOR_HEADER$1 = '.main-header';
-  var SELECTOR_FOOTER$1 = '.main-footer';
+  var SELECTOR_FOOTER$1 = '.main-footer.blade.php';
   var CLASS_NAME_CONTROL_SIDEBAR_ANIMATE = 'control-sidebar-animate';
   var CLASS_NAME_CONTROL_SIDEBAR_OPEN$1 = 'control-sidebar-open';
   var CLASS_NAME_CONTROL_SIDEBAR_SLIDE = 'control-sidebar-slide-open';
@@ -438,11 +438,11 @@
   var CLASS_NAME_NAVBAR_MD_FIXED = 'layout-md-navbar-fixed';
   var CLASS_NAME_NAVBAR_LG_FIXED = 'layout-lg-navbar-fixed';
   var CLASS_NAME_NAVBAR_XL_FIXED = 'layout-xl-navbar-fixed';
-  var CLASS_NAME_FOOTER_FIXED = 'layout-footer-fixed';
-  var CLASS_NAME_FOOTER_SM_FIXED = 'layout-sm-footer-fixed';
-  var CLASS_NAME_FOOTER_MD_FIXED = 'layout-md-footer-fixed';
-  var CLASS_NAME_FOOTER_LG_FIXED = 'layout-lg-footer-fixed';
-  var CLASS_NAME_FOOTER_XL_FIXED = 'layout-xl-footer-fixed';
+  var CLASS_NAME_FOOTER_FIXED = 'layout-footer.blade.php-fixed';
+  var CLASS_NAME_FOOTER_SM_FIXED = 'layout-sm-footer.blade.php-fixed';
+  var CLASS_NAME_FOOTER_MD_FIXED = 'layout-md-footer.blade.php-fixed';
+  var CLASS_NAME_FOOTER_LG_FIXED = 'layout-lg-footer.blade.php-fixed';
+  var CLASS_NAME_FOOTER_XL_FIXED = 'layout-xl-footer.blade.php-fixed';
   var Default$a = {
     controlsidebarSlide: true,
     scrollbarTheme: 'os-theme-light',
@@ -1696,7 +1696,7 @@
   var SELECTOR_CONTENT = '.content-wrapper';
   var SELECTOR_CONTROL_SIDEBAR_CONTENT = '.control-sidebar-content';
   var SELECTOR_CONTROL_SIDEBAR_BTN = '[data-widget="control-sidebar"]';
-  var SELECTOR_FOOTER = '.main-footer';
+  var SELECTOR_FOOTER = '.main-footer.blade.php';
   var SELECTOR_PUSHMENU_BTN = '[data-widget="pushmenu"]';
   var SELECTOR_LOGIN_BOX = '.login-box';
   var SELECTOR_REGISTER_BOX = '.register-box';

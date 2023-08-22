@@ -1430,7 +1430,7 @@
     });
   };
 
-  const swalStringParams = ['swal-title', 'swal-html', 'swal-footer'];
+  const swalStringParams = ['swal-title', 'swal-html', 'swal-footer.blade.php'];
   const getTemplateParams = params => {
     const template = typeof params.template === 'string' ? document.querySelector(params.template) : params.template;
 

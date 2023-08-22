@@ -3006,10 +3006,12 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "ef6f2088ca0e89e4c3169423f0dd237de366240a"
+                "reference": "7b80b0110259613c4163028ec7198ed1c5537b54"
             },
             "require": {
-                "qh/core": "dev-main"
+                "qh/core": "dev-main",
+                "qh/dashboard": "dev-main",
+                "qh/warehouse": "dev-main"
             },
             "type": "library",
             "extra": {
@@ -3044,7 +3046,12 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/warehouse",
-                "reference": "663a15e5b21bf6b2f9eed61e9836387b600f1d3f"
+                "reference": "8007b96f2e5aad750a122aa75ccfa2976340312c"
+            },
+            "require": {
+                "qh/core": "dev-main",
+                "qh/dashboard": "dev-main",
+                "qh/product": "dev-main"
             },
             "type": "library",
             "extra": {
@@ -9064,16 +9071,16 @@
         },
         {
             "name": "spatie/ignition",
-            "version": "1.9.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ignition.git",
-                "reference": "de24ff1e01814d5043bd6eb4ab36a5a852a04973"
+                "reference": "d92b9a081e99261179b63a858c7a4b01541e7dd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ignition/zipball/de24ff1e01814d5043bd6eb4ab36a5a852a04973",
-                "reference": "de24ff1e01814d5043bd6eb4ab36a5a852a04973",
+                "url": "https://api.github.com/repos/spatie/ignition/zipball/d92b9a081e99261179b63a858c7a4b01541e7dd1",
+                "reference": "d92b9a081e99261179b63a858c7a4b01541e7dd1",
                 "shasum": ""
             },
             "require": {
@@ -9143,7 +9150,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-28T13:24:59+00:00"
+            "time": "2023-08-21T15:06:37+00:00"
         },
         {
             "name": "spatie/laravel-ignition",

@@ -6,8 +6,8 @@ use QH\Core\ACL\Login\Http\Controllers\User\UserController;
 
 Route::middleware('web')->prefix("/user")->name('user.')->group(function () {
     Route::middleware(['guest:web'])->group(function () {
-        Route::view('/login', 'user.login')->name('login');
-        Route::view('/register', 'user.register')->name('register');
+        Route::view('/login', 'user.login.login')->name('login');
+        Route::view('/register', 'user.login.register')->name('register');
         Route::post('/create', [UserController::class, 'create'])->name('create');
         Route::post('/login', [UserController::class, 'login']);
         Route::view('/forgot-password', 'user.passwords.email')->name('forgot-password');
@@ -15,7 +15,7 @@ Route::middleware('web')->prefix("/user")->name('user.')->group(function () {
         Route::view('/confirm', 'user.passwords.confirm')->name('confirm');
     });
     Route::middleware(['auth:web'])->group(function () {
-        Route::view('/dashboard', 'user.home')->name('home');
+        Route::view('/dashboard', 'user.login.home')->name('home');
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     });
 });
