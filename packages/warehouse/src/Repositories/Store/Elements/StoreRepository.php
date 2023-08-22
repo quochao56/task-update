@@ -52,10 +52,26 @@ class StoreRepository extends BaseRepository implements StoreRepositoryInterface
             $productInWHs = ProductWarehouse::with('warehouse')
                 ->whereIn('product_id', $productId)
                 ->get();
+            $dataProductStore = [];
             foreach ($productInWHs as $product) {
                 $qty = $items[$product->product_id];
-                $newQtyProduct = $product->qty + $qty;
-                dd($qty);
+                $newQtyProduct = $product->qty - $qty;
+
+                $product->update(['qty' => $newQtyProduct]);
+
+                $productStore = ProductStore::with('store')
+                    ->with('product')
+                    ->where("product_id", $product->product_id)
+                    ->first();
+                if($productStore){
+                    $dataProductStore[] = [
+                        'id' => $productStore->id,
+                        'store_id' => $request->input('storeId'),
+                        'product_id' => $product->product_id,
+                        'qty' => $productStore->qty + $qty
+                    ];
+
+                }
             }
 
 
