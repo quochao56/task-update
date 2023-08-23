@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -38,9 +37,17 @@ class OrderMail extends Mailable
      */
     public function build()
     {
+        $recipientEmail = $this->sale->customer->email;
+
+    if (!empty($recipientEmail)) {
         return $this->subject('Order Confirmation')
-            ->view('mails.order-mail')
+            ->to($recipientEmail)
+            ->view('mail.order')
             ->with(['sale' => $this->sale]);
+    } else {
+        // Handle the case where the email address is empty or null
+        // You can log an error or take appropriate action here.
+    }
     }
 
     /**

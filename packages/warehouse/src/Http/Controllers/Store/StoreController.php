@@ -5,7 +5,6 @@ namespace QH\Warehouse\Http\Controllers\Store;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 use QH\Warehouse\Http\Requests\StoreRequest;
 use QH\Warehouse\Http\Services\Store\StoreService;
 use QH\Warehouse\Models\Store;
@@ -23,19 +22,19 @@ class StoreController extends Controller
         $this->storeService = $storeService;
         $this->warehouseRepo = $warehouseRepository;
     }
-    public function list(Request $request)
-    {
+    function list(Request $request) {
+
+        // Get the current query parameters, including warehouse and store
+        $queryParameters = $request->query();
 
         $warehouseId = $request->input('warehouse', '1');
         $storeId = $request->input('store', '1');
-
-        $products_selected = $this->storeRepo->getProduct();
 
         return view('admin.warehouse.store.list', [
             'title' => 'Danh sánh sản phẩm',
             'warehouses' => $this->warehouseRepo->getAll(),
             'stores' => $this->storeRepo->getAll(),
-            'products' => $this->warehouseRepo->getProductsInWarehouse($warehouseId),
+            'products' => $this->warehouseRepo->getProductsInWarehouse($warehouseId)->appends($queryParameters),
         ]);
     }
 
@@ -43,7 +42,7 @@ class StoreController extends Controller
     {
         $title = 'Danh sánh cửa hàng';
         $stores = $this->storeRepo->getAll();
-        return view('admin.warehouse.store.index ', compact(
+        return view('admin.warehouse.store.index', compact(
             'title',
             'stores'
         ));
