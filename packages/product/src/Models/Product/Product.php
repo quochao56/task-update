@@ -41,10 +41,6 @@ class Product extends Model
         return $this->hasMany(PurchaseProduct::class, 'product_id');
     }
 
-    public function productStores(){
-        return $this->hasMany(ProductStore::class, 'product_id');
-
-    }
     public function productWarehouses(){
         return $this->hasMany(ProductWarehouse::class, 'product_id');
 

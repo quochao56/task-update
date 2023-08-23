@@ -9,9 +9,6 @@
 <!-- Header -->
 @include('user.layouts.header')
 
-<!-- Cart -->
-@include('user.layouts.cart')
-
 @yield('content')
 
 @include('user.layouts.footer')

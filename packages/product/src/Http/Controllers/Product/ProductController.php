@@ -9,20 +9,23 @@ use QH\Product\Http\Requests\Product\UpdateProductRequest;
 use QH\Product\Http\Services\Product\UploadService;
 use QH\Product\Http\Services\Service;
 use QH\Product\Models\Product\Product;
+use QH\Product\Repositories\Category\Interface\CategoryRepositoryInterface;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
     protected $productRepo;
     protected $uploadService;
+    protected $categoryRepository;
 
     public $service;
 
-    public function __construct(ProductRepositoryInterface $productRepo, UploadService $uploadService, Service $service)
+    public function __construct(ProductRepositoryInterface $productRepo, CategoryRepositoryInterface $categoryRepository, UploadService $uploadService, Service $service)
     {
         $this->service = $service;
         $this->productRepo = $productRepo;
         $this->uploadService = $uploadService;
+        $this->categoryRepository = $categoryRepository;
 
     }
 
@@ -38,7 +41,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = $this->productRepo->getActiveCategories();
+        $categories = $this->categoryRepository->getActive();
         $users = $this->productRepo->getAllUsers();
         return view('admin.product.add', [
             'title' => 'Thêm sản phẩm mới',
@@ -66,7 +69,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $categories = $this->productRepo->getAllCategories();
+        $categories = $this->categoryRepository->getActive();
         $users = $this->productRepo->getAllUsers();
         $product = $this->productRepo->find($id);
 
@@ -91,6 +94,7 @@ class ProductController extends Controller
 
         $data = $data->all(); // Verify the modified data
         try {
+            $data['slug'] = $this->service->createSlug($request->input('name'));
             $this->productRepo->updateProduct($product, $data);
             session()->flash('success', 'Sửa Sản phẩm Thành Công');
         } catch (\Exception $err) {

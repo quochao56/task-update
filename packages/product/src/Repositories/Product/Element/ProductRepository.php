@@ -29,10 +29,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return User::find($id)->first();
     }
 
-    public function getActiveCategories()
-    {
-        return Category::where('status','active')->get();
-    }
 
     public function getAllUsers()
     {
@@ -69,6 +65,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return Product::with("category")->with("user")->orderBy("status",'asc')->orderByDesc("id")->paginate(3);
     }
+    public function getActiveProducts()
+    {
+        return Product::with("category")->with("user")->where("status",'active')->paginate(4);
+    }
     public function createProduct($request)
     {
         $userId = auth()->user()->id;
@@ -81,5 +81,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function updateProduct($product, $data){
         $this->UnlinkImage($product);
         return parent::update($product, $data);
+    }
+    public function getProductBySlug($slug){
+        return $this->model->where('slug',$slug)->first();
     }
 }

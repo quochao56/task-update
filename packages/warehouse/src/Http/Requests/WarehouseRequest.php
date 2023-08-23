@@ -1,11 +1,11 @@
 <?php
 
-namespace QH\Product\Http\Requests\Category;
+namespace QH\Warehouse\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryRequest extends FormRequest
+class WarehouseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,12 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $category = $this->route('category');
+        $warehouse = $this->route('warehouses');
+
         return [
-            'name' => ['required',Rule::unique('categories', 'name')->ignore($category)],
-            'description' => 'required',
+            'name' => ['required',Rule::unique('warehouses', 'name')->ignore($warehouse)],
+            'phone' => 'required|digits:10',
+            'location' => 'required',
             'status' => 'required',
         ];
     }
@@ -33,15 +35,21 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name.required' => ':attribute không được trống',
-            'description.required' => ':attribute không được trống',
+            'phone' => [
+                'required' => ':attribute không được trống',
+                'digits' => ':attribute có 10 số'
+            ],
+            'location.required' => ':attribute không được trống',
             'name.unique' => ':attribute đã tồn tại'
         ];
     }
     public function attributes()
     {
         return [
-            'name' => "Tên danh mục",
-            'description' => "Mô tả"
+            'name' => "Tên kho",
+            'description' => "Mô tả",
+            'location' => "Địa chỉ",
+            'phone' => "Số điện thoại",
         ];
     }
 }

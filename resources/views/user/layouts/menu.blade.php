@@ -39,7 +39,7 @@
         </li>
 
         <li>
-            <a href="{{ route('cart') }}" class="label1 rs1" data-label1="hot">Features</a>
+            <a href="{{ route('carts') }}" class="label1 rs1" data-label1="hot">Features</a>
         </li>
 
         <li>
@@ -60,7 +60,7 @@
 <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
     <div class="container-search-header">
         <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-            <img src="images/icons/icon-close2.png" alt="CLOSE">
+            <img src="/qh/dashboard/template/images/icons/icon-close2.png" alt="CLOSE">
         </button>
 
         <form class="wrap-search-header flex-w p-l-15">

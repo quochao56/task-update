@@ -6,24 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
+use QH\Warehouse\Http\Requests\StoreRequest;
 use QH\Warehouse\Http\Services\Store\StoreService;
+use QH\Warehouse\Models\Store;
 use QH\Warehouse\Repositories\Store\Interfaces\StoreRepositoryInterface;
 use QH\Warehouse\Repositories\Warehouse\Interfaces\WarehouseRepositoryInterface;
 
 class StoreController extends Controller
 {
     protected $storeService;
-    protected $storeRepo;
     protected $warehouseRepo;
-
+    protected $storeRepo;
     public function __construct(WarehouseRepositoryInterface $warehouseRepository, StoreService $storeService, StoreRepositoryInterface $storeRepository)
     {
-        $this->storeService = $storeService;
         $this->storeRepo = $storeRepository;
+        $this->storeService = $storeService;
         $this->warehouseRepo = $warehouseRepository;
     }
-
-    public function index(Request $request)
+    public function list(Request $request)
     {
 
         $warehouseId = $request->input('warehouse', '1');
@@ -31,52 +31,75 @@ class StoreController extends Controller
 
         $products_selected = $this->storeRepo->getProduct();
 
-        return view('admin.warehouse.store.index', [
+        return view('admin.warehouse.store.list', [
             'title' => 'Danh sánh sản phẩm',
-            'warehouses' => $this->warehouseRepo->getActive(),
-            'stores' => $this->storeRepo->getActive(),
+            'warehouses' => $this->warehouseRepo->getAll(),
+            'stores' => $this->storeRepo->getAll(),
             'products' => $this->warehouseRepo->getProductsInWarehouse($warehouseId),
-            'products_selected' => $products_selected,
-            'importStore' => Session::get('importStore'),
-            'storeId' => $storeId
         ]);
     }
 
-
-    public function create(Request $request)
+    public function index()
     {
-        $this->storeService->create($request);
-
-        return redirect()->back();
+        $title = 'Danh sánh cửa hàng';
+        $stores = $this->storeRepo->getAll();
+        return view('admin.warehouse.store.index ', compact(
+            'title',
+            'stores'
+        ));
     }
 
-    public function update(Request $request)
+    public function create()
     {
-        $this->storeService->update($request);
+        return view('admin.warehouse.store.add', ['title' => 'Thêm cửa hàng mới']);
+    }
+    public function show($id)
+    {
+        $title = 'Sửa cửa hàng';
+        $store = $this->storeRepo->find($id);
 
-        return redirect()->back();
+        return view('admin.warehouse.store.edit', compact(
+            'title',
+            'store'
+        ));
     }
 
-    public function destroy($id = 0)
+    public function store(StoreRequest $request)
     {
-        $this->storeService->remove($id);
-
-        return redirect()->back();
-    }
-    public function store(Request $request){
-        $this->storeRepo->storeStore($request);
-
-        return redirect()->back();
-    }
-
-    public function list()
-    {
-
+        $data = $request->except('_token');
+        try {
+            $this->storeRepo->create($data);
+            session()->flash('success', 'Thêm cửa hàng Thành Công');
+        } catch (\Exception $err) {
+            session()->flash('error', $err->getMessage());
+            return false;
+        }
+        return redirect()->route("admin.stores.index");
     }
 
-    public function detail()
+    public function update(StoreRequest $request, Store $warehouse)
     {
+        $data = $request->except('_token');
+        try {
+            $this->storeRepo->update($warehouse, $data);
+            session()->flash('success', 'Sửa cửa hàng Thành Công');
+        } catch (\Exception $err) {
+            session()->flash('error', $err->getMessage());
+            return false;
+        }
+        return redirect()->route("admin.stores.index");
+    }
+    public function destroy(Store $stores)
+    {
+        try {
+            $this->storeRepo->delete($stores);
+            session()->flash('success', 'Xóa cửa hàng Thành Công');
+        } catch (\Exception $err) {
+            session()->flash('error', $err->getMessage());
+            return false;
+        }
 
+        return redirect()->route("admin.stores.index");
     }
 
 }

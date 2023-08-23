@@ -22,7 +22,4 @@ class Store extends Model
     public function warehouseStores(){
         return $this->hasMany(WarehouseStore::class);
     }
-    public function productStores(){
-        return $this->hasMany(ProductStore::class);
-    }
 }

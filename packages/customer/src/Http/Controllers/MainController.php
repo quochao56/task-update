@@ -4,35 +4,55 @@ namespace QH\Customer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use QH\Customer\Repositories\Interfaces\ShopRepositoryInterface;
+use QH\Product\Repositories\Category\Interface\CategoryRepositoryInterface;
+use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 
 class MainController extends Controller
 {
     protected $shopRepo;
-    public function __construct(ShopRepositoryInterface $shopRepository)
+    protected $categoryRepo;
+    protected $productRepo;
+
+    public function __construct(ShopRepositoryInterface $shopRepository, CategoryRepositoryInterface $categoryRepository, ProductRepositoryInterface $productRepository)
     {
         $this->shopRepo = $shopRepository;
+        $this->categoryRepo = $categoryRepository;
+        $this->productRepo = $productRepository;
     }
 
     public function index()
     {
         return view('user.home', [
             'title' => 'Shop sách Quốc Hảo',
-            'products' => $this->shopRepo->getAllProducts()
+            'categories' => $this->categoryRepo->getActive(),
+
         ]);
     }
-    public function shop(){
+
+    public function shop()
+    {
         return view('user.shop', [
             'title' => 'Shop sách Quốc Hảo',
+            'categories' => $this->categoryRepo->getActive(),
+            'products' => $this->productRepo->getActiveProducts()
         ]);
     }
-    public function detail($slug=''){
+
+    public function detail($slug = '')
+    {
         return view('user.detail', [
-            'title' => 'Shop sách Quốc Hảo',
+            'title' => 'Chi tiết sản phẩm',
+            'categories' => $this->categoryRepo->getActive(),
+            'product' => $this->productRepo->getProductBySlug($slug)
         ]);
     }
-    public function cart(){
+
+    public function cart()
+    {
         return view('user.cart', [
-            'title' => 'Shop sách Quốc Hảo',
+            'title' => 'Giỏ hàng',
+            'categories' => $this->categoryRepo->getActive(),
+
         ]);
     }
 }

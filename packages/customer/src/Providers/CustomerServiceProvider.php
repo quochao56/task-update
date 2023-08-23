@@ -3,7 +3,9 @@
 namespace QH\Customer\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use QH\Customer\Repositories\Elements\CartRepository;
 use QH\Customer\Repositories\Elements\ShopRepository;
+use QH\Customer\Repositories\Interfaces\CartRepositoryInterface;
 use QH\Customer\Repositories\Interfaces\ShopRepositoryInterface;
 
 class CustomerServiceProvider extends ServiceProvider
@@ -14,6 +16,7 @@ class CustomerServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(ShopRepositoryInterface::class, ShopRepository::class);
+        $this->app->singleton(CartRepositoryInterface::class, CartRepository::class);
     }
 
     /**

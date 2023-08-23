@@ -1,11 +1,10 @@
 <?php
 
-namespace QH\Product\Http\Requests\Category;
+namespace QH\Warehouse\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CategoryRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +21,10 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $category = $this->route('category');
         return [
-            'name' => ['required',Rule::unique('categories', 'name')->ignore($category)],
-            'description' => 'required',
+            'name' => 'required|unique:stores,name',
+            'phone' => 'required|digits:10',
+            'location' => 'required',
             'status' => 'required',
         ];
     }
@@ -33,7 +32,11 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name.required' => ':attribute không được trống',
-            'description.required' => ':attribute không được trống',
+            'phone' => [
+                'required' => ':attribute không được trống',
+                'phone' => ':attribute có 10 số'
+            ],
+            'location.required' => ':attribute không được trống',
             'name.unique' => ':attribute đã tồn tại'
         ];
     }
@@ -41,7 +44,9 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => "Tên danh mục",
-            'description' => "Mô tả"
+            'description' => "Mô tả",
+            'location' => "Địa chỉ",
+            'phone' => "Số điện thoại",
         ];
     }
 }

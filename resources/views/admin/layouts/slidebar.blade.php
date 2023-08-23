@@ -116,15 +116,39 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.stores.index') }}" class="nav-link">
+                            <a href="{{ route('admin.warehouses.add') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Nhập vào cửa hàng</p>
+                                <p>Tạo kho</p>
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.warehouses.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách kho</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.stores.add') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tạo cửa hàng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.stores.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách cửa hàng</p>
+                            </a>
+                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="{{ route('admin.stores.index') }}" class="nav-link">--}}
+{{--                                <i class="far fa-circle nav-icon"></i>--}}
+{{--                                <p>Nhập vào cửa hàng</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+                        <li class="nav-item">
                             <a href="{{ route('admin.stores.list') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Sách Đơn hàng</p>
+                                <p>Danh Sách sản phẩm</p>
                             </a>
                         </li>
 

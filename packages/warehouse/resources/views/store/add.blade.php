@@ -6,7 +6,7 @@
         @method("POST")
         <div class="card-body">
             <div class="form-group">
-                <label for="menu">Tên Danh Mục</label>
+                <label for="menu">Tên Kho</label>
                 <input type="text" name="name" class="form-control @error("name") border border-danger @enderror"
                        value="{{ old('name') }}" placeholder="Nhập tên danh mục">
                 @error("name")
@@ -15,14 +15,21 @@
             </div>
 
             <div class="form-group">
-                <label>Mô Tả</label>
-                <textarea name="description" placeholder="Description" class="form-control @error("description") border border-danger @enderror"
-                          >{{ old('description') }}</textarea>
-                @error("description")
+                <label>Phone</label>
+                <input name="text" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
+                          value="{{ old('phone') }}"></input>
+                @error("phone")
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
-
+            <div class="form-group">
+                <label>Địa chỉ</label>
+                <textarea name="text" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
+                          >{{ old('location') }}</textarea>
+                @error("location")
+                <p class="text-danger">{{$message}}</p>
+                @enderror
+            </div>
 
             <div class="form-group">
                 <label>Kích Hoạt</label>

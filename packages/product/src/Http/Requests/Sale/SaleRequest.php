@@ -38,7 +38,7 @@ class SaleRequest extends FormRequest
             ],
             'phone' => [
                 'required' => ':attribute không được trống',
-                'phone' => ':attribute có 10 số'
+                'digits' => ':attribute có 10 số'
             ],
             'address.required' => ':attribute không được trống'
         ];
