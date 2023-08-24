@@ -2,6 +2,7 @@
 
 namespace QH\Customer\Repositories\Elements;
 
+use App\Jobs\SendMail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -21,7 +22,6 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
     public function storeSale($request)
     {
-
         $sale_date = Carbon::now("Asia/Ho_Chi_Minh")->format("Y-m-d H:i:s");
         try {
             DB::beginTransaction();
@@ -72,9 +72,9 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
             DB::commit();
             Session::flash('success', 'Đặt Hàng Thành Công');
-
+     
             #Queue
-            SendMail::dispatch($request->input('email'))->delay(now()->addSeconds(2));
+            SendMail::dispatch($sale)->delay(now()->addSeconds(2));
 
             Session::forget('carts');
         } catch (\Exception $err) {

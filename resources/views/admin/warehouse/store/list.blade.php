@@ -21,7 +21,7 @@
         }
     </style>
     <div class="container m-3">
-        <form action="{{ route('admin.stores.index') }}" method="get">
+        <form action="{{ route('admin.stores.list') }}" method="get">
             <div class="row">
                 <div class="col-md-5 my-auto">
                     <label for="warehouse" class="form-label">Select a Warehouse:</label>
