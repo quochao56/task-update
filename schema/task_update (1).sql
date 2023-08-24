@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 22, 2023 at 10:53 AM
+-- Generation Time: Aug 24, 2023 at 07:31 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -116,6 +116,53 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `histories`
+--
+
+CREATE TABLE `histories` (
+  `id` bigint UNSIGNED NOT NULL,
+  `from` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `to` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qty` int NOT NULL,
+  `total_amount` decimal(8,2) NOT NULL,
+  `product` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `links` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `histories`
+--
+
+INSERT INTO `histories` (`id`, `from`, `to`, `qty`, `total_amount`, `product`, `created_at`, `updated_at`, `status`, `links`) VALUES
+(1, 'NCC', 'w opsgreat 2', 4, '8000.00', '2', NULL, NULL, 'pending', 'http://task-update.test/admin/sale/detail/35'),
+(2, 'w opsgreat 2', 'opsgreat 1', 4, '20000.00', '9,23', NULL, NULL, 'pending', ''),
+(3, 'opsgreat 2', 'quochao2k2@gmail.com', 2, '4000.00', '2', NULL, NULL, 'pending', 'http://task-update.test/admin/sale/detail/35'),
+(5, 'NCC', 'w opsgreat 2', 3, '884.00', '9,16,23', '2023-08-24 04:46:03', '2023-08-24 04:46:03', 'pending', 'http://task-update.test/admin/orders/detail/103'),
+(6, 'w opsgreat 2', 'quochao2k2@gmail.com', 2, '333.00', '2,8', '2023-08-24 05:03:27', '2023-08-24 05:03:27', 'pending', 'http://task-update.test/admin/sale/detail/38'),
+(7, 'w opsgreat 2', 'quochao2k2@gmail.com', 2, '884.00', '16,23', '2023-08-24 06:41:20', '2023-08-24 06:41:20', 'pending', 'http://task-update.test/admin/sale/detail/40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint UNSIGNED NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint UNSIGNED NOT NULL,
+  `reserved_at` int UNSIGNED DEFAULT NULL,
+  `available_at` int UNSIGNED NOT NULL,
+  `created_at` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -159,7 +206,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2023_08_21_074037_create_product_warehouses_table', 18),
 (47, '2023_08_21_092840_add_status_to_warehouses_table', 18),
 (48, '2023_08_21_092919_add_status_to_stores_table', 18),
-(49, '2023_08_21_095418_add_warehouse_id_to_purchases_table', 19);
+(49, '2023_08_21_095418_add_warehouse_id_to_purchases_table', 19),
+(50, '2023_08_23_135105_create_jobs_table', 20),
+(51, '2023_08_24_102205_create_histories_table', 21);
 
 -- --------------------------------------------------------
 
@@ -226,7 +275,8 @@ INSERT INTO `posts` (`id`, `slug`, `title`, `description`, `thumb`, `created_at`
 (13, 'chau-phi', 'chau phi', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ut aliquam purus sit amet.', '64dddb1072d59-london.jpg', '2023-08-17 01:32:16', '2023-08-17 01:54:27', 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ut aliquam purus sit amet. Tristique nulla aliquet enim tortor at auctor urna. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus et. <strong>Malesuada proin libero nunc consequat interdum varius</strong>. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus. Elementum integer enim neque volutpat ac tincidunt vitae. Augue eget arcu dictum varius duis at. Magnis dis parturient montes nascetur ridiculus mus mauris vitae. Ullamcorper dignissim cras tincidunt lobortis feugiat. Nibh cras pulvinar mattis nunc sed blandit libero volutpat sed. Sed arcu non odio euismod lacinia at quis risus sed. In aliquam sem fringilla ut. Pretium quam vulputate dignissim suspendisse in.</p>\r\n\r\n<p>Scelerisque fermentum dui faucibus in ornare. Nec nam aliquam sem et tortor. Volutpat est velit egestas dui id ornare arcu. Fermentum dui faucibus in ornare. Imperdiet dui accumsan sit amet nulla facilisi morbi. A iaculis at erat pellentesque adipiscing commodo elit. Nisi scelerisque eu ultrices vitae auctor eu. Fringilla urna porttitor rhoncus dolor purus non enim. Morbi tristique senectus et netus et malesuada fames ac. Iaculis eu non diam phasellus vestibulum lorem sed risus. Ut consequat semper viverra nam libero justo. Rhoncus urna neque viverra justo nec ultrices dui sapien. Etiam non quam lacus suspendisse faucibus interdum posuere lorem. Ipsum a arcu cursus vitae congue mauris rhoncus. Bibendum est ultricies integer quis auctor elit. Pellentesque pulvinar pellentesque habitant morbi tristique. Ornare lectus sit amet est placerat in. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed.</p>\r\n\r\n<p>Pretium lectus quam id leo in. Sed id semper risus in hendrerit gravida. Odio eu feugiat pretium nibh ipsum. Pharetra diam sit amet nisl suscipit adipiscing bibendum. Tellus id interdum velit laoreet id. Nibh sed pulvinar proin gravida hendrerit lectus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Accumsan sit amet nulla facilisi morbi. Enim ut sem viverra aliquet eget sit amet. Sit amet tellus cras adipiscing enim eu turpis egestas.</p>\r\n\r\n<p>Donec et odio pellentesque diam volutpat commodo sed egestas. Magna sit amet purus gravida quis. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Sit amet consectetur adipiscing elit duis. Velit aliquet sagittis id consectetur. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Amet consectetur adipiscing elit pellentesque habitant morbi tristique. Quam pellentesque nec nam aliquam sem et tortor. Dolor sit amet consectetur adipiscing elit duis. Scelerisque fermentum dui faucibus in ornare. Amet volutpat consequat mauris nunc congue nisi vitae suscipit. Neque volutpat ac tincidunt vitae. Nec dui nunc mattis enim ut. Iaculis eu non diam phasellus vestibulum lorem sed risus ultricies. Neque laoreet suspendisse interdum consectetur. Tortor at risus viverra adipiscing at in. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Duis ultricies lacus sed turpis tincidunt id aliquet. Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>\r\n\r\n<p>Porttitor eget dolor morbi non arcu. Neque laoreet suspendisse interdum consectetur libero id. Tincidunt lobortis feugiat vivamus at augue eget. Donec ac odio tempor orci dapibus ultrices. Tincidunt lobortis feugiat vivamus at augue eget arcu. Arcu non odio euismod lacinia at. Cras sed felis eget velit aliquet. Pharetra convallis posuere morbi leo. Enim tortor at auctor urna nunc id cursus metus aliquam. Sapien et ligula ullamcorper malesuada proin libero nunc consequat. Tempor id eu nisl nunc mi. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Ultrices dui sapien eget mi proin sed. Purus in mollis nunc sed id. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Arcu cursus euismod quis viverra nibh cras.</p>', 'active'),
 (14, 'a-free-trip', 'a free trip', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ut aliquam purus sit amet.', '64dddb1072d59-london.jpg', '2023-08-17 01:32:16', '2023-08-17 01:54:27', 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ut aliquam purus sit amet. Tristique nulla aliquet enim tortor at auctor urna. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus et. <strong>Malesuada proin libero nunc consequat interdum varius</strong>. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus. Elementum integer enim neque volutpat ac tincidunt vitae. Augue eget arcu dictum varius duis at. Magnis dis parturient montes nascetur ridiculus mus mauris vitae. Ullamcorper dignissim cras tincidunt lobortis feugiat. Nibh cras pulvinar mattis nunc sed blandit libero volutpat sed. Sed arcu non odio euismod lacinia at quis risus sed. In aliquam sem fringilla ut. Pretium quam vulputate dignissim suspendisse in.</p>\r\n\r\n<p>Scelerisque fermentum dui faucibus in ornare. Nec nam aliquam sem et tortor. Volutpat est velit egestas dui id ornare arcu. Fermentum dui faucibus in ornare. Imperdiet dui accumsan sit amet nulla facilisi morbi. A iaculis at erat pellentesque adipiscing commodo elit. Nisi scelerisque eu ultrices vitae auctor eu. Fringilla urna porttitor rhoncus dolor purus non enim. Morbi tristique senectus et netus et malesuada fames ac. Iaculis eu non diam phasellus vestibulum lorem sed risus. Ut consequat semper viverra nam libero justo. Rhoncus urna neque viverra justo nec ultrices dui sapien. Etiam non quam lacus suspendisse faucibus interdum posuere lorem. Ipsum a arcu cursus vitae congue mauris rhoncus. Bibendum est ultricies integer quis auctor elit. Pellentesque pulvinar pellentesque habitant morbi tristique. Ornare lectus sit amet est placerat in. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed.</p>\r\n\r\n<p>Pretium lectus quam id leo in. Sed id semper risus in hendrerit gravida. Odio eu feugiat pretium nibh ipsum. Pharetra diam sit amet nisl suscipit adipiscing bibendum. Tellus id interdum velit laoreet id. Nibh sed pulvinar proin gravida hendrerit lectus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Accumsan sit amet nulla facilisi morbi. Enim ut sem viverra aliquet eget sit amet. Sit amet tellus cras adipiscing enim eu turpis egestas.</p>\r\n\r\n<p>Donec et odio pellentesque diam volutpat commodo sed egestas. Magna sit amet purus gravida quis. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Sit amet consectetur adipiscing elit duis. Velit aliquet sagittis id consectetur. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Amet consectetur adipiscing elit pellentesque habitant morbi tristique. Quam pellentesque nec nam aliquam sem et tortor. Dolor sit amet consectetur adipiscing elit duis. Scelerisque fermentum dui faucibus in ornare. Amet volutpat consequat mauris nunc congue nisi vitae suscipit. Neque volutpat ac tincidunt vitae. Nec dui nunc mattis enim ut. Iaculis eu non diam phasellus vestibulum lorem sed risus ultricies. Neque laoreet suspendisse interdum consectetur. Tortor at risus viverra adipiscing at in. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Duis ultricies lacus sed turpis tincidunt id aliquet. Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>\r\n\r\n<p>Porttitor eget dolor morbi non arcu. Neque laoreet suspendisse interdum consectetur libero id. Tincidunt lobortis feugiat vivamus at augue eget. Donec ac odio tempor orci dapibus ultrices. Tincidunt lobortis feugiat vivamus at augue eget arcu. Arcu non odio euismod lacinia at. Cras sed felis eget velit aliquet. Pharetra convallis posuere morbi leo. Enim tortor at auctor urna nunc id cursus metus aliquam. Sapien et ligula ullamcorper malesuada proin libero nunc consequat. Tempor id eu nisl nunc mi. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Ultrices dui sapien eget mi proin sed. Purus in mollis nunc sed id. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Arcu cursus euismod quis viverra nibh cras.</p>', 'active'),
 (15, 'around-world-in-3-days', 'around world in 3 days', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ut aliquam purus sit amet.', '64dddb1072d59-london.jpg', '2023-08-17 01:32:16', '2023-08-17 01:54:27', 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ut aliquam purus sit amet. Tristique nulla aliquet enim tortor at auctor urna. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus et. <strong>Malesuada proin libero nunc consequat interdum varius</strong>. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus. Elementum integer enim neque volutpat ac tincidunt vitae. Augue eget arcu dictum varius duis at. Magnis dis parturient montes nascetur ridiculus mus mauris vitae. Ullamcorper dignissim cras tincidunt lobortis feugiat. Nibh cras pulvinar mattis nunc sed blandit libero volutpat sed. Sed arcu non odio euismod lacinia at quis risus sed. In aliquam sem fringilla ut. Pretium quam vulputate dignissim suspendisse in.</p>\r\n\r\n<p>Scelerisque fermentum dui faucibus in ornare. Nec nam aliquam sem et tortor. Volutpat est velit egestas dui id ornare arcu. Fermentum dui faucibus in ornare. Imperdiet dui accumsan sit amet nulla facilisi morbi. A iaculis at erat pellentesque adipiscing commodo elit. Nisi scelerisque eu ultrices vitae auctor eu. Fringilla urna porttitor rhoncus dolor purus non enim. Morbi tristique senectus et netus et malesuada fames ac. Iaculis eu non diam phasellus vestibulum lorem sed risus. Ut consequat semper viverra nam libero justo. Rhoncus urna neque viverra justo nec ultrices dui sapien. Etiam non quam lacus suspendisse faucibus interdum posuere lorem. Ipsum a arcu cursus vitae congue mauris rhoncus. Bibendum est ultricies integer quis auctor elit. Pellentesque pulvinar pellentesque habitant morbi tristique. Ornare lectus sit amet est placerat in. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed.</p>\r\n\r\n<p>Pretium lectus quam id leo in. Sed id semper risus in hendrerit gravida. Odio eu feugiat pretium nibh ipsum. Pharetra diam sit amet nisl suscipit adipiscing bibendum. Tellus id interdum velit laoreet id. Nibh sed pulvinar proin gravida hendrerit lectus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Accumsan sit amet nulla facilisi morbi. Enim ut sem viverra aliquet eget sit amet. Sit amet tellus cras adipiscing enim eu turpis egestas.</p>\r\n\r\n<p>Donec et odio pellentesque diam volutpat commodo sed egestas. Magna sit amet purus gravida quis. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. Sit amet consectetur adipiscing elit duis. Velit aliquet sagittis id consectetur. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Amet consectetur adipiscing elit pellentesque habitant morbi tristique. Quam pellentesque nec nam aliquam sem et tortor. Dolor sit amet consectetur adipiscing elit duis. Scelerisque fermentum dui faucibus in ornare. Amet volutpat consequat mauris nunc congue nisi vitae suscipit. Neque volutpat ac tincidunt vitae. Nec dui nunc mattis enim ut. Iaculis eu non diam phasellus vestibulum lorem sed risus ultricies. Neque laoreet suspendisse interdum consectetur. Tortor at risus viverra adipiscing at in. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Duis ultricies lacus sed turpis tincidunt id aliquet. Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>\r\n\r\n<p>Porttitor eget dolor morbi non arcu. Neque laoreet suspendisse interdum consectetur libero id. Tincidunt lobortis feugiat vivamus at augue eget. Donec ac odio tempor orci dapibus ultrices. Tincidunt lobortis feugiat vivamus at augue eget arcu. Arcu non odio euismod lacinia at. Cras sed felis eget velit aliquet. Pharetra convallis posuere morbi leo. Enim tortor at auctor urna nunc id cursus metus aliquam. Sapien et ligula ullamcorper malesuada proin libero nunc consequat. Tempor id eu nisl nunc mi. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Ultrices dui sapien eget mi proin sed. Purus in mollis nunc sed id. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Arcu cursus euismod quis viverra nibh cras.</p>', 'active'),
-(16, 'this-is-my-journey', 'this is my journey', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '64e2d20e479b7-this-is-my-journey.jpg', '2023-08-20 19:55:10', '2023-08-20 20:15:08', 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Curabitur gravida arcu ac tortor dignissim convallis. Est ullamcorper eget nulla facilisi etiam dignissim diam quis enim. Sit amet nulla facilisi morbi tempus iaculis urna id. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Massa sapien faucibus et molestie ac feugiat sed. Dapibus ultrices in iaculis nunc sed augue lacus viverra. Arcu cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Aliquet enim tortor at auctor urna. Ultrices eros in cursus turpis massa tincidunt dui ut ornare. Dui ut ornare lectus sit amet est placerat in. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere ac. Sit amet mattis vulputate enim nulla aliquet. Mattis pellentesque id nibh tortor id aliquet.</p>\r\n\r\n<p>Fames ac turpis egestas maecenas pharetra convallis. Vitae congue eu consequat ac felis. Gravida quis blandit turpis cursus in hac habitasse. A erat nam at lectus urna duis convallis convallis. Quam id leo in vitae turpis massa sed elementum. Scelerisque eu ultrices vitae auctor eu augue ut lectus. At ultrices mi tempus imperdiet nulla malesuada pellentesque. Vestibulum sed arcu non odio euismod. Velit aliquet sagittis id consectetur. Euismod in pellentesque massa placerat duis ultricies lacus. A diam sollicitudin tempor id. Mi proin sed libero enim sed faucibus turpis in. Duis ut diam quam nulla porttitor. Dolor purus non enim praesent elementum facilisis leo vel fringilla. Blandit volutpat maecenas volutpat blandit aliquam etiam erat.</p>\r\n\r\n<p>Vitae suscipit tellus mauris a diam maecenas. Facilisis mauris sit amet massa vitae tortor condimentum lacinia quis. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Donec ac odio tempor orci dapibus. Tincidunt tortor aliquam nulla facilisi. Ipsum a arcu cursus vitae. Vulputate sapien nec sagittis aliquam. Vel eros donec ac odio. At tellus at urna condimentum mattis.</p>\r\n\r\n<p>Dolor purus non enim praesent. Erat pellentesque adipiscing commodo elit at imperdiet dui. Pretium lectus quam id leo in vitae turpis. Tortor condimentum lacinia quis vel. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Non enim praesent elementum facilisis leo. Consectetur a erat nam at lectus urna duis convallis. Nunc congue nisi vitae suscipit tellus. Lectus nulla at volutpat diam ut venenatis. Etiam sit amet nisl purus. Laoreet suspendisse interdum consectetur libero id.</p>\r\n\r\n<p>Donec et odio pellentesque diam volutpat commodo sed egestas egestas. Volutpat blandit aliquam etiam erat velit scelerisque in dictum. Mi eget mauris pharetra et ultrices neque ornare aenean. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Odio aenean sed adipiscing diam donec. Nunc sed augue lacus viverra vitae congue eu consequat ac. Tincidunt praesent semper feugiat nibh sed pulvinar proin. Ultricies leo integer malesuada nunc vel risus commodo viverra. Morbi tristique senectus et netus et malesuada fames ac turpis. Pharetra magna ac placerat vestibulum lectus. Dignissim sodales ut eu sem integer vitae. Lacus vel facilisis volutpat est velit egestas. Luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>', 'active');
+(16, 'this-is-my-journey', 'this is my journey', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '64e2d20e479b7-this-is-my-journey.jpg', '2023-08-20 19:55:10', '2023-08-20 20:15:08', 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Curabitur gravida arcu ac tortor dignissim convallis. Est ullamcorper eget nulla facilisi etiam dignissim diam quis enim. Sit amet nulla facilisi morbi tempus iaculis urna id. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Massa sapien faucibus et molestie ac feugiat sed. Dapibus ultrices in iaculis nunc sed augue lacus viverra. Arcu cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Aliquet enim tortor at auctor urna. Ultrices eros in cursus turpis massa tincidunt dui ut ornare. Dui ut ornare lectus sit amet est placerat in. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere ac. Sit amet mattis vulputate enim nulla aliquet. Mattis pellentesque id nibh tortor id aliquet.</p>\r\n\r\n<p>Fames ac turpis egestas maecenas pharetra convallis. Vitae congue eu consequat ac felis. Gravida quis blandit turpis cursus in hac habitasse. A erat nam at lectus urna duis convallis convallis. Quam id leo in vitae turpis massa sed elementum. Scelerisque eu ultrices vitae auctor eu augue ut lectus. At ultrices mi tempus imperdiet nulla malesuada pellentesque. Vestibulum sed arcu non odio euismod. Velit aliquet sagittis id consectetur. Euismod in pellentesque massa placerat duis ultricies lacus. A diam sollicitudin tempor id. Mi proin sed libero enim sed faucibus turpis in. Duis ut diam quam nulla porttitor. Dolor purus non enim praesent elementum facilisis leo vel fringilla. Blandit volutpat maecenas volutpat blandit aliquam etiam erat.</p>\r\n\r\n<p>Vitae suscipit tellus mauris a diam maecenas. Facilisis mauris sit amet massa vitae tortor condimentum lacinia quis. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Donec ac odio tempor orci dapibus. Tincidunt tortor aliquam nulla facilisi. Ipsum a arcu cursus vitae. Vulputate sapien nec sagittis aliquam. Vel eros donec ac odio. At tellus at urna condimentum mattis.</p>\r\n\r\n<p>Dolor purus non enim praesent. Erat pellentesque adipiscing commodo elit at imperdiet dui. Pretium lectus quam id leo in vitae turpis. Tortor condimentum lacinia quis vel. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Non enim praesent elementum facilisis leo. Consectetur a erat nam at lectus urna duis convallis. Nunc congue nisi vitae suscipit tellus. Lectus nulla at volutpat diam ut venenatis. Etiam sit amet nisl purus. Laoreet suspendisse interdum consectetur libero id.</p>\r\n\r\n<p>Donec et odio pellentesque diam volutpat commodo sed egestas egestas. Volutpat blandit aliquam etiam erat velit scelerisque in dictum. Mi eget mauris pharetra et ultrices neque ornare aenean. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Odio aenean sed adipiscing diam donec. Nunc sed augue lacus viverra vitae congue eu consequat ac. Tincidunt praesent semper feugiat nibh sed pulvinar proin. Ultricies leo integer malesuada nunc vel risus commodo viverra. Morbi tristique senectus et netus et malesuada fames ac turpis. Pharetra magna ac placerat vestibulum lectus. Dignissim sodales ut eu sem integer vitae. Lacus vel facilisis volutpat est velit egestas. Luctus venenatis lectus magna fringilla urna porttitor rhoncus.</p>', 'active'),
+(18, 'harry-potter-10-review', 'harry potter 10 review', 'update Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim ut sem viverra aliquet eget sit amet. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse.', '64e6bf522d97e-harry-potter-10-review.jpg', '2023-08-24 02:24:18', '2023-08-24 02:24:30', 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim ut sem viverra aliquet eget sit amet. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse. Amet porttitor eget dolor morbi non. Donec enim diam vulputate ut. Eu mi bibendum neque egestas congue quisque egestas diam in. Tincidunt id aliquet risus feugiat in. Tincidunt lobortis feugiat vivamus at augue eget. Convallis a cras semper auctor neque. Ullamcorper malesuada proin libero nunc consequat interdum varius.</p>\r\n\r\n<p>Libero justo laoreet sit amet cursus sit amet. Sagittis purus sit amet volutpat consequat mauris nunc congue. A pellentesque sit amet porttitor. Euismod lacinia at quis risus sed vulputate odio ut. Consectetur a erat nam at lectus urna duis. Aliquam ultrices sagittis orci a scelerisque purus semper eget duis. Leo vel orci porta non pulvinar neque. Diam vel quam elementum pulvinar etiam. Dolor magna eget est lorem. Sit amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Pretium quam vulputate dignissim suspendisse. Non odio euismod lacinia at quis risus sed vulputate odio. Facilisis volutpat est velit egestas dui id ornare. Vitae purus faucibus ornare suspendisse sed nisi lacus sed. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque. Sit amet dictum sit amet justo donec enim. Sed lectus vestibulum mattis ullamcorper. Sapien nec sagittis aliquam malesuada.</p>\r\n\r\n<p>Vivamus arcu felis bibendum ut tristique et egestas. Scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam. Lectus proin nibh nisl condimentum id venenatis a condimentum vitae. Proin nibh nisl condimentum id. At urna condimentum mattis pellentesque id nibh tortor id. Aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis. Gravida neque convallis a cras semper auctor neque vitae. Interdum posuere lorem ipsum dolor sit amet consectetur. Tristique nulla aliquet enim tortor at auctor urna. Semper eget duis at tellus at urna condimentum mattis pellentesque.</p>\r\n\r\n<p>Aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Non enim praesent elementum facilisis leo vel fringilla est ullamcorper. Dictumst vestibulum rhoncus est pellentesque. Sit amet porttitor eget dolor morbi non. Risus ultricies tristique nulla aliquet enim tortor at auctor. Amet massa vitae tortor condimentum lacinia quis vel eros donec. Amet purus gravida quis blandit. Molestie a iaculis at erat pellentesque adipiscing commodo elit. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus. Consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat.</p>\r\n\r\n<p>Mattis ullamcorper velit sed ullamcorper. Id consectetur purus ut faucibus pulvinar elementum integer enim neque. Nunc lobortis mattis aliquam faucibus purus in massa tempor. Magna ac placerat vestibulum lectus mauris ultrices eros in cursus. Aliquet lectus proin nibh nisl condimentum id venenatis a. Egestas purus viverra accumsan in. Nisi quis eleifend quam adipiscing vitae proin. Eget duis at tellus at urna condimentum mattis. Eget nulla facilisi etiam dignissim diam quis enim. Bibendum est ultricies integer quis auctor elit sed vulputate. Convallis tellus id interdum velit. Vestibulum morbi blandit cursus risus at ultrices.</p>', 'active');
 
 -- --------------------------------------------------------
 
@@ -256,39 +306,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `thumb`, `price`, `qty`, `content`, `category_id`, `author_type`, `created_at`, `updated_at`, `price_sale`, `status`, `author_id`, `slug`) VALUES
-(1, 'Harry Potter 1', '/storage/uploads/1690886327.harry-potter.jpg', '100.00', 1, '<p>content</p>', 8, 'Novelist', '2023-07-31 21:58:09', '2023-07-31 20:38:48', NULL, 'active', 1, ''),
-(2, 'Fans', '/storage/uploads/1690881925.harry-potter.jpg', '2000.00', 1, '<p>content fans</p>', 4, 'Blog', '2023-07-31 21:58:09', '2023-07-31 20:39:15', NULL, 'active', 1, ''),
-(7, 'Harry Potter 2', '/storage/uploads/1690886372.harry-potter.jpg', '333.00', 1, '<p>aaa</p>', 5, 'Novelist', '2023-07-31 20:12:03', '2023-07-31 20:39:34', NULL, 'active', 1, ''),
-(8, 'Harry Potter 3', '/storage/uploads/1690886391.harry-potter.jpg', '333.00', 10, '<p>aaa</p>', 5, 'Novelist', '2023-07-31 20:35:13', '2023-08-10 19:02:16', NULL, 'active', 1, ''),
-(9, 'Harry Potter 4', '/storage/uploads/1690886409.harry-potter.jpg', '333.00', 13, '<p>content</p>', 5, 'Novelist', '2023-07-31 20:38:11', '2023-08-21 23:24:42', NULL, 'active', 1, ''),
-(16, 'Harry Potter 7', '/storage/uploads/1692594455.harry-potter.jpg', '333.00', 3, '<p>content</p>', 5, 'Novelist', '2023-08-09 02:20:38', '2023-08-21 03:40:14', NULL, 'active', 1, ''),
-(22, 'Lucifer Morningstar', '/storage/uploads/1691997651.harry-potter.jpg', '333.00', 12, '<p>a</p>', 5, 'Novelist', '2023-08-14 00:20:51', '2023-08-20 23:54:38', NULL, 'inactive', 1, ''),
-(23, 'Lucifer Morningstar season 1', '/storage/uploads/1692602170.lucifer.jpg', '884.00', 13, '<p>lucifer&nbsp;</p>', 5, 'Novelist', '2023-08-21 00:16:10', '2023-08-21 04:06:22', NULL, 'active', 1, 'lucifer-morningstar-season-1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_stores`
---
-
-CREATE TABLE `product_stores` (
-  `id` bigint UNSIGNED NOT NULL,
-  `store_id` bigint UNSIGNED NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
-  `qty` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `product_stores`
---
-
-INSERT INTO `product_stores` (`id`, `store_id`, `product_id`, `qty`, `created_at`, `updated_at`) VALUES
-(1, 1, 22, 2, '2023-08-21 10:02:40', NULL),
-(2, 1, 7, 1, '2023-08-21 10:02:40', NULL),
-(3, 1, 22, 1, '2023-08-21 10:03:17', NULL),
-(4, 1, 23, 4, '2023-08-21 10:03:17', NULL);
+(1, 'Harry Potter 1', '/storage/uploads/1692787295.harry-potter.jpg', '100.00', 10, '<p>content</p>', 8, 'Novelist', '2023-07-31 21:58:09', '2023-08-23 03:41:35', NULL, 'active', 1, 'harry-potter-1'),
+(2, 'Fans', '/storage/uploads/1692787270.harry-potter.jpg', '2000.00', 8, '<p>content fans</p>', 4, 'Blog', '2023-07-31 21:58:09', '2023-08-24 05:03:27', NULL, 'active', 1, 'fans'),
+(7, 'Harry Potter 2', '/storage/uploads/1692787244.harry-potter.jpg', '333.00', 10, '<p>aaa</p>', 5, 'Novelist', '2023-07-31 20:12:03', '2023-08-23 03:40:44', NULL, 'active', 1, 'harry-potter-2'),
+(8, 'Harry Potter 3', '/storage/uploads/1692787219.harry-potter.jpg', '333.00', 9, '<p>aaa</p>', 5, 'Novelist', '2023-07-31 20:35:13', '2023-08-24 05:03:27', NULL, 'active', 1, 'harry-potter-3'),
+(9, 'Harry Potter 4', '/storage/uploads/1692787195.harry-potter.jpg', '333.00', 11, '<p>content</p>', 5, 'Novelist', '2023-07-31 20:38:11', '2023-08-24 04:46:03', NULL, 'active', 1, 'harry-potter-4'),
+(16, 'Harry Potter 7', '/storage/uploads/1692787174.harry-potter.jpg', '333.00', 12, '<p>content</p>', 5, 'Novelist', '2023-08-09 02:20:38', '2023-08-24 06:41:20', NULL, 'active', 1, 'harry-potter-7'),
+(22, 'Lucifer Morningstar', '/storage/uploads/1692787322.harry-potter.jpg', '333.00', 12, '<p>a</p>', 5, 'Novelist', '2023-08-14 00:20:51', '2023-08-23 03:42:02', NULL, 'inactive', 1, 'lucifer-morningstar'),
+(23, 'Lucifer Morningstar season 1', '/storage/uploads/1692602170.lucifer.jpg', '884.00', 6, '<p>lucifer&nbsp;</p>', 5, 'Novelist', '2023-08-21 00:16:10', '2023-08-24 06:41:20', NULL, 'active', 1, 'lucifer-morningstar-season-1');
 
 -- --------------------------------------------------------
 
@@ -310,9 +335,12 @@ CREATE TABLE `product_warehouses` (
 --
 
 INSERT INTO `product_warehouses` (`id`, `warehouse_id`, `product_id`, `qty`, `created_at`, `updated_at`) VALUES
-(1, 2, 23, 5, '2023-08-21 10:04:24', '2023-08-21 04:06:22'),
-(2, 3, 16, 3, '2023-08-21 10:04:24', NULL),
-(3, 2, 9, 3, '2023-08-21 23:24:42', '2023-08-21 23:24:42');
+(1, 2, 23, 4, '2023-08-21 10:04:24', '2023-08-24 04:46:03'),
+(2, 3, 16, 4, '2023-08-21 10:04:24', '2023-08-24 04:46:03'),
+(3, 2, 9, 6, '2023-08-21 23:24:42', '2023-08-24 04:46:03'),
+(6, 2, 16, 9, '2023-08-21 23:24:42', '2023-08-21 23:24:42'),
+(7, 2, 8, 4, '2023-08-21 23:24:42', '2023-08-21 23:24:42'),
+(8, 2, 2, -2, '2023-08-21 23:24:42', '2023-08-24 02:37:42');
 
 -- --------------------------------------------------------
 
@@ -357,7 +385,9 @@ INSERT INTO `purchases` (`id`, `total_qty`, `shipping_cost`, `total_amount`, `no
 (28, 10, 0, 3330, NULL, 'pending', '2023-08-18', '2023-08-18 01:11:45', '2023-08-18 01:11:45', 1),
 (43, 4, 0, 2985, NULL, 'pending', '2023-08-21', '2023-08-21 03:40:14', '2023-08-21 03:40:14', 2),
 (60, 1, 0, 884, NULL, 'pending', '2023-08-21', '2023-08-21 04:06:22', '2023-08-21 04:06:22', 2),
-(61, 3, 0, 999, NULL, 'pending', '2023-08-22', '2023-08-21 23:24:42', '2023-08-21 23:24:42', 2);
+(61, 3, 0, 999, NULL, 'pending', '2023-08-22', '2023-08-21 23:24:42', '2023-08-21 23:24:42', 2),
+(62, 4, 0, 8000, NULL, 'pending', '2023-08-24', '2023-08-24 02:37:42', '2023-08-24 02:37:42', 2),
+(103, 3, 0, 1550, NULL, 'pending', '2023-08-24', '2023-08-24 04:46:03', '2023-08-24 04:46:03', 2);
 
 -- --------------------------------------------------------
 
@@ -404,7 +434,11 @@ INSERT INTO `purchase_products` (`id`, `purchase_id`, `product_id`, `qty`, `pric
 (29, 43, 16, 1, 333, 333, NULL, NULL),
 (30, 43, 23, 3, 884, 2652, NULL, NULL),
 (31, 60, 23, 1, 884, 884, NULL, NULL),
-(32, 61, 9, 3, 333, 999, NULL, NULL);
+(32, 61, 9, 3, 333, 999, NULL, NULL),
+(33, 62, 2, 4, 2000, 8000, NULL, NULL),
+(100, 103, 9, 1, 333, 333, NULL, NULL),
+(101, 103, 16, 1, 333, 333, NULL, NULL),
+(102, 103, 23, 1, 884, 884, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -440,7 +474,15 @@ INSERT INTO `sales` (`id`, `customer_id`, `total_qty`, `shipping_cost`, `total_a
 (9, 11, 1, 0, 333, NULL, 'pending', '2023-08-09', '2023-08-09 02:47:23', '2023-08-09 02:47:23'),
 (10, 3, 3, 0, 999, 'hp 7', 'pending', '2023-08-11', '2023-08-10 19:04:12', '2023-08-10 19:04:12'),
 (11, 3, 8, 0, 2664, 'note', 'pending', '2023-08-11', '2023-08-11 00:46:13', '2023-08-11 00:46:13'),
-(12, 3, 3, 0, 2652, NULL, 'pending', '2023-08-21', '2023-08-21 00:19:57', '2023-08-21 00:19:57');
+(12, 3, 3, 0, 2652, NULL, 'pending', '2023-08-21', '2023-08-21 00:19:57', '2023-08-21 00:19:57'),
+(31, 3, 6, 0, 3651, NULL, 'pending', '2023-08-23', '2023-08-23 01:53:02', '2023-08-23 01:53:02'),
+(32, 3, 5, 0, 6652, NULL, 'pending', '2023-08-23', '2023-08-23 03:45:48', '2023-08-23 03:45:48'),
+(33, 3, 3, 0, 6000, NULL, 'pending', '2023-08-24', '2023-08-24 02:27:34', '2023-08-24 02:27:34'),
+(34, 3, 3, 0, 6000, NULL, 'pending', '2023-08-24', '2023-08-24 02:31:24', '2023-08-24 02:31:24'),
+(35, 3, 2, 0, 4000, NULL, 'pending', '2023-08-24', '2023-08-24 03:18:02', '2023-08-24 03:18:02'),
+(38, 3, 2, 0, 2333, NULL, 'pending', '2023-08-24', '2023-08-24 05:03:27', '2023-08-24 05:03:27'),
+(39, 3, 2, 0, 1217, NULL, 'pending', '2023-08-24', '2023-08-24 05:07:47', '2023-08-24 05:07:47'),
+(40, 3, 2, 0, 1217, NULL, 'pending', '2023-08-24', '2023-08-24 06:41:20', '2023-08-24 06:41:20');
 
 -- --------------------------------------------------------
 
@@ -476,7 +518,20 @@ INSERT INTO `sale_products` (`id`, `sale_id`, `product_id`, `qty`, `price`, `tot
 (16, 9, 8, 1, 333, 333, NULL, NULL),
 (17, 10, 16, 3, 333, 999, NULL, NULL),
 (18, 11, 16, 8, 333, 2664, NULL, NULL),
-(19, 12, 23, 3, 884, 2652, NULL, NULL);
+(19, 12, 23, 3, 884, 2652, NULL, NULL),
+(20, 31, 9, 3, 333, 999, NULL, NULL),
+(21, 31, 23, 3, 884, 2652, NULL, NULL),
+(22, 32, 2, 2, 2000, 4000, NULL, NULL),
+(23, 32, 23, 3, 884, 2652, NULL, NULL),
+(24, 33, 2, 3, 2000, 6000, NULL, NULL),
+(25, 34, 2, 3, 2000, 6000, NULL, NULL),
+(26, 35, 2, 2, 2000, 4000, NULL, NULL),
+(29, 38, 2, 1, 2000, 2000, NULL, NULL),
+(30, 38, 8, 1, 333, 333, NULL, NULL),
+(31, 39, 16, 1, 333, 333, NULL, NULL),
+(32, 39, 23, 1, 884, 884, NULL, NULL),
+(33, 40, 16, 1, 333, 333, NULL, NULL),
+(34, 40, 23, 1, 884, 884, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -500,7 +555,8 @@ CREATE TABLE `stores` (
 
 INSERT INTO `stores` (`id`, `name`, `phone`, `location`, `created_at`, `updated_at`, `status`) VALUES
 (1, 'opsgreat 1', '0123646782', 'q1', NULL, NULL, 'active'),
-(2, 'opsgreat 2', '0123646282', 'q1', NULL, NULL, 'active');
+(2, 'opsgreat 2', '0123646282', 'q1', NULL, NULL, 'active'),
+(3, 'opsgreat 4', '1234567851', 'binh chanh', '2023-08-23 03:31:16', '2023-08-23 03:31:16', 'active');
 
 -- --------------------------------------------------------
 
@@ -527,13 +583,14 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `role`, `password`, `remember_token`, `created_at`, `updated_at`, `type`) VALUES
 (1, 'Admin', 'admin@gmail.com', NULL, 'admin', '$2y$10$SWHgKHcAV.2c9wGZXeHsguxv90A34tm94ScvQggEPu/13ueBL2T4u', NULL, NULL, NULL, 'Novelist'),
-(2, 'Agent', 'quochao2k2@gmail.com', NULL, 'agent', '$2y$10$2JnjrHwscBL5sjpf9ua1.u08Gbzswj.hCjOqXgx.E3MPQtP3kOXDG', 'wGvU0mxZ8WJ1HNNFWflHoucv3i7XekZfuZkuFoAUe9dZCAybnl5uHAwMHyna', NULL, '2023-08-20 19:39:53', 'Poet'),
+(2, 'Agent', 'quochao2k2@gmail.com', NULL, 'agent', '$2y$10$eu.6N.aHR2QenOWpq7kGuOXOkmUKHMSWn60M.fM7aDOOntyFwbUAe', 'Ee15qPw4QAIJhLzusLx8d4A0MLJPbzZuhNarsTNLq9Ey4YuX7K2PNHI5jzwe', NULL, '2023-08-24 02:48:55', 'Poet'),
 (3, 'User', 'user@gmail.com', NULL, 'user', '$2y$10$SWHgKHcAV.2c9wGZXeHsguxv90A34tm94ScvQggEPu/13ueBL2T4u', NULL, NULL, NULL, 'Essayist'),
 (4, 'Prof. Garth Leffler', 'paris83@example.com', '2023-08-07 01:05:02', 'user', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '5Nu7ITx6GH', '2023-08-07 01:05:02', '2023-08-07 01:05:02', 'Novelist'),
 (5, 'Bernadine Mayert IV', 'arne.walter@example.net', '2023-08-07 01:05:02', 'agent', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6fg54A2i4V', '2023-08-07 01:05:02', '2023-08-07 01:05:02', 'Novelist'),
 (6, 'Jaylen Goodwin', 'halvorson.mabel@example.org', '2023-08-07 01:05:02', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Db1czv7Gtf', '2023-08-07 01:05:02', '2023-08-07 01:05:02', 'Novelist'),
 (7, 'Prof. Perry Rempel V', 'althea.dicki@example.net', '2023-08-07 01:05:02', 'user', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'JL17E0gKzV', '2023-08-07 01:05:02', '2023-08-07 01:05:02', 'Novelist'),
-(8, 'Joshua Volkman', 'dashawn42@example.org', '2023-08-07 01:05:02', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Z2UCK85ywu', '2023-08-07 01:05:02', '2023-08-07 01:05:02', 'Novelist');
+(8, 'Joshua Volkman', 'dashawn42@example.org', '2023-08-07 01:05:02', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Z2UCK85ywu', '2023-08-07 01:05:02', '2023-08-07 01:05:02', 'Novelist'),
+(9, 'hao le', 'thomaszen63@gmail.com', NULL, 'user', '$2y$10$oU/M0czncAQOyU0UwePw8OIinWAUC/2QcVSbbnXjx2kNFT2iGDzTW', NULL, '2023-08-24 02:47:19', '2023-08-24 02:47:19', 'Novelist');
 
 -- --------------------------------------------------------
 
@@ -558,7 +615,8 @@ CREATE TABLE `warehouses` (
 INSERT INTO `warehouses` (`id`, `name`, `phone`, `location`, `created_at`, `updated_at`, `status`) VALUES
 (1, 'w opsgreat 1', '0123435948', 'q3', NULL, NULL, 'active'),
 (2, 'w opsgreat 2', '01234567899', 'q4', NULL, NULL, 'active'),
-(3, 'w opsgreat 3', '0112345678', 'q2', NULL, NULL, 'active');
+(3, 'w opsgreat 3', '0112345678', 'q2', NULL, NULL, 'active'),
+(5, 'w opsgreat 4', '1234526789', 'q9', '2023-08-23 03:30:45', '2023-08-23 03:30:45', 'active');
 
 -- --------------------------------------------------------
 
@@ -614,6 +672,19 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `histories`
+--
+ALTER TABLE `histories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -647,14 +718,6 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `products_category_id_foreign` (`category_id`),
   ADD KEY `products_author_id_foreign` (`author_id`);
-
---
--- Indexes for table `product_stores`
---
-ALTER TABLE `product_stores`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_stores_store_id_foreign` (`store_id`),
-  ADD KEY `product_stores_product_id_foreign` (`product_id`);
 
 --
 -- Indexes for table `product_warehouses`
@@ -741,7 +804,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -750,10 +813,22 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `histories`
+--
+ALTER TABLE `histories`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -765,7 +840,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -774,58 +849,52 @@ ALTER TABLE `products`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `product_stores`
---
-ALTER TABLE `product_stores`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `product_warehouses`
 --
 ALTER TABLE `product_warehouses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `purchase_products`
 --
 ALTER TABLE `purchase_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `sale_products`
 --
 ALTER TABLE `sale_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `warehouses`
 --
 ALTER TABLE `warehouses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `warehouse_stores`
@@ -849,13 +918,6 @@ ALTER TABLE `posts`
 ALTER TABLE `products`
   ADD CONSTRAINT `products_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `admins` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `product_stores`
---
-ALTER TABLE `product_stores`
-  ADD CONSTRAINT `product_stores_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_stores_store_id_foreign` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_warehouses`
