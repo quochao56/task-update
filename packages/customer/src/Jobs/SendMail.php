@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Jobs;
+namespace QH\Customer\Jobs;
 
-use App\Mail\OrderMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use QH\Customer\Mail\OrderMail;
 
 class SendMail implements ShouldQueue
 {

@@ -6,28 +6,30 @@
             <th>ID</th>
             <th>Name</th>
             <th>Status</th>
-            <th>Description</th>
+            <th>Phone</th>
+            <th>Location</th>
             <th>Created</th>
             <th>Updated</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        @foreach ($categories as $category)
+        @foreach ($stores as $store)
             <tr>
-                <td>{{ $category->id }}</td>
-                <td>{{ $category->name }}</td>
-                <td>{!! \QH\Product\Helpers\Helper::status($category->status)  !!}</td>
-                <td>{{ $category->description }}</td>
-                <td>{{ $category->created_at }}</td>
-                <td>{{ $category->updated_at }}</td>
+                <td>{{ $store->id }}</td>
+                <td>{{ $store->name }}</td>
+                <td>{!! \QH\Product\Helpers\Helper::status($store->status)  !!}</td>
+                <td>{{ $store->phone }}</td>
+                <td>{{ $store->location }}</td>
+                <td>{{ $store->created_at }}</td>
+                <td>{{ $store->updated_at }}</td>
                 <td>
                     <a class="btn btn-primary btn-sm"
-                       href="{{ route('admin.category.edit_category', $category) }} "><i class="fas fa-edit"></i></a>
-                    <form id="deleteForm{{ $category->id }}" method="POST" action="{{ route('admin.category.destroy', $category) }}" style="display: inline;">
+                       href="{{ route('admin.stores.edit', $store) }} "><i class="fas fa-edit"></i></a>
+                    <form id="deleteForm{{ $store->id }}" method="POST" action="{{ route('admin.stores.destroy', $store) }}" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow({{ $category->id }})"><i class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow({{ $store->id }})"><i class="fa fa-trash"></i></button>
                     </form>
 
                 </td>

@@ -177,6 +177,12 @@
 
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.history.index')}}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-clock-rotate-left"></i>
+                        <p> History </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

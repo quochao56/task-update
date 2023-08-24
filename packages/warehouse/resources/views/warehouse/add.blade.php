@@ -16,21 +16,20 @@
 
             <div class="form-group">
                 <label>Phone</label>
-                <input name="text" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
-                          value="{{ old('phone') }}"></input>
+                <input type="text"  name="phone" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
+                       value="{{ old('phone') }}"></input>
                 @error("phone")
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
             <div class="form-group">
                 <label>Địa chỉ</label>
-                <textarea name="text" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
-                          value="{{ old('location') }}"></textarea>
+                <textarea type="text" name="location" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
+                >{{ old('location') }}</textarea>
                 @error("location")
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
-
             <div class="form-group">
                 <label>Kích Hoạt</label>
                 <div class="custom-control custom-radio">
@@ -49,7 +48,7 @@
         </div>
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Tạo Danh Mục</button>
+            <button type="submit" class="btn btn-primary">Tạo Cửa hàng</button>
         </div>
 
     </form>

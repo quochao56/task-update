@@ -2,16 +2,17 @@
 
 namespace QH\Customer\Repositories\Elements;
 
-use App\Jobs\SendMail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use QH\Core\Base\Repository\BaseRepository;
+use QH\Customer\Jobs\SendMail;
 use QH\Customer\Models\Customer;
 use QH\Customer\Repositories\Interfaces\CartRepositoryInterface;
 use QH\Product\Models\Product\Product;
 use QH\Product\Models\Sale\Sale;
 use QH\Product\Models\Sale\SaleProduct;
+use QH\Warehouse\Models\History\History;
 
 class CartRepository extends BaseRepository implements CartRepositoryInterface
 {
@@ -67,12 +68,13 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             $sale->note = $request->input('note');
             $sale->sale_date = $sale_date;
             $sale->save();
-            $sale_id = $sale->id;
-            $this->infoSaleProduct($items, $sale_id);
+            if ($this->infoSaleProduct($items, $sale, $email) == false) {
+                return false;
+            }
 
             DB::commit();
             Session::flash('success', 'Đặt Hàng Thành Công');
-     
+
             #Queue
             SendMail::dispatch($sale)->delay(now()->addSeconds(2));
 
@@ -85,7 +87,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
         return true;
     }
 
-    protected function infoSaleProduct($items, $sale_id)
+    protected function infoSaleProduct($items, $sale, $email)
     {
         $productId = array_keys($items);
         $products = Product::select('id', 'qty', 'price')
@@ -100,8 +102,11 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             ->get();
 
         $data = [];
+        $dataProuductHistory = '';
+        $qtyHistory = 0;
         foreach ($products as $product) {
             $qty = $items[$product->id];
+            $qtyHistory += $qty;
             $price = $product->price;
             $total_amount = $qty * $price;
             $newQtyProduct = $product->qty - $qty;
@@ -113,9 +118,11 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             // Update the product's qty attribute
             $product->update(['qty' => $newQtyProduct]);
 
+            $dataProuductHistory .= (string)$product->id . ',';
+
             // Prepare data for SaleProduct insertion
             $data[] = [
-                'sale_id' => $sale_id,
+                'sale_id' => $sale->id,
                 'product_id' => $product->id,
                 'qty' => $qty,
                 'price' => $price,
@@ -128,7 +135,27 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
                 ->update(['qty' => $newQtyWarehouse]);
         }
 
+        try {
 // Insert the data into the SaleProduct table
-        return SaleProduct::insert($data);
+            SaleProduct::insert($data);
+            $dataProuductHistory = substr($dataProuductHistory, 0, -1);
+
+            $history = new History();
+            $history->from = 'w opsgreat 2';
+            $history->to = $email;
+            $history->qty = $qtyHistory;
+            $history->total_amount = $total_amount;
+            $history->product = $dataProuductHistory;
+            $history->status = 'pending';
+            $history->links = "http://task-update.test/admin/sale/detail/" . $sale->id;
+
+            $history->save();
+
+        } catch (\Exception $err) {
+            DB::rollBack();
+            return false;
+        }
+
+        return true;
     }
 }

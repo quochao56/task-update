@@ -28,7 +28,7 @@ class PurchaseController extends Controller
             'title' => 'Danh sánh sản phẩm',
             'products' => $products,
             'products_selected' =>$products_selected,
-            'importStore' => Session::get('import'),
+            'import' => Session::get('import'),
             'warehouses' => $this->purchaseRepo->getAllWarehouses()
         ]);
     }

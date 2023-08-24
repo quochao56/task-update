@@ -21,7 +21,8 @@
         "laravel": {
             "providers" : [
                 "QH\\Warehouse\\Providers\\Store\\StoreServiceProvider",
-                "QH\\Warehouse\\Providers\\Warehouse\\WarehouseServiceProvider"
+                "QH\\Warehouse\\Providers\\Warehouse\\WarehouseServiceProvider",
+                "QH\\Warehouse\\Providers\\History\\HistoryServiceProvider"
             ]
         }
     }

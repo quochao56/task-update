@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label>Phone</label>
-                <input name="text" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
+                <input type="text" name="phone" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
                        value="{{ $warehouse->phone }}"></input>
                 @error("phone")
                 <p class="text-danger">{{$message}}</p>
@@ -24,8 +24,8 @@
             </div>
             <div class="form-group">
                 <label>Địa chỉ</label>
-                <textarea name="text" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
-                          value="{{ $warehouse->location }}"></textarea>
+                <textarea type="text" name="location" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
+                          >{{ $warehouse->location }}</textarea>
                 @error("location")
                 <p class="text-danger">{{$message}}</p>
                 @enderror

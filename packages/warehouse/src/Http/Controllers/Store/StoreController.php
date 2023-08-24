@@ -16,13 +16,16 @@ class StoreController extends Controller
     protected $storeService;
     protected $warehouseRepo;
     protected $storeRepo;
+
     public function __construct(WarehouseRepositoryInterface $warehouseRepository, StoreService $storeService, StoreRepositoryInterface $storeRepository)
     {
         $this->storeRepo = $storeRepository;
         $this->storeService = $storeService;
         $this->warehouseRepo = $warehouseRepository;
     }
-    function list(Request $request) {
+
+    public function list(Request $request)
+    {
 
         // Get the current query parameters, including warehouse and store
         $queryParameters = $request->query();
@@ -52,6 +55,7 @@ class StoreController extends Controller
     {
         return view('admin.warehouse.store.add', ['title' => 'Thêm cửa hàng mới']);
     }
+
     public function show($id)
     {
         $title = 'Sửa cửa hàng';
@@ -88,6 +92,7 @@ class StoreController extends Controller
         }
         return redirect()->route("admin.stores.index");
     }
+
     public function destroy(Store $stores)
     {
         try {

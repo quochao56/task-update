@@ -25,5 +25,8 @@ class StoreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../../resources/views' => resource_path('views/admin/warehouse'),
         ]);
+        $this->publishes([
+            __DIR__ . '/../../../resources/views' => resource_path('views/admin/history'),
+        ]);
     }
 }

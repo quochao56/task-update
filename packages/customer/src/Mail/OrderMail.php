@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Mail;
+namespace QH\Customer\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use QH\Product\Models\Sale\Sale;

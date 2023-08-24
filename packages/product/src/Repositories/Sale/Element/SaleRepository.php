@@ -7,11 +7,13 @@ use Dotenv\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use QH\Core\Base\Repository\BaseRepository;
+use QH\Customer\Jobs\SendMail;
 use QH\Customer\Models\Customer;
 use QH\Product\Models\Product\Product;
 use QH\Product\Models\Sale\Sale;
 use QH\Product\Models\Sale\SaleProduct;
 use QH\Product\Repositories\Sale\Interface\SaleRepositoryInterface;
+use QH\Warehouse\Models\History\History;
 
 
 class SaleRepository extends BaseRepository implements SaleRepositoryInterface
@@ -92,11 +94,15 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
             $sale->note = $request->input('note');
             $sale->sale_date = $sale_date;
             $sale->save();
-            $sale_id = $sale->id;
-            $this->infoSaleProduct($items, $sale_id);
+            if ($this->infoSaleProduct($items, $sale, $email) == false) {
+                return false;
+            }
 
             DB::commit();
             Session::flash('success', 'Đặt Hàng Thành Công');
+
+            #Queue
+            SendMail::dispatch($sale)->delay(now()->addSeconds(2));
 
             Session::forget('export');
         } catch (\Exception $err) {
@@ -107,31 +113,76 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
         return true;
     }
 
-    protected function infoSaleProduct($items, $sale_id )
+    protected function infoSaleProduct($items, $sale, $email)
     {
         $productId = array_keys($items);
-        $products = Product::select('id', 'qty','price')
+        $products = Product::select('id', 'qty', 'price')
             ->whereIn('id', $productId)
+            ->get();
+        $joinResult = DB::table('warehouse_stores')
+            ->join('product_warehouses', function ($join) {
+                $join->on('warehouse_stores.warehouse_id', '=', 'product_warehouses.warehouse_id')
+                    ->where('warehouse_stores.warehouse_id', '2'); // Default store 2
+            })
+            ->select('warehouse_stores.*', 'product_warehouses.*')
             ->get();
 
         $data = [];
+        $dataProuductHistory = '';
+        $qtyHistory = 0;
         foreach ($products as $product) {
             $qty = $items[$product->id];
+            $qtyHistory += $qty;
             $price = $product->price;
             $total_amount = $qty * $price;
             $newQtyProduct = $product->qty - $qty;
+
+            // Find the corresponding row in the joinResult for the product
+            $warehouseRow = $joinResult->where('product_id', $product->id)->first();
+            $newQtyWarehouse = $warehouseRow->qty - $qty;
+
+            // Update the product's qty attribute
             $product->update(['qty' => $newQtyProduct]);
+
+            $dataProuductHistory .= (string)$product->id . ',';
+
+            // Prepare data for SaleProduct insertion
             $data[] = [
-                'sale_id' => $sale_id,
+                'sale_id' => $sale->id,
                 'product_id' => $product->id,
                 'qty' => $qty,
                 'price' => $price,
                 'total_amount' => $total_amount,
             ];
-
+            // Update the warehouse quantity in the product_warehouses table
+            DB::table('product_warehouses')
+                ->where('warehouse_id', $warehouseRow->warehouse_id)
+                ->where('product_id', $product->id)
+                ->update(['qty' => $newQtyWarehouse]);
         }
 
-        return SaleProduct::insert($data);
+        try {
+// Insert the data into the SaleProduct table
+            SaleProduct::insert($data);
+            $dataProuductHistory = substr($dataProuductHistory, 0, -1);
+
+            $history = new History();
+            $history->from = 'w opsgreat 2';
+            $history->to = $email;
+            $history->qty = $qtyHistory;
+            $history->total_amount = $total_amount;
+            $history->product = $dataProuductHistory;
+            $history->status = 'pending';
+            $history->links = "http://task-update.test/admin/sale/detail/" . $sale->id;
+
+            $history->save();
+
+        } catch (\Exception $err) {
+            DB::rollBack();
+            return false;
+        }
+
+        return true;
     }
 
     public function getProduct()

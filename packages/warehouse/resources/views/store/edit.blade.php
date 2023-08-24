@@ -2,23 +2,31 @@
 
 @section('content')
     <form action="" method="POST">
+        @csrf
+        @method("PUT")
         <div class="card-body">
-            @csrf
-            @method("PUT")
             <div class="form-group">
-                <label for="name">Tên Danh Mục</label>
-                <input type="text" name="name" value="{{ $category->name }}"
-                       class="form-control @error("name") border border-danger @enderror"
-                       placeholder="Nhập tên danh mục">
+                <label for="menu">Tên cửa hàng</label>
+                <input type="text" name="name" class="form-control @error("name") border border-danger @enderror"
+                       value="{{ $store->name }}" placeholder="Nhập tên cửa hàng">
                 @error("name")
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
 
             <div class="form-group">
-                <label>Mô Tả </label>
-                <textarea name="description" class="form-control @error("description") border border-danger @enderror">{{ $category->description }}</textarea>
-                @error("description")
+                <label>Phone</label>
+                <input type="text" name="phone" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
+                       value="{{ $store->phone }}"></input>
+                @error("phone")
+                <p class="text-danger">{{$message}}</p>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ</label>
+                <textarea type="text" name="location" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
+                >{{ $store->location }}</textarea>
+                @error("location")
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
@@ -27,12 +35,12 @@
                 <label>Kích Hoạt</label>
                 <div class="custom-control custom-radio">
                     <input class="custom-control-input" value="active" type="radio" id="active"
-                           name="status" {{ $category->status === 'active' ? 'checked=""' : '' }}>
+                           name="status" {{ $store->status === 'active' ? 'checked=""' : '' }}>
                     <label for="active" class="custom-control-label">Có</label>
                 </div>
                 <div class="custom-control custom-radio">
                     <input class="custom-control-input" value="inactive" type="radio" id="no_active"
-                           name="status" {{ $category->status === 'inactive' ? 'checked=""' : '' }}>
+                           name="status" {{ $store->status === 'inactive' ? 'checked=""' : '' }}>
                     <label for="no_active" class="custom-control-label">Không</label>
                 </div>
                 @error("active")
@@ -42,8 +50,9 @@
         </div>
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Sửa Danh Mục</button>
+            <button type="submit" class="btn btn-primary">Tạo Danh Mục</button>
         </div>
 
     </form>
 @endsection
+

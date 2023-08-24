@@ -10,6 +10,7 @@ use QH\Product\Models\Product\Product;
 use QH\Product\Models\Purchase\Purchase;
 use QH\Product\Models\Purchase\PurchaseProduct;
 use QH\Product\Repositories\Purchase\Interface\PurchaseRepositoryInterface;
+use QH\Warehouse\Models\History\History;
 use QH\Warehouse\Models\ProductWarehouse;
 use QH\Warehouse\Models\Warehouse;
 
@@ -29,7 +30,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
 
     public function getPurchaseProduct($id)
     {
-        return PurchaseProduct::where('purchase_id', $id)->get();
+        return PurchaseProduct::with('product')->where('purchase_id', $id)->get();
     }
 
     public function getActiveProducts()
@@ -66,7 +67,10 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
             $purchase->purchase_date = $purchase_date;
             $purchase->warehouse_id = $request->input('warehouse_id');
             $purchase->save();
-            $this->insertPPnWP($items, $purchase);
+            $warehouseName = $purchase->warehouse->name;
+            if ($this->insertPPnWP($items, $purchase, $warehouseName) == false) {
+                return false;
+            }
 
             DB::commit();
             Session::flash('success', 'Đặt Hàng Thành Công');
@@ -80,7 +84,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
         return true;
     }
 
-    protected function insertPPnWP($items, $purchase)
+    protected function insertPPnWP($items, $purchase, $warehouseName)
     {
         $productId = array_keys($items);
         $products = Product::with('productWarehouses')
@@ -89,8 +93,11 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
 
         $dataPurchase = [];
         $dataWarehouse = [];
+        $dataProuductHistory = '';
+        $qtyHistory = 0;
         foreach ($products as $product) {
             $qty = $items[$product->id];
+            $qtyHistory += $qty;
             $price = $product->price;
             $total_amount = $qty * $price;
             $newQtyProduct = $product->qty + $qty;
@@ -105,7 +112,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
                 'price' => $price,
                 'total_amount' => $total_amount,
             ];
-
+            $dataProuductHistory .= (string)$product->id . ',';
             // Check if a ProductWarehouse record exists
             $productWarehouse = $product->productWarehouses->first();
 
@@ -127,9 +134,24 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
             }
         }
 
+
         try {
             ProductWarehouse::upsert($dataWarehouse, ['id'], ['qty']); // Use upsert to insert or update based on id
             PurchaseProduct::insert($dataPurchase);
+            $dataProuductHistory = substr($dataProuductHistory, 0, -1);
+//            $status = Purchase::find($purchase->id)->status;
+
+            $history = new History();
+            $history->from = 'NCC';
+            $history->to = $warehouseName;
+            $history->qty = $qtyHistory;
+            $history->total_amount = $total_amount;
+            $history->product = $dataProuductHistory;
+            $history->status = 'pending';
+            $history->links = "http://task-update.test/admin/orders/detail/" . $purchase->id;
+
+            $history->save();
+
         } catch (\Exception $err) {
             DB::rollBack();
             Session::flash('error', 'Đặt Hàng Lỗi, Vui lòng thử lại sau');
