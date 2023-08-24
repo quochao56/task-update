@@ -3,7 +3,7 @@
 use QH\Customer\Http\Controllers\CartController;
 use QH\Customer\Http\Controllers\MainController;
 
-Route::middleware(['web','guest:web'])->group(function () {
+Route::middleware(['web'])->group(function () {
     Route::get('/home', [MainController::class, 'index'])->name('home');
     Route::get('/shop', [MainController::class, 'shop'])->name('shop');
     Route::get('/detail/{slug}', [MainController::class, 'detail'])->name('detail');

@@ -12,24 +12,33 @@ class PostsController extends Controller
 {
     protected $postRepository;
     protected $postService;
-    public function __construct(PostsService $postService,PostRepositoryInterface $postRepository){
+
+    public function __construct(PostsService $postService, PostRepositoryInterface $postRepository)
+    {
         $this->postRepository = $postRepository;
         $this->postService = $postService;
 //        $this->middleware('auth',['except'=>['/user/blog/index','/user/blog/show']]);
     }
-    public function dashboard(){
+
+    public function dashboard()
+    {
         $posts = $this->postRepository->getSomePosts();
         return view('blog.index')
             ->with('posts', $posts);
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = $this->postRepository->getAllPosts();
+        if (\Auth::check()) {
+            $posts = $this->postRepository->getAllPosts();
         return view('blog.user.index')
             ->with('posts', $posts);
+        }else{
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -70,7 +79,7 @@ class PostsController extends Controller
     {
         $post = $this->postRepository->getPostBySlug($slug);
         return view('blog.user.show')
-            ->with('post',$post);
+            ->with('post', $post);
     }
 
     /**
@@ -80,7 +89,7 @@ class PostsController extends Controller
     {
         $post = $this->postRepository->getPostBySlug($slug);
         return view('blog.user.edit')
-            ->with('post',$post);
+            ->with('post', $post);
     }
 
     /**
@@ -96,7 +105,7 @@ class PostsController extends Controller
         ]);
         try {
             $data = $this->postService->updatePost($request);
-            $this->postRepository->updatePost($slug,$data);
+            $this->postRepository->updatePost($slug, $data);
             session()->flash('success', 'Update the post successfully');
         } catch (\Exception $err) {
             session()->flash('error', $err->getMessage());

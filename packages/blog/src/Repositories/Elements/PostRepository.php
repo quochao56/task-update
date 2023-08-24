@@ -17,6 +17,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
     public function getAllPosts()
     {
+
         if(\Auth::user()->role === 'admin'){
             return $this->model->with('user')->orderBy('updated_at', 'DESC')->paginate(5);
         }

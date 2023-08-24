@@ -43,7 +43,7 @@ class UserController extends Controller
         ]);
         $check = $request->only(['email', 'password']);
         if (Auth::guard('web')->attempt($check)) {
-            return redirect()->route('home')->with('success', 'Welcome to dashboard');
+            return redirect()->back()->with('success', 'Welcome to dashboard');
         } else {
             return redirect()->back()->with('error', 'Login Failed');
 
