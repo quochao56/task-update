@@ -2,6 +2,7 @@
 
 use QH\Customer\Http\Controllers\CartController;
 use QH\Customer\Http\Controllers\MainController;
+use QH\Customer\Http\Controllers\OrderController;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/home', [MainController::class, 'index'])->name('home');
@@ -16,4 +17,9 @@ Route::middleware(['web'])->group(function () {
     Route::post('update-cart', [CartController::class, 'update']);
     Route::get('carts/delete/{id}', [CartController::class, 'remove']);
     Route::post('carts', [CartController::class, 'addCart']);
+
+    Route::middleware('auth:web')->group(function(){
+       Route::get('orders', [OrderController::class,'index'])->name('orders');
+       Route::get('orders/detail/{sale}', [OrderController::class,'detail'])->name('orders.detail');
+    });
 });

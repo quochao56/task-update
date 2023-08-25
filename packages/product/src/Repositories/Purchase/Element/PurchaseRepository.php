@@ -35,12 +35,12 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
 
     public function getActiveProducts()
     {
-        return Product::with("category")->with("user")->where('status', 'active')->orderByDesc("id")->paginate(3);
+        return Product::with("category")->with("user")->where('status', 'active')->orderByDesc("id")->paginate(5);
     }
 
     public function getAllPurchases()
     {
-        return Purchase::orderByDesc('created_at')->paginate(5);
+        return Purchase::orderByDesc('created_at')->paginate(10);
     }
 
     public function getAllWarehouses()
@@ -59,17 +59,19 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
             if (is_null($items)) {
                 return false;
             }
-
-            $purchase = new Purchase();
-            $purchase->total_qty = $request->input('qty');
-            $purchase->total_amount = $request->input('total_amount');
-            $purchase->note = $request->input('note');
-            $purchase->purchase_date = $purchase_date;
-            $purchase->warehouse_id = $request->input('warehouse_id');
-            $purchase->save();
-            $warehouseName = $purchase->warehouse->name;
-            if ($this->insertPPnWP($items, $purchase, $warehouseName) == false) {
-                return false;
+            $selectedWarehouses = $request->input('warehouse_id', []);
+            foreach ($selectedWarehouses as $warehouseId) {
+                $purchase = new Purchase();
+                $purchase->total_qty = $request->input('qty');
+                $purchase->total_amount = $request->input('total_amount');
+                $purchase->note = $request->input('note');
+                $purchase->purchase_date = $purchase_date;
+                $purchase->warehouse_id = $warehouseId;
+                $purchase->save();
+                $warehouseName = $purchase->warehouse->name;
+                if ($this->insertPPnWP($items, $purchase, $warehouseName) == false) {
+                    return false;
+                }
             }
 
             DB::commit();
@@ -79,6 +81,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
         } catch (\Exception $err) {
             DB::rollBack();
             Session::flash('error', 'Đặt Hàng Lỗi, Vui lòng thử lại sau');
+            \Log::error('Error message: ' . $err->getMessage());
             return false;
         }
         return true;
@@ -90,7 +93,6 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
         $products = Product::with('productWarehouses')
             ->whereIn('id', $productId)
             ->get();
-
         $dataPurchase = [];
         $dataWarehouse = [];
         $dataProuductHistory = '';
@@ -114,7 +116,7 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
             ];
             $dataProuductHistory .= (string)$product->id . ',';
             // Check if a ProductWarehouse record exists
-            $productWarehouse = $product->productWarehouses->first();
+            $productWarehouse = $product->productWarehouses->where('warehouse_id', $purchase->warehouse_id)->first();
 
             if ($productWarehouse) {
                 // If it exists, update it
@@ -125,18 +127,23 @@ class PurchaseRepository extends BaseRepository implements PurchaseRepositoryInt
                     'qty' => $productWarehouse->qty + $qty
                 ];
             } else {
-                // If it doesn't exist, create a new one
-                $dataWarehouse[] = [
+                // If the product doesn't exist, create a new record
+                $pw = ProductWarehouse::create([
                     'product_id' => $product->id,
                     'warehouse_id' => $purchase->warehouse_id,
-                    'qty' => $qty
-                ];
+                    'qty' => $qty,
+                ]);
             }
         }
 
-
         try {
-            ProductWarehouse::upsert($dataWarehouse, ['id'], ['qty']); // Use upsert to insert or update based on id
+            try {
+                ProductWarehouse::upsert($dataWarehouse, ['id'], ['qty']); // Use upsert to insert or update based on id
+            } catch (\Exception $err) {
+                \Log::error('Error message: ' . $err->getMessage());
+                return false;
+            }
+
             PurchaseProduct::insert($dataPurchase);
             $dataProuductHistory = substr($dataProuductHistory, 0, -1);
 //            $status = Purchase::find($purchase->id)->status;

@@ -8,16 +8,6 @@
                 </h4>
 
                 <ul>
-
-
-                    @foreach($categories as $category)
-                        <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                {{$category->name}}
-                            </a>
-                        </li>
-                    @endforeach
-
                 </ul>
             </div>
 
@@ -245,3 +235,4 @@
 </script>
 <!--===============================================================================================-->
 <script src="/qh/dashboard/template/js/main.js"></script>
+<script src="https://kit.fontawesome.com/879a513359.js" crossorigin="anonymous"></script>

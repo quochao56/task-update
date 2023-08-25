@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -28,9 +29,9 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         if ($user) {
-            return redirect()->back()->with('success', 'You have registered successfully');
+            return redirect()->route('home');
         } else {
-            return redirect()->back()->with('error', 'Registration Failed');
+            return redirect()->back()->with('error', 'Registration Failed')->withInput();
         }
 
     }
@@ -43,9 +44,9 @@ class UserController extends Controller
         ]);
         $check = $request->only(['email', 'password']);
         if (Auth::guard('web')->attempt($check)) {
-            return redirect()->back()->with('success', 'Welcome to dashboard');
+            return redirect()->route('home');
         } else {
-            return redirect()->back()->with('error', 'Login Failed');
+            return redirect()->back()->with('error', 'Login Failed')->withInput();
 
         }
     }

@@ -30,8 +30,6 @@ Route::middleware(['auth:admin', 'web'])->group(function () {
             Route::get('edit/{product}', [ProductController::class, 'show'])->name('admin.product.edit_product');
             Route::put('edit/{product}', [ProductController::class, 'update']);
             Route::delete('destroy/{product}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
-
-
         });
     });
 });

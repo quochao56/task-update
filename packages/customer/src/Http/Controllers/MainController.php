@@ -24,7 +24,6 @@ class MainController extends Controller
     {
         return view('user.home', [
             'title' => 'Shop sách Quốc Hảo',
-            'categories' => $this->categoryRepo->getActive(),
 
         ]);
     }
@@ -42,7 +41,6 @@ class MainController extends Controller
     {
         return view('user.detail', [
             'title' => 'Chi tiết sản phẩm',
-            'categories' => $this->categoryRepo->getActive(),
             'product' => $this->productRepo->getProductBySlug($slug)
         ]);
     }
@@ -51,7 +49,6 @@ class MainController extends Controller
     {
         return view('user.cart', [
             'title' => 'Giỏ hàng',
-            'categories' => $this->categoryRepo->getActive(),
 
         ]);
     }

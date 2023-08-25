@@ -21,6 +21,15 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
         return Sale::class;
     }
 
+    public function getInfoCustomer()
+    {
+        $userCustomer = DB::table('users')
+            ->join('customers', 'users.email', '=', 'customers.email')
+            ->select('customers.*')
+            ->first();
+        return $userCustomer;
+    }
+
     public function storeSale($request)
     {
         $sale_date = Carbon::now("Asia/Ho_Chi_Minh")->format("Y-m-d H:i:s");
@@ -73,8 +82,6 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             }
 
             DB::commit();
-            Session::flash('success', 'Đặt Hàng Thành Công');
-
             #Queue
             SendMail::dispatch($sale)->delay(now()->addSeconds(2));
 
@@ -86,6 +93,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
         }
         return true;
     }
+
 
     protected function infoSaleProduct($items, $sale, $email)
     {

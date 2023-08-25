@@ -21,9 +21,9 @@
         }
     </style>
     <div class="container m-3">
-        <form action="{{ route('admin.stores.list') }}" method="get">
+        <form>
             <div class="row">
-                <div class="col-md-5 my-auto">
+                <div class="col-md-6">
                     <label for="warehouse" class="form-label">Select a Warehouse:</label>
                     <select id="warehouse" name="warehouse" class="form-select">
                         @foreach($warehouses as $wh)
@@ -31,16 +31,13 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-5 my-auto">
+                <div class="col-md-6">
                     <label for="store" class="form-label">Select a Store:</label>
                     <select id="store" name="store" class="form-select">
                         @foreach($stores as $st)
                             <option value="{{$st->id}}">{{$st->name}}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="col-md-2 d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </form>
@@ -74,4 +71,59 @@
     <div class="card-footer clearfix">
         {!! $products->links('admin.layouts.pagination') !!}
     </div>
+@endsection
+
+@section('footer')
+    <script>
+        $(function() {
+            // Function to get the current query parameters as an object
+            function getUrlParams() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const params = {};
+                for (const [key, value] of urlParams) {
+                    params[key] = value;
+                }
+                return params;
+            }
+
+            // Function to update the selected option in a <select> element
+            function updateSelectValue(selectElement, value) {
+                selectElement.val(value);
+            }
+
+            const warehouseSelect = $('select[name="warehouse"]');
+            const storeSelect = $('select[name="store"]');
+            const urlParams = getUrlParams();
+
+            // Update the selected options based on the URL parameters
+            if (urlParams.warehouse) {
+                updateSelectValue(warehouseSelect, urlParams.warehouse);
+            }
+            if (urlParams.store) {
+                updateSelectValue(storeSelect, urlParams.store);
+            }
+
+            // Event handler for changing the warehouse <select>
+            warehouseSelect.on('change', function() {
+                const selectedWarehouseId = $(this).val();
+                urlParams.warehouse = selectedWarehouseId; // Update the warehouse query parameter
+                const queryString = $.param(urlParams);
+                const newUrl = `?${queryString}`;
+
+                // Redirect to the new URL
+                window.location.href = newUrl;
+            });
+
+            // Event handler for changing the store <select>
+            storeSelect.on('change', function() {
+                const selectedStoreId = $(this).val();
+                urlParams.store = selectedStoreId; // Update the store query parameter
+                const queryString = $.param(urlParams);
+                const newUrl = `?${queryString}`;
+
+                // Redirect to the new URL
+                window.location.href = newUrl;
+            });
+        });
+    </script>
 @endsection

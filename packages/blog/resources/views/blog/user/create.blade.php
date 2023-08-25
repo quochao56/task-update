@@ -54,7 +54,23 @@
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
+            <div class="mb-3">
 
+                <div class="form-group">
+                    <label>Kích Hoạt</label>
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input" value="active" type="radio" id="active" name="status" checked="">
+                        <label for="active" class="custom-control-label">Có</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input" value="inactive" type="radio" id="no_active" name="status">
+                        <label for="no_active" class="custom-control-label">Không</label>
+                    </div>
+                </div>
+                @error('status')
+                <p class="text-danger">{{$message}}</p>
+                @enderror
+            </div>
             <div class="mb-3">
                 <div class="form-group">
                     <button type="submit" class="btn btn-info rounded-pill">Submit</button>

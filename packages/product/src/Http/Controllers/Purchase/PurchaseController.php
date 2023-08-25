@@ -5,6 +5,7 @@ namespace QH\Product\Http\Controllers\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use QH\Product\Http\Services\Purchase\PurchaseService;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 use QH\Product\Repositories\Purchase\Interface\PurchaseRepositoryInterface;
@@ -48,7 +49,23 @@ class PurchaseController extends Controller
     }
 
     public function store(Request $request){
-        $request->only(['note','qty','total_amount','warehouse_id']);
+        $rules = [
+            'warehouse_id' => 'required'
+        ];
+        $messages = [
+            'warehouse_id' => [
+                'required' => 'Vui lòng chọn kho',
+            ]
+        ];
+        // Create a validator instance
+        $validator = Validator::make($request->only(['note','qty','total_amount','warehouse_id']), $rules, $messages);
+        // Perform the validation
+        if ($validator->fails()) {
+            // Validation failed, return with errors
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
         $this->purchaseRepo->storePurchase($request);
 
         return redirect()->back();

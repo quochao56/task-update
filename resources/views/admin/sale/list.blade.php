@@ -33,7 +33,7 @@
 
         </tbody>
     </table>
-    <div>
+    <div class="card-footer clearfix  d-flex justify-content-center align-items-center">
         {!! $sales->links('admin.layouts.pagination') !!}
     </div>
 @endsection

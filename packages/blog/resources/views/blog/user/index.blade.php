@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    @if(Auth::check() || auth()->user()->name === 'admin')
+    @if(Auth::check() || auth()->user()->role === 'admin')
         <div class="py-2 container">
             <div class="row">
                 <div class="col-md-6">
@@ -40,7 +40,7 @@
                         <a href="{{route('user.blog.show',$post->slug)}}" class="btn btn-info btn-sm rounded-pill">Find
                             Out More</a>
 
-                        @if((isset(Auth::user()->id) && Auth::user()->id === $post->user_id) || auth()->user()->name === 'admin')
+                        @if((isset(Auth::user()->id) && Auth::user()->id === $post->user_id) || auth()->user()->role === 'admin')
                             <span class="float-end">
                             <a href="{{ route('user.blog.edit', $post->slug) }}" class="btn btn-link text-secondary">
                                 <i class="fas fa-pencil-alt"></i> Edit

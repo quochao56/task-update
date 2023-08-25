@@ -30,7 +30,7 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
     }
     public function getActiveProducts()
     {
-        return Product::with("category")->with("user")->where('status','active')->orderByDesc("id")->paginate(3);
+        return Product::with("category")->with("user")->where('status','active')->orderByDesc("id")->paginate(5);
     }
 
     public function getAllSales(){

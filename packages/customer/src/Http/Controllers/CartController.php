@@ -4,6 +4,7 @@ namespace QH\Customer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use QH\Customer\Http\Services\CartService;
@@ -35,11 +36,15 @@ class CartController extends Controller
 
     public function show()
     {
+        $customer = [];
         $products = $this->cartService->getProduct();
+        if(Auth::guard('web')->check()){
+            $customer =  $this->cartRepo->getInfoCustomer();
+        }
         return view('user.cart', [
             'title' => 'Giỏ Hàng',
             'products' => $products,
-            'categories' => $this->categoryRepo->getActive(),
+            'customer' => $customer,
             'carts' => Session::get('carts')
         ]);
     }
@@ -69,7 +74,6 @@ class CartController extends Controller
         }
         return view('user.thankyou', [
             'title' => 'Thank you',
-            'categories' => $this->categoryRepo->getActive(),
         ]);
     }
 }

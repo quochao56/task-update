@@ -57,7 +57,7 @@
         </tbody>
     </table>
 
-    <div class="card-footer clearfix">
+    <div class="card-footer clearfix d-flex justify-content-center align-items-center">
         {!! $products->links('admin.layouts.pagination') !!}
     </div>
     <div class="row">
