@@ -23,7 +23,7 @@
                 <td>{{ $history->qty }}</td>
                 <td>{{ $history->total_amount}}</td>
                 <td>{{ $history->product }}</td>
-                <td>{{ $history->status }}</td>
+                <td>{!! \QH\Core\Base\Helpers\Helper::active($history->status)  !!}</td>
                 <td>{{ $history->created_at}}</td>
                 <td>
                     <a href="{{ $history->links }}"><i class="fa-solid fa-circle-info" style="color: #e6ea10;"></i></a>

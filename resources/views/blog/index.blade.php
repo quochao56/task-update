@@ -26,7 +26,7 @@ font-family: 'EB Garamond', serif;">Read More</a>
                             <p>{{$post->description}}</p>
                         </div>
                         <div class="author">
-                            <a href="{{route('user.blog.show', $post->slug)}}" class="btn btn-info btn-sm rounded-pill">Find Out More</a>
+                            <a href="{{route('blog.show', $post->slug)}}" class="btn btn-info btn-sm rounded-pill">Find Out More</a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ font-family: 'EB Garamond', serif;">Read More</a>
         @endforeach
             <div class="d-flex justify-content-center pt-3">
                 <div class="pagination">
-                    {{$posts->links('blog.layouts.pagination')}}
+                    {{$posts->links('admin.layouts.pagination')}}
                 </div>
             </div>
 

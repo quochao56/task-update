@@ -21,5 +21,6 @@ Route::middleware(['web'])->group(function () {
     Route::middleware('auth:web')->group(function(){
        Route::get('orders', [OrderController::class,'index'])->name('orders');
        Route::get('orders/detail/{sale}', [OrderController::class,'detail'])->name('orders.detail');
+       Route::delete('orders/detail/{sale}', [OrderController::class,'cancel'])->name('orders.delete');
     });
 });

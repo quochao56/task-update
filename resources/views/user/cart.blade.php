@@ -136,10 +136,10 @@
                                             <label for="email">Email</label>
                                             <input type="text" name="email" placeholder="email@gmail.com"
                                                    class="form-control @error("email") border border-danger @enderror"
-                                                   value="{{ Auth::guard('web')->check() ? $customer->email : old('email') }}"
+                                                   value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->email : old('email') }}"
                                                 {{ Auth::guard('web')->check() ? 'disabled' : '' }}>
                                             @if (Auth::guard('web')->check())
-                                                <input type="hidden" name="email" value="{{ $customer->email }}">
+                                                <input type="hidden" name="email" value="{{ Auth::guard('web')->user()->email }}">
                                             @endif
                                             @error("email")
                                             <p class="text-danger">{{$message}}</p>
@@ -147,12 +147,18 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="phone">Phone</label>
-                                            <input type="text" name="phone" placeholder="Number Phone"
-                                                   class="form-control @error("phone") border border-danger @enderror"
-                                                   value="{{ Auth::guard('web')->check() ? $customer->phone : old('phone') }}"
-                                                {{ Auth::guard('web')->check() ? 'disabled' : '' }}>
-                                            @if (Auth::guard('web')->check())
-                                                <input type="hidden" name="phone" value="{{ $customer->phone }}">
+                                            @if(Auth::guard('web')->check() && $customer->phone == null)
+                                                <input type="text" name="phone" placeholder="Number Phone"
+                                                       class="form-control @error("phone") border border-danger @enderror"
+                                                       value="{{ old('phone') }}"
+                                            @else
+                                                <input type="text" name="phone" placeholder="Number Phone"
+                                                       class="form-control @error("phone") border border-danger @enderror"
+                                                       value="{{ Auth::guard('web')->check() ? $customer->phone : old('phone') }}"
+                                                    {{ Auth::guard('web')->check() ? 'disabled' : '' }}>
+                                                @if (Auth::guard('web')->check())
+                                                    <input type="hidden" name="phone" value="{{ $customer->phone }}">
+                                                @endif
                                             @endif
                                             @error("phone")
                                             <p class="text-danger">{{$message}}</p>

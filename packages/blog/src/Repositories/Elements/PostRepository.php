@@ -17,16 +17,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
     public function getAllPosts()
     {
+        return $this->model->with('user')->orderBy('updated_at', 'DESC')->paginate(5);
 
-        if(\Auth::user()->role === 'admin'){
-            return $this->model->with('user')->orderBy('updated_at', 'DESC')->paginate(5);
-        }
-        return $this->model->with('user')
-            ->where('user_id',\Auth::user()->id)
-            ->orderBy('updated_at', 'DESC')->paginate(3);
     }
 
-    public function getSomePosts(){
+    public function getSomePosts()
+    {
         return $this->model->with('user')->where('status', 'active')->orderBy('updated_at', 'DESC')->paginate(3);
     }
 
@@ -43,7 +39,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     public function deletePost($slug)
     {
         $post = $this->model->where('slug', $slug)->first();
-        $thumbnailPath = public_path('/qh/blog/images/'.$post->thumb);
+        $thumbnailPath = public_path('/qh/blog/images/' . $post->thumb);
         if (File::exists($thumbnailPath)) {
             try {
                 unlink($thumbnailPath);

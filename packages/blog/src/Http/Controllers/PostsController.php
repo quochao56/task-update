@@ -32,13 +32,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        if (\Auth::check()) {
-            $posts = $this->postRepository->getAllPosts();
-        return view('blog.user.index')
-            ->with('posts', $posts);
-        }else{
-            return redirect()->route('user.login');
-        }
+        $posts = $this->postRepository->getAllPosts();
+        return view('admin.blog.index', [
+            'title' => "Danh sách bài viết",
+            "posts" => $posts
+        ]);
     }
 
     /**
@@ -46,7 +44,9 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('blog.user.create');
+        return view('admin.blog.create', [
+            'title' => "Tạo bài viết"
+        ]);
     }
 
     /**
@@ -69,7 +69,7 @@ class PostsController extends Controller
             session()->flash('error', $err->getMessage());
             return false;
         }
-        return redirect()->route("user.blog.");
+        return redirect()->route("admin.blogs.index");
     }
 
     /**
@@ -78,8 +78,16 @@ class PostsController extends Controller
     public function show($slug)
     {
         $post = $this->postRepository->getPostBySlug($slug);
-        return view('blog.user.show')
-            ->with('post', $post);
+        return view('blog.show')->with('post',$post);
+    }
+
+    public function showAdmin($slug)
+    {
+        $post = $this->postRepository->getPostBySlug($slug);
+        return view('admin.blog.show', [
+            'title' => "Bài viết",
+            "post" => $post
+        ]);
     }
 
     /**
@@ -88,8 +96,10 @@ class PostsController extends Controller
     public function edit(string $slug)
     {
         $post = $this->postRepository->getPostBySlug($slug);
-        return view('blog.user.edit')
-            ->with('post', $post);
+        return view('admin.blog.edit',[
+        'title' => "Sửa bài viết",
+            "post" => $post
+        ]);
     }
 
     /**
@@ -111,7 +121,7 @@ class PostsController extends Controller
             session()->flash('error', $err->getMessage());
             return false;
         }
-        return redirect()->route("user.blog.");
+        return redirect()->route("admin.blogs.index");
     }
 
     /**
@@ -126,6 +136,6 @@ class PostsController extends Controller
             session()->flash('error', $err->getMessage());
             return false;
         }
-        return redirect()->route("user.blog.");
+        return redirect()->route("admin.blogs.index");
     }
 }

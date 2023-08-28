@@ -18,7 +18,7 @@
             @foreach ($sales as $sale)
             <tr>
                 <td>{{ $sale->id }}</td>
-                <td>{{ $sale->customer->name }}</td>
+                <td>{{ $sale->customer->email }}</td>
                 <td>{{ $sale->total_qty}}</td>
                 <td>{{ $sale->shipping_cost}}</td>
                 <td>{{ $sale->total_amount}}</td>

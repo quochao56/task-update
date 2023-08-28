@@ -63,7 +63,7 @@ class WarehouseController extends Controller
             session()->flash('error', $err->getMessage());
             return false;
         }
-        return redirect()->route("admin.warehouse.index");
+        return redirect()->route("admin.warehouses.index");
     }
     public function destroy(Warehouse $warehouse)
     {

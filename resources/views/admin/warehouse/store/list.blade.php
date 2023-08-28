@@ -26,6 +26,7 @@
                 <div class="col-md-6">
                     <label for="warehouse" class="form-label">Select a Warehouse:</label>
                     <select id="warehouse" name="warehouse" class="form-select">
+                        <option value="1">Chọn kho</option>
                         @foreach($warehouses as $wh)
                             <option value="{{$wh->id}}">{{$wh->name}}</option>
                         @endforeach
@@ -34,6 +35,7 @@
                 <div class="col-md-6">
                     <label for="store" class="form-label">Select a Store:</label>
                     <select id="store" name="store" class="form-select">
+                        <option value="1">Chọn cửa hàng</option>
                         @foreach($stores as $st)
                             <option value="{{$st->id}}">{{$st->name}}</option>
                         @endforeach

@@ -48,7 +48,7 @@
         </div>
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Tạo Cửa hàng</button>
+            <button type="submit" class="btn btn-primary">Tạo Kho</button>
         </div>
 
     </form>

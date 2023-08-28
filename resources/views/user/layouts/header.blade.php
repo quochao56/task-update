@@ -55,7 +55,7 @@
                             </li>
 
                             <li>
-                                <a href="/index">Blog</a>
+                                <a href="{{route('blog')}}">Blog</a>
                             </li>
 
                             <li>

@@ -25,7 +25,10 @@ class BlogServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->publishes([
-            __DIR__ . '/../../resources/views/' => resource_path('views/'),
+            __DIR__ . '/../../resources/views/admin' => resource_path('views/admin'),
+        ]);
+        $this->publishes([
+            __DIR__ . '/../../resources/views/blog' => resource_path('views/blog'),
         ]);
         $this->publishes([
             __DIR__ . '/../../public' => public_path('qh/blog/'),

@@ -27,4 +27,14 @@ class OrderController extends Controller
             'orders' => $this->orderRepo->getSaleProduct($sale->id)
         ]);
     }
+
+    public function cancel(Sale $sale){
+        try {
+            $this->orderRepo->cancel($sale);
+        }catch (\Exception $err){
+            session()->flash('error', "Không thể hủy đơn hàng!");
+            return false;
+        }
+        return redirect()->route('orders');
+    }
 }

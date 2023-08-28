@@ -5,7 +5,18 @@
             <div class="col-md-10"> <!-- Adjust the column width as needed -->
                 <div class="panel panel-default">
                     <div class="panel-heading" style="font-size: 24px;"> <!-- Increase the font size -->
-                        Chi tiết đơn hàng
+                        <div class="row">
+                            <div class="col-md-6">
+                                Chi tiết đơn hàng
+                            </div>
+                            <div class="col-md-6 ">
+                                <form action="" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm pull-right">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped table-responsive">

@@ -65,15 +65,19 @@ class CartController extends Controller
 
     public function addCart(SaleRequest $request)
     {
-
         try {
-            $this->cartRepo->storeSale($request);
+            $result = $this->cartRepo->storeSale($request);
+            if($result === true){
+                return view('user.thankyou', [
+                    'title' => 'Thank you',
+                ]);
+            }else{
 
+            }
         } catch (\Exception $e) {
             \Log::error('An exception occurred: ' . $e->getMessage());
+            return redirect()->back();
         }
-        return view('user.thankyou', [
-            'title' => 'Thank you',
-        ]);
+        return redirect()->back();
     }
 }

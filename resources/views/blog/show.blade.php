@@ -12,8 +12,7 @@
     </div>
 
     <div class="w-4/5 m-auto container">
-        <p>By <span><strong><em>{{$post->user->name}}</em></strong></span>, Created
-            on {{date('jS M Y', strtotime($post->updated_at))}}</p>
+        <p>Created on {{date('jS M Y', strtotime($post->updated_at))}}</p>
 
         <p>{!!$post->content!!}</p>
     </div>

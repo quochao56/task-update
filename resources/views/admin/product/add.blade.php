@@ -101,7 +101,7 @@
         </div>
     </form>
 @endsection
-@section('footer.blade.php')
+@section('footer')
     <script>
         CKEDITOR.replace('content');
     </script>

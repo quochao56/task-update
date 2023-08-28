@@ -3,6 +3,7 @@
 namespace QH\Warehouse\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -21,8 +22,9 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $store = $this->route('store');
         return [
-            'name' => 'required|unique:stores,name',
+            'name' => ['required',Rule::unique('stores', 'name')->ignore($store)],
             'phone' => 'required|digits:10',
             'location' => 'required',
             'status' => 'required',

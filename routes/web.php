@@ -39,3 +39,5 @@ Route::middleware(['role:agent', 'auth'])->group(function () {
         return view('agent.dashboard');
     });
 });
+
+Route::view('testtailwind','test-tailwind');

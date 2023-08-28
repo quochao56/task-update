@@ -3,6 +3,7 @@
 namespace QH\Customer\Repositories\Elements;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use QH\Core\Base\Repository\BaseRepository;
@@ -24,7 +25,8 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     public function getInfoCustomer()
     {
         $userCustomer = DB::table('users')
-            ->join('customers', 'users.email', '=', 'customers.email')
+            ->leftJoin('customers', 'users.email', '=', 'customers.email')
+            ->where('users.email', '=', Auth::guard('web')->user()->email)
             ->select('customers.*')
             ->first();
         return $userCustomer;

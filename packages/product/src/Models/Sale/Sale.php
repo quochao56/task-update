@@ -16,6 +16,7 @@ class Sale extends Model
         'total_amount',
         'note',
         'purchase_date',
+        'status',
         'customer_id'
     ];
 

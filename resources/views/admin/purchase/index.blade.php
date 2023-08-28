@@ -168,10 +168,6 @@
         </div>
     </div>
 @endsection
-
-@section('content')
-
-@endsection
 @section('footer')
     <script>
         $(function () {

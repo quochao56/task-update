@@ -17,6 +17,6 @@ class HistoryRepository extends BaseRepository implements HistoryRepositoryInter
 
     public function getAllHistories()
     {
-        return $this->model->orderByDesc('created_at')->paginate(5);
+        return $this->model->orderByDesc('created_at')->paginate(10);
     }
 }

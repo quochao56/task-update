@@ -14,7 +14,9 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         return Sale::class;
     }
-    public function getAllOrders(){
+
+    public function getAllOrders()
+    {
 
         $userEmail = Auth::guard('web')->user()->email;
 
@@ -31,4 +33,18 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         return SaleProduct::with('product')->where('sale_id', $id)->get();
     }
+
+    public function cancel($sale)
+    {
+        // Retrieve the sale by its ID
+        $sale = Sale::find($sale->id);
+
+
+        // Update the status to "canceled"
+        return $sale->update([
+            "status" => "canceled"
+        ]);
+
+    }
+
 }

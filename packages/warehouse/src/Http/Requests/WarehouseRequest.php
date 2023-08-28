@@ -22,8 +22,7 @@ class WarehouseRequest extends FormRequest
      */
     public function rules(): array
     {
-        $warehouse = $this->route('warehouses');
-
+        $warehouse = $this->route('warehouse');
         return [
             'name' => ['required',Rule::unique('warehouses', 'name')->ignore($warehouse)],
             'phone' => 'required|digits:10',

@@ -28,7 +28,7 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->orderByDesc('id')->get();
     }
     public function getActive(){
         return $this->model->where('status','active')->get();
