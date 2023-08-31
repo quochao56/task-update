@@ -63,11 +63,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getAllProducts()
     {
-        return Product::with("category")->with("user")->orderBy("status",'asc')->orderByDesc("id")->paginate(3);
+        return Product::with("category")->with("user")->orderBy("status",'asc')->orderByDesc("id")->paginate(5);
     }
     public function getActiveProducts()
     {
-        return Product::with("category")->with("user")->where("status",'active')->paginate(4);
+        return Product::with("category")->with("user")->where("status",'active')->paginate(5);
     }
     public function createProduct($request)
     {

@@ -9,70 +9,30 @@ use Illuminate\Support\Facades\Validator;
 use QH\Product\Http\Services\Purchase\PurchaseService;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 use QH\Product\Repositories\Purchase\Interface\PurchaseRepositoryInterface;
+use QH\Warehouse\Repositories\Warehouse\Interfaces\WarehouseRepositoryInterface;
 
 
 class PurchaseController extends Controller
 {
-    protected $purchaseService;
     protected $purchaseRepo;
+    protected $warehouseRepo;
 
-    public function __construct(PurchaseService $purchaseService, PurchaseRepositoryInterface $purchaseRepo)
+    public function __construct(PurchaseRepositoryInterface $purchaseRepo, WarehouseRepositoryInterface $warehouseRepo)
     {
-        $this->purchaseService = $purchaseService;
         $this->purchaseRepo = $purchaseRepo;
+        $this->warehouseRepo = $warehouseRepo;
     }
     public function index(){
         $products = $this->purchaseRepo->getActiveProducts();
-        $products_selected = $this->purchaseService->getProduct();
-
         return view('admin.purchase.index', [
             'title' => 'Danh sánh sản phẩm',
             'products' => $products,
-            'products_selected' =>$products_selected,
-            'import' => Session::get('import'),
-            'warehouses' => $this->purchaseRepo->getAllWarehouses()
+            'warehouses' => $this->warehouseRepo->getActive()
         ]);
-    }
-    public function create(Request $request){
-        $this->purchaseService->create($request);
-
-        return redirect()->back();
-    }
-
-
-    public function update(Request $request)
-    {
-        $request->except("_token");
-        $this->purchaseService->update($request);
-
-        return redirect()->back();
     }
 
     public function store(Request $request){
-        $rules = [
-            'warehouse_id' => 'required'
-        ];
-        $messages = [
-            'warehouse_id' => [
-                'required' => 'Vui lòng chọn kho',
-            ]
-        ];
-        // Create a validator instance
-        $validator = Validator::make($request->only(['note','qty','total_amount','warehouse_id']), $rules, $messages);
-        // Perform the validation
-        if ($validator->fails()) {
-            // Validation failed, return with errors
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
         $this->purchaseRepo->storePurchase($request);
-
-        return redirect()->back();
-    }
-    public function destroy($id = 0)
-    {
-        $this->purchaseService->remove($id);
 
         return redirect()->back();
     }

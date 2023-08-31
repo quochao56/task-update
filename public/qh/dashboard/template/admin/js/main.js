@@ -5,11 +5,15 @@ $.ajaxSetup({
 });
 
 function removeRow(id) {
-    if (confirm('Are you sure you want to delete this record?')) {
-        document.getElementById('deleteForm' + id).submit();
+    var formId = 'deleteForm' + id;
+    var form = document.getElementById(formId);
+
+    if (form) {
+        if (confirm('Are you sure you want to delete this item?')) {
+            form.submit();
+        }
     }
 }
-
 /*Upload File */
 // $('#upload').change(function() {
 //

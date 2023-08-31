@@ -5,6 +5,7 @@ namespace QH\Product\Models\Purchase;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use QH\Product\Models\Product\Product;
+use QH\Warehouse\Models\Warehouse;
 
 
 class PurchaseProduct extends Model
@@ -16,7 +17,8 @@ class PurchaseProduct extends Model
         'product_id',
         'qty',
         'price',
-        'total_amount'
+        'total_amount',
+        'warehouse_id'
     ];
 
     public function purchase(){
@@ -25,5 +27,8 @@ class PurchaseProduct extends Model
 
     public function product(){
         return $this->belongsTo(Product::class);
+    }
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class);
     }
 }

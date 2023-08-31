@@ -11,57 +11,53 @@ use QH\Product\Http\Requests\Sale\SaleRequest;
 use QH\Product\Http\Services\Sale\SaleService;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 use QH\Product\Repositories\Sale\Interface\SaleRepositoryInterface;
+use QH\Warehouse\Repositories\Warehouse\Interfaces\WarehouseRepositoryInterface;
 use Ramsey\Uuid\Rfc4122\Validator;
 
 class SaleController extends Controller
 {
-    protected $saleService;
     protected $saleRepo;
+    protected $warehouseRepo;
 
-    public function __construct(SaleService $saleService, SaleRepositoryInterface $saleRepo)
+    public function __construct(SaleRepositoryInterface $saleRepo, WarehouseRepositoryInterface $warehouseRepository)
     {
-        $this->saleService = $saleService;
         $this->saleRepo = $saleRepo;
+        $this->warehouseRepo = $warehouseRepository;
     }
 
     public function index()
     {
         $products = $this->saleRepo->getActiveProducts();
-        $products_selected = $this->saleRepo->getProduct();
         return view('admin.sale.index', [
             'title' => 'Danh sánh sản phẩm',
             'products' => $products,
-            'products_selected' => $products_selected,
-            'export' => Session::get('export')
+            'warehouses' => $this->warehouseRepo->getActive(),
         ]);
-    }
-
-    public function create(Request $request)
-    {
-        $this->saleService->create($request);
-
-        return redirect()->back();
-    }
-
-
-    public function update(Request $request)
-    {
-        $request->except("_token");
-        $this->saleService->update($request);
-
-        return redirect()->back();
     }
 
     public function store(SaleRequest $request)
     {
-        $this->saleRepo->storeSale($request);
+        $checkCustomer = $this->saleRepo->checkCustomer($request);
 
-        return redirect()->back();
-    }
+        if($checkCustomer){
+            $selectedProducts = session('selectedProducts');
+            if($checkCustomer == "phone"){
+                return redirect()->back()->withErrors(['phone' => 'Số điện thoại này đã có người sử dụng'])->withInput()->with('selectedProducts', $selectedProducts);
+            } elseif($checkCustomer == "email"){
+                return redirect()->back()->withErrors(['email' => 'Email này đã có người sử dụng'])->withInput()->with('selectedProducts', $selectedProducts);
+            }
+        }
+            $productIds[] = $request->input('product_id');
+            dd($request->input('product_id') );
+            if ($productIds == null) {
+                Session()->flash('error', "Vui lòng chọn sản phẩm");
+                return redirect()->back()->withInput();
+            }
 
-    public function destroy($id = 0)
-    {
-        $this->saleService->remove($id);
+
+//        $this->saleRepo->storeSale($request);
+        // Clear the selected product information from the session after a successful sale
+        session()->forget('selectedProducts');
 
         return redirect()->back();
     }

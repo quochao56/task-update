@@ -33,6 +33,9 @@ abstract class BaseRepository implements RepositoryInterface
     public function getActive(){
         return $this->model->where('status','active')->get();
     }
+    public function getActiveP($n = 5){
+        return $this->model->where('status','active')->paginate($n);
+    }
 
     public function find($id)
     {

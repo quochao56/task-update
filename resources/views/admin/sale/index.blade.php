@@ -1,184 +1,221 @@
 @extends('admin.layouts.main')
+
 @section('content')
-    <style>
-        .summary-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-right: 5px;
-        }
+    <div>
+        <form action="{{ route('admin.sale.store') }}" method="POST" id="orderForm">
+            @csrf <!-- Add Laravel CSRF token field -->
 
-        .title {
-            margin-right: 5px;
-        }
-
-        .index {
-            font-weight: bold;
-        }
-
-        .num-product {
-            width: 80px;
-        }
-    </style>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Category</th>
-            <th>Thumb</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach ($products as $product)
-            <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->price }}</td>
-                <td>{{ $product->qty }}</td>
-                <td>{{ $product->category->name }}</td>
-                <td><img src="{{ $product->thumb }}" width="60" alt=""></td>
-                <td>
-                    <form action="{{ route('admin.sale.add_product') }}" method="post">
-                        <input class="text-104 cl3 txt-center num-product" data-max="120" min="1" max="{{$product->qty}}" pattern="[0-9]*"
-                               type="number" name="num_product" value="1">
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-                        <button class="btn btn-lg" role="button"><i class="fa-solid fa-circle-plus"
-                                                                    style="color: #295fbc;"></i></button>
-                        @csrf
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-
-    <div class="card-footer clearfix d-flex justify-content-center align-items-center">
-        {!! $products->links('admin.layouts.pagination') !!}
-    </div>
-    <div class="row">
-        <div class="col-md-9">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="card-title">Danh sách sản phẩm đã chọn</h3>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" placeholder="Name"
+                       class="form-control @error("name") border border-danger @enderror"
+                       value="{{ old('name') }}">
+                @error("name")
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
-            @php
-                $total = 0;
-                $qty = 0;
-            @endphp
-            <form action="" method="POST">
-                <button type="submit" class="btn btn-success m-1"
-                        formaction="{{ route('admin.sale.update') }}">Update
-                </button>
-                <table class="table">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" placeholder="email@gmail.com"
+                       class="form-control @error("email") border border-danger @enderror" value="{{ old('email') }}">
+                @error("email")
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" placeholder="Number Phone"
+                       class="form-control @error("phone") border border-danger @enderror"
+                       value="{{ old('phone') }}">
+                @error("phone")
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" name="address" placeholder="Address"
+                       class="form-control @error("address") border border-danger @enderror"
+                       value="{{ old('address') }}">
+                @error("address")
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="mySelect">Select a product:</label>
+                <select id="mySelect" class="w-full p-2 border rounded focus:ring focus:ring-blue-300">
+                    <option value="">Select a product</option>
+                    @foreach ($products as $product)
+                        <option value="{{ json_encode($product) }}">({{ $product->id }}) - {{ $product->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="container-fluid">
+                <table class="table table-responsive-xl mt-4 bg-white p-4 rounded shadow">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Thumb</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Action</th>
+                        <th class="col-1 border px-4 py-2">ID</th>
+                        <th class="col-2 border px-4 py-2">Name</th>
+                        <th class="col-2 border px-4 py-2">Price</th>
+                        <th class="col-1 border px-4 py-2">Quantity</th>
+                        <th class="col-2 border px-4 py-2">Total</th>
+                        <th class="col-2 border px-4 py-2">Warehouse</th>
+                        <th class="col-2 border px-4 py-2">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {{-- ps blog selected --}}
-                    @foreach ($products_selected as $ps)
+                    <tbody id="selectedOptionsTableBody">
+                    <!-- Check if there are selected products in the session -->
+                    @if(session('selectedProducts'))
                         @php
-                            $priceEnd = $ps->price * $export[$ps->id];
-                            $total += $priceEnd;
-                            $qty += $export[$ps->id];
+                            $selectedProducts = session('selectedProducts');
                         @endphp
-                        <tr>
-                            <td>{{ $ps->id }}</td>
-                            <td><img src="{{ $ps->thumb }}" width="60" alt=""></td>
-                            <td>{{ $ps->name }}</td>
-                            <td>{{ $ps->price }}</td>
-                            <td>
-                                @csrf
-                                <input id="number-product" data-max="120" pattern="[0-9]*" min="1" max="{{$ps->qty}}"
-                                       class="text-104 cl3 txt-center num-product" type="number"
-                                       name="num_product[{{ $ps->id }}]" value="{{ $export[$ps->id] }}"
-                                >
-
-                            </td>
-                            <td>{{ number_format($priceEnd, 0, '', '.') }}</td>
-                            <form action="" class="mr-1" method="POST">
+                        @for($i = 0; $i < count($selectedProducts['productIds']); $i++)
+                            <tr>
+                                <td>{{ $selectedProducts['productIds'][$i] }}</td>
+                                <td>{{ $selectedProducts['productNames'][$i] }}</td>
+                                <td>{{ $selectedProducts['productPrices'][$i] }}</td>
                                 <td>
-                                    <a class="btn btn-danger btn-sm"
-                                       href="{{ route('admin.sale.destroy', $ps->id) }}"><i
-                                            class="fa fa-trash"></i></a>
+                                    <input class="w-16 border rounded text-center" data-max="120" min="1"
+                                           pattern="[0-9]*" type="number" name="num_product[]"
+                                           value="{{ $selectedProducts['numberProducts'][$i] }}">
                                 </td>
-                            </form>
-                        </tr>
-                    @endforeach
-
+                                <td>{{ $selectedProducts['productPrices'][$i] * $selectedProducts['numberProducts'][$i] }}</td>
+                                <td>
+                                    <!-- Populate the warehouse select box here -->
+                                </td>
+                                <td>
+                                    <button class="btn btn-lg" type="button" data-delete-row>
+                                        <i class="fa-solid fa-circle-minus text-red-600"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endfor
+                    @endif
                     </tbody>
                 </table>
-            </form>
-
-        </div>
-        <div class="col-md-3">
-
-            <form action="{{ route('admin.sale.store') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" placeholder="Name"  class="form-control @error("name") border border-danger @enderror" value="{{old('name')}}">
-                    @error("name")
-                        <p class="text-danger">{{$message}}</p>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" placeholder="email@gmail.com" class="form-control @error("email") border border-danger @enderror" value="{{old('email')}}">
-                    @error("email")
-                    <p class="text-danger">{{$message}}</p>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="text" name="phone" placeholder="Number Phone" class="form-control @error("phone") border border-danger @enderror" value="{{old('phone')}}">
-                    @error("phone")
-                    <p class="text-danger">{{$message}}</p>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" name="address" placeholder="Address" class="form-control @error("address") border border-danger @enderror" value="{{old('address')}}">
-                    @error("address")
-                    <p class="text-danger">{{$message}}</p>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label>Note</label>
-                    <textarea name="note" id="note" class="form-control"></textarea>
-                    <input type="hidden" name="qty" value="{{ $qty }}">
-                    <input type="hidden" name="total_amount" value="{{ $total }}">
-                </div>
-                <div class="summary">
-                    <p class="summary-info"><span class="title">Số lượng:</span><b class="index">{{ $qty }}</b></p>
-
-                    <p class="summary-info"><span class="title">Shipping:</span><b class="index">Free Shipping</b></p>
-
-                    <p class="summary-info total-info "><span class="title">Tổng cộng:</span><b
-                            class="index">{{ number_format($total, 0, '', '.') }}</b></p>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Order</button>
-                </div>
-            </form>
-
-        </div>
+            </div>
+            <div class="summary">
+                <p class="summary-info"><span class="title">Số lượng: </span><b class="total-quantity">0</b></p>
+                <input type="hidden" name="total_qty">
+                <p class="summary-info"><span class="title">Shipping: </span><b class="index">Free Shipping</b></p>
+                <p class="summary-info "><span class="title">Tổng cộng: </span><b class="total">0</b></p>
+                <input type="hidden" name="total_end">
+            </div>
+            <div class="form-group pt-4">
+                <label>Note</label>
+                <textarea name="note" id="note" class="form-control"></textarea>
+            </div>
+            <div class="mt-4 text-center">
+                <button type="submit" name="submit" class="btn btn-primary text-white px-4 py-2 rounded">Submit Order
+                </button>
+            </div>
+        </form>
     </div>
+@endsection
+
+@section('footer')
+
+    <script>
+        $(document).ready(function () {
+            // Search on select
+            var selectElement = $('#mySelect');
+
+            selectElement.select2();
+            var totalEnd = 0;
+            var totalQuantity = 0;
+
+            // Function to update totalEnd and totalQuantity
+            function updateTotals() {
+                totalEnd = 0;
+                totalQuantity = 0;
+
+                // Loop through each row in the table
+                $('#selectedOptionsTableBody tr').each(function () {
+                    var quantity = parseInt($(this).find('input[name="num_product[]"]').val());
+                    var price = parseFloat($(this).find('td:eq(2)').text());
+                    totalQuantity += quantity;
+                    totalEnd += quantity * price;
+                });
+
+                // Update the displayed totals
+                $('.total-quantity').text(totalQuantity);
+                $('.total').text(totalEnd);
+
+                // Update the hidden input fields
+                $('input[name="total_qty"]').val(totalQuantity);
+                $('input[name="total_end"]').val(totalEnd);
+            }
+
+            $('html,input').on('change', function () {
+                updateTotals();
+            });
+
+            selectElement.on('change', function () {
+                var selectedProductData = this.value;
+                if (selectedProductData) {
+                    var product = JSON.parse(selectedProductData);
+                    addProductToTable(product);
+                    this.value = '';
+                    selectElement.val(null).trigger('change');
+                }
+            });
+
+            // Add product into the table
+            var tableBody = $('#selectedOptionsTableBody');
+
+            tableBody.on('click', '[data-delete-row]', function () {
+                // Remove the entire row when the "Delete" button is clicked
+                $(this).closest('tr').remove();
+                updateTotals(); // Update totals when a row is deleted
+            });
+
+            // Function to add a product to the table
+            function addProductToTable(product) {
+                var newRow = $('<tr>');
+                newRow.append('<td>' + product.id + '</td>');
+                newRow.append('<td>' + product.name + '</td>');
+                newRow.append('<td>' + product.price + '</td>');
+
+                var quantityInput = $('<input class="w-16 border rounded text-center" data-max="120" min="1" pattern="[0-9]*" ' +
+                    'type="number" name="num_product[]" value="1">');
+
+                var productIdInput = $('<input type="hidden" name="product_id[]" value="' + product.id + '">');
+
+                var totalCell = $('<td>' + (product.price * parseInt(quantityInput.val())) + '</td>');
+
+                quantityInput.on('input', function () {
+                    var quantity = parseInt($(this).val());
+                    totalCell.text(product.price * quantity);
+                    updateTotals(); // Update totals when quantity changes
+                });
+
+                var warehouseSelect = $('<select class="form-select" data-placeholder="Chọn kho" name="warehouse_id[]"></select>');
+                @foreach($warehouses as $warehouse)
+                warehouseSelect.append('<option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>');
+                @endforeach
+
+                var warehouseTd = $('<td>').append(warehouseSelect);
+
+                var deleteButton = $('<button class="btn btn-lg" type="button" data-delete-row><i class="fa-solid fa-circle-minus text-red-600"></i></button>');
+
+                var actionTd = $('<td>').append(deleteButton);
+
+                newRow.append(quantityInput);
+                newRow.append(productIdInput);
+                newRow.append(totalCell);
+                newRow.append(warehouseTd);
+                newRow.append(actionTd);
+
+                tableBody.append(newRow);
+                updateTotals(); // Update totals when a new row is added
+            }
+
+            // Add CSRF token to the AJAX request headers
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script>
 @endsection

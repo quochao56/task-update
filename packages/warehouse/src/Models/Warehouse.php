@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use QH\Product\Models\Product\Product;
 use QH\Product\Models\Purchase\Purchase;
+use QH\Product\Models\Purchase\PurchaseProduct;
 
 class Warehouse extends Model
 {
@@ -23,6 +24,6 @@ class Warehouse extends Model
         return $this->hasMany(Store::class);
     }
     public function purchases(){
-        return $this->hasMany(Purchase::class);
+        return $this->hasMany(PurchaseProduct::class);
     }
 }

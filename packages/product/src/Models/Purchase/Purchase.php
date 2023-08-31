@@ -15,14 +15,10 @@ class Purchase extends Model
         'shipping_cost',
         'total_amount',
         'note',
-        'warehouse_id',
+        'warehouse',
         'purchase_date'
     ];
     public function purchaseProducts(){
         return $this->hasMany(PurchaseProduct::class);
-    }
-
-    public function warehouse(){
-        return $this->belongsTo(Warehouse::class);
     }
 }
