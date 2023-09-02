@@ -54,12 +54,22 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
 
     }
 
+    public function getProductsForWarehouse($request, $warehouseId)
+    {
+        // Retrieve products filtered by warehouse ID
+        $filteredProducts = Product::whereHas('productWarehouses', function ($query) use ($warehouseId) {
+            $query->where('warehouse_id', $warehouseId);
+        })->get();
+
+        // Return the filtered products as JSON response
+        return response()->json($filteredProducts);
+    }
+
     public function checkCustomer($request)
     {
         try {
             DB::beginTransaction();
 
-            $flag = '';
             //          store customer
             $name = $request->input('name');
             $email = $request->input('email');
@@ -81,13 +91,13 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
                     'address' => $address
                 ]);
                 if (Customer::where('phone', $customer->phone)->first()->id != $customer->id) {
-                    $flag = 'phone';
+                    return 'phone';
                 } elseif (Customer::where('email', $customer->email)->first()->id != $customer->id) {
-                    $flag = 'email';
+                    return 'email';
                 }
             }
             DB::commit();
-            return $flag;
+            return $customer;
         } catch (\Exception $err) {
             DB::rollBack();
             \Log::error('Error message: ' . $err->getMessage());
@@ -100,27 +110,101 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
         $sale_date = Carbon::now("Asia/Ho_Chi_Minh")->format("Y-m-d H:i:s");
         try {
             $productIds[] = $request->input('product_id');
-            $warehouseIds[] = $request->input('warehouse_id');
+//            $warehouseIds[] = $request->input('warehouse_id');
             $numberProducts[] = $request->input('num_product');
             $total_price = $request->input('total_end');
             $total_qty = $request->input('total_qty');
             $note = $request->input('note');
+            $warehouse_id = $request->input('warehouse_id');
+            // convert customer to array
+            $customer = $request->input('customer');
 
+//            dd($customer);
+            $customerArray = json_decode($customer, true);
+            // Check if the 'email' key exists in the array
+
+
+//            dd($customerArray);
+//            session()->put('customer', $customer);
+            $validator = \Validator::make($request->all(), [
+                'warehouse_id' => 'required',
+            ],
+                [
+                    'warehouse_id' => "Vui lòng chọn kho"
+                ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput()->with([
+                        'alert' => 'Thông tin khách hàng hợp lệ và đã được lưu lại!',
+                        'customer' => $customer,
+                        'customerArray' => $customerArray
+                    ]);
+            }
             if ($productIds[0] == null) {
                 Session()->flash('error', "Vui lòng chọn sản phẩm");
-                return redirect()->back()->withInput();
+                return redirect()->back()->withInput()->with([
+                    'alert' => 'Thông tin khách hàng hợp lệ và đã được lưu lại!',
+                    'customer' => $customer,
+                    'customerArray' => $customerArray
+                ]);
+            } else {
+                // Clean data productId => qty
+                $products = [];
+
+                for ($i = 0; $i < sizeof($productIds[0]); $i++) {
+                    $product_id = $productIds[0][$i];
+                    $qty = $numberProducts[0][$i];
+
+                    if (isset($products[$product_id])) {
+                        // If the product_id already exists in the array, add the quantity
+                        $products[$product_id] += $qty;
+                    } else {
+                        // If the product_id doesn't exist in the array, set the quantity
+                        $products[$product_id] = $qty;
+                    }
+                }
+
             }
+
             //  store Sale
             $sale = new Sale();
-            $sale->customer_id = $customer->id;
+            $sale->customer_id = $customerArray['id'];
             $sale->total_qty = $total_qty;
             $sale->total_amount = $total_price;
             $sale->note = $note;
             $sale->sale_date = $sale_date;
+            $sale->warehouse_id = $warehouse_id;
             $sale->save();
-            dd($sale);
+//            dd($sale);
+            if ($this->infoSaleProduct($products, $sale) == false) {
+                return false;
+            }
+
+            //sort products
+            $productIdsString = implode(", ", array_unique($productIds[0]));
+            $explode = explode(", ", $productIdsString);
+            sort($explode);
+            $productIdsArray = implode(', ', $explode);
+            // insert History
+            $history = new History();
+            $history->from = $sale->warehouse->name;
+            $history->to = $customerArray['email'];
+            $history->qty = $total_qty;
+            $history->total_amount = $total_price;
+            $history->product = $productIdsArray;
+            $history->status = 'pending';
+            $history->links = "http://task-update.test/admin/sale/detail/" . $sale->id;
+
+            $history->save();
+            #Queue
+            SendMail::dispatch($sale)->delay(now()->addSeconds(2));
+
+
             Session::flash('success', 'Đặt Hàng Thành Công');
 
+            Session::forget('customer');
             DB::commit();
         } catch (\Exception $err) {
             DB::rollBack();
@@ -131,172 +215,43 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
         return true;
     }
 
-    protected function infoSaleProduct($productIds, $purchase, $warehouseId)
+    protected function infoSaleProduct($productIds, $sale)
     {
 //        dd($productIds);
         $products = Product::with('productWarehouses')
             ->whereIn('id', array_keys($productIds))
             ->select('id', 'name', 'qty', 'price')
             ->get();
-
 //        dd($products);
-        $dataPurchase = [];
-        $dataWarehouse = [];
+
+
+        $data = [];
         foreach ($products as $product) {
             $qty = $productIds[$product->id];
             $price = $product->price;
-            $newQtyProduct = $product->qty + $qty;
-            $total_amount = $qty * $price;
-
-//            dd($newQtyProduct, $price);
-
-            // Update the Product record
-            $product->update(['qty' => $newQtyProduct]);
-
-            $dataPurchase[] = [
-                'purchase_id' => $purchase->id,
-                'product_id' => $product->id,
-                'qty' => $qty,
-                'price' => $price,
-                'total_amount' => $total_amount,
-                'warehouse_id' => $warehouseId,
-            ];
-//            dd($dataPurchase);
-            // Check if a ProductWarehouse record exists
-            $productWarehouse = $product->productWarehouses->where('warehouse_id', $warehouseId)->first();
-
-//            dd($productWarehouse);
-            if ($productWarehouse) {
-                // If it exists, update it
-                $dataWarehouse[] = [
-                    'id' => $productWarehouse->id,
-                    'product_id' => $product->id,
-                    'warehouse_id' => $warehouseId,
-                    'qty' => $productWarehouse->qty + $qty
-                ];
-            } else {
-                // If the product doesn't exist, create a new record
-                $pw = ProductWarehouse::create([
-                    'product_id' => $product->id,
-                    'warehouse_id' => $warehouseId,
-                    'qty' => $qty,
-                ]);
-//                dd($pw);
-            }
-        }
-        try {
-            ProductWarehouse::upsert($dataWarehouse, ['id'], ['qty']); // Use upsert to insert or update based on id
-            PurchaseProduct::insert($dataPurchase);
-
-        } catch (\Exception $err) {
-            \Log::error('Error message: ' . $err->getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    public function storeSalex($request)
-    {
-        $sale_date = Carbon::now("Asia/Ho_Chi_Minh")->format("Y-m-d H:i:s");
-        try {
-            DB::beginTransaction();
-
-            $productIds[] = $request->input('product_id');
-            $warehouseIds[] = $request->input('warehouse_id');
-            $numberProducts[] = $request->input('num_product');
-            $total_price = $request->input('total_end');
-            $total_qty = $request->input('total_qty');
-            $note = $request->input('note');
-
-            if ($productIds[0] == null) {
-                Session()->flash('error', "Vui lòng chọn sản phẩm");
-                return redirect()->back();
-            }
-//          store customer
-            $name = $request->input('name');
-            $email = $request->input('email');
-            $phone = $request->input('phone');
-            $address = $request->input('address');
-            $customer = Customer::where('email', $email)
-                ->where('phone', $phone)
-                ->first();
-            if ($customer) {
-                $customer->update([
-                    'name' => $name,
-                    'address' => $address
-                ]);
-            } else {
-                $customer = Customer::create([
-                    'name' => $name,
-                    'email' => $email,
-                    'phone' => $phone,
-                    'address' => $address
-                ]);
-                if (Customer::where('phone', $customer->phone)->first()->id != $customer->id) {
-                    return redirect()->back()->withErrors(['phone' => 'Số điện thoại này đã có người sử dụng'])->withInput();
-                } elseif (Customer::where('email', $customer->email)->first()->id != $customer->id) {
-                    return redirect()->back()->withErrors(['email' => 'Email này đã có người sử dụng'])->withInput();
-                }
-            }
-//            store Purchase
-            $sale = new Sale();
-            $sale->customer_id = $customer->id;
-            $sale->total_qty = $request->input('qty');
-            $sale->total_amount = $request->input('total_amount');
-            $sale->note = $request->input('note');
-            $sale->sale_date = $sale_date;
-            $sale->save();
-            if ($this->infoSaleProduct($items, $sale, $email) == false) {
-                return false;
-            }
-
-            DB::commit();
-            Session::flash('success', 'Đặt Hàng Thành Công');
-
-            #Queue
-            SendMail::dispatch($sale)->delay(now()->addSeconds(2));
-
-            Session::forget('export');
-        } catch (\Exception $err) {
-            DB::rollBack();
-            Session::flash('error', 'Đặt Hàng Lỗi, Vui lòng thử lại sau');
-            return false;
-        }
-        return true;
-    }
-
-    protected function infoSaleProductx($items, $sale, $email)
-    {
-        $productId = array_keys($items);
-        $products = Product::select('id', 'qty', 'price')
-            ->whereIn('id', $productId)
-            ->get();
-        $joinResult = DB::table('warehouse_stores')
-            ->join('product_warehouses', function ($join) {
-                $join->on('warehouse_stores.warehouse_id', '=', 'product_warehouses.warehouse_id')
-                    ->where('warehouse_stores.warehouse_id', '2'); // Default store 2
-            })
-            ->select('warehouse_stores.*', 'product_warehouses.*')
-            ->get();
-
-        $data = [];
-        $dataProuductHistory = '';
-        $qtyHistory = 0;
-        foreach ($products as $product) {
-            $qty = $items[$product->id];
-            $qtyHistory += $qty;
-            $price = $product->price;
             $total_amount = $qty * $price;
             $newQtyProduct = $product->qty - $qty;
-
-            // Find the corresponding row in the joinResult for the product
-            $warehouseRow = $joinResult->where('product_id', $product->id)->first();
-            $newQtyWarehouse = $warehouseRow->qty - $qty;
+//            dd($qty, $price, $total_amount, $newQtyProduct);
 
             // Update the product's qty attribute
             $product->update(['qty' => $newQtyProduct]);
+            // Update the product's qty in warehouse
+            $productWarehouse = $product->productWarehouses
+                ->where('warehouse_id', $sale->warehouse_id)
+                ->first();
 
-            $dataProuductHistory .= (string)$product->id . ',';
+            if ($productWarehouse) {
+                // Ensure $productWarehouse is not null
+                $newQty = $productWarehouse->qty - $qty; // Subtract $qty from the current quantity
+
+                // Update the qty column with the new quantity
+                $productWarehouse->update(['qty' => $newQty]);
+
+            } else {
+                // Handle the case where the productWarehouse does not exist for the given warehouse
+                \Log::error('ProductWarehouse not found for the specified warehouse.');
+                return false;
+            }
 
             // Prepare data for SaleProduct insertion
             $data[] = [
@@ -306,37 +261,15 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
                 'price' => $price,
                 'total_amount' => $total_amount,
             ];
-            // Update the warehouse quantity in the product_warehouses table
-            DB::table('product_warehouses')
-                ->where('warehouse_id', $warehouseRow->warehouse_id)
-                ->where('product_id', $product->id)
-                ->update(['qty' => $newQtyWarehouse]);
         }
-
         try {
-// Insert the data into the SaleProduct table
             SaleProduct::insert($data);
-            $dataProuductHistory = substr($dataProuductHistory, 0, -1);
-
-            $history = new History();
-            $history->from = 'w opsgreat 2';
-            $history->to = $email;
-            $history->qty = $qtyHistory;
-            $history->total_amount = $total_amount;
-            $history->product = $dataProuductHistory;
-            $history->status = 'pending';
-            $history->links = "http://task-update.test/admin/sale/detail/" . $sale->id;
-
-            $history->save();
-
         } catch (\Exception $err) {
-            DB::rollBack();
+            \Log::error('Error message: ' . $err->getMessage());
             return false;
         }
-
         return true;
     }
-
     public function getProduct()
     {
         $export = Session::get('export');

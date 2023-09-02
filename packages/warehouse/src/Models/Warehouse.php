@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use QH\Product\Models\Product\Product;
 use QH\Product\Models\Purchase\Purchase;
 use QH\Product\Models\Purchase\PurchaseProduct;
+use QH\Product\Models\Sale\Sale;
 
 class Warehouse extends Model
 {
@@ -25,5 +26,8 @@ class Warehouse extends Model
     }
     public function purchases(){
         return $this->hasMany(PurchaseProduct::class);
+    }
+    public function sales(){
+        return $this->hasMany(Sale::class);
     }
 }

@@ -1,5 +1,13 @@
 @extends('admin.layouts.main')
 @section('content')
+    <style>
+        .warehouse-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333; /* Customize the color */
+            margin-bottom: 10px;
+        }
+    </style>
     <div class="card card-cyan mt-2">
         <div class="card-header">
             <div class="row">
@@ -35,7 +43,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class="card-title">Đơn hàng</h3>
+                        <h3 class="card-title">Đơn hàng từ <span class="font-weight-bold text-uppercase"> {{$sales->first()->sale->warehouse->name}}</span></h3>
                     </div>
                 </div>
             </div>

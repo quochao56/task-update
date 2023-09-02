@@ -66,6 +66,10 @@ Route::middleware(['auth:admin', 'web'])->group(function () {
             Route::get('destroy/{id}', [SaleController::class, 'destroy'])->name('admin.sale.destroy');
 //
             Route::post('/update', [SaleController::class, 'update'])->name('admin.sale.update');
+
+            Route::post('/check-customer', [SaleController::class, 'checkCustomer'])->name('admin.sale.check_customer');
+            Route::get('/get-products/{warehouseId}', [SaleController::class, 'getProductsForWarehouse']);
+
         });
     });
 });

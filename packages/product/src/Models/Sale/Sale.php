@@ -5,6 +5,7 @@ namespace QH\Product\Models\Sale;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use QH\Customer\Models\Customer;
+use QH\Warehouse\Models\Warehouse;
 
 class Sale extends Model
 {
@@ -17,7 +18,8 @@ class Sale extends Model
         'note',
         'purchase_date',
         'status',
-        'customer_id'
+        'customer_id',
+        'warehouse_id'
     ];
 
     public function saleProducts(){
@@ -26,5 +28,8 @@ class Sale extends Model
 
     public function customer(){
         return $this->belongsTo(Customer::class);
+    }
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class);
     }
 }
