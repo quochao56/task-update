@@ -19,14 +19,23 @@ class WarehouseRepository extends BaseRepository implements WarehouseRepositoryI
 
     public function getProductsInWarehouse($warehouseId)
     {
-        return Product::with('category')->whereHas('productWarehouses', function ($query) use ($warehouseId) {
+        $products = Product::with('category')->whereHas('productWarehouses', function ($query) use ($warehouseId) {
             $query->where('warehouse_id', $warehouseId);
         })->with(['productWarehouses' => function ($query) use ($warehouseId) {
             $query->where('warehouse_id', $warehouseId);
-        }])->paginate(3);
+        }])->get()->each(function ($product) use ($warehouseId) {
+            $product->productQuantity = $product->productWarehouses->firstWhere('warehouse_id', $warehouseId)->qty ?? 0;
+        });
+        // Total products in warehouse
+        $totalWQuantity = $products->sum(function ($product) use ($warehouseId) {
+            return $product->productWarehouses->firstWhere('warehouse_id', $warehouseId)->qty ?? 0;
+        });
+        return [
+            'products' => $products,
+            'totalWQuantity' => $totalWQuantity, // Add the total quantity to the response
+        ];
+
     }
-
-
 
 
 }

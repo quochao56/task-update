@@ -22,11 +22,14 @@ class CreateProductRequest extends FormRequest
         return [
             'name' => ['required',Rule::unique('products', 'name')->ignore($product)],
             'file' => 'required|image|mimes:jpg,jpeg,png',
-            'thumb' => 'required',
+            'images' => 'array',
+            'images.*' => 'image|mimes:jpg,jpeg,png',
             'price' => 'required|numeric|gt:0',
+            'price_sale' => 'numeric|lt:price',
             'qty' => 'required|numeric|gt:0',
             'content' => 'required',
             'category_id' => 'required',
+            'warehouse_id' => 'required',
         ];
     }
 
@@ -35,10 +38,12 @@ class CreateProductRequest extends FormRequest
         return [
             'name.required' => ':attribute không được trống',
             'name.unique' => ':attribute đã tồn tại',
-            'thumb.required' => ':attribute không được trống',
             'content.required' => ':attribute không được trống',
             'qty.required' => ':attribute không được trống',
             'category_id' => [
+                'required' => ':attribute không được trống',
+            ],
+            'warehouse_id' => [
                 'required' => ':attribute không được trống',
             ],
             'price' => [
@@ -46,9 +51,17 @@ class CreateProductRequest extends FormRequest
                 'gt:0' => ':attribute phải lớn hơn 0',
                 'numeric' => ':attribute phải là số và lớn hơn 0',
             ],
+            'price_sale' => [
+                'lt' => ':attribute phải nhỏ hơn giá sản phẩm',
+                'numeric' => ':attribute phải là số và lớn hơn 0',
+            ],
             'file' => [
                 'required' => ':attribute không được trống',
-                'image' => ':attribute phải là một hình ảnh',
+                'image' => ':attribute phải là trong jpg,jpeg,png',
+                'mimes' => ':attribute không hợp lệ',
+            ],
+            'images' => [
+                'image' => ':attribute phải là một trong jpg,jpeg,png',
                 'mimes' => ':attribute không hợp lệ',
             ],
 
@@ -59,12 +72,14 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => "Tên sản phẩm",
-            'thumb' => "Hình ảnh",
             'price' => "Giá",
             'qty' => "Số lượng",
             'content' => "Nội dung",
             'category_id' => "Danh mục",
-            'file' => 'File'
+            'warehouse_id' => "Kho",
+            'file' => 'Hình ảnh',
+            'images' => 'Hình ảnh',
+            'price_sale' => 'Giá giảm'
         ];
     }
 }

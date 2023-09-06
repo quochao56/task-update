@@ -7,20 +7,11 @@
                 {{ session()->get('alert') }}
             </div>
         @else
-            <p class="text-danger">Vui lòng check thông tin trước khi chọn sản phẩm</p>
+            <p class="text-danger">Vui lòng Check thông tin khách hàng trước khi chọn sản phẩm</p>
         @endif
         @php
             $customerArray = json_decode(session('customer'), true);
         @endphp
-
-        {{--        @if (isset($customerArray['email']))--}}
-        {{--            @php--}}
-        {{--                $email = $customerArray['email'];--}}
-        {{--            @endphp--}}
-        {{--            {{ $email }}--}}
-        {{--        @else--}}
-        {{--            Email not found in the customer data.--}}
-        {{--        @endif--}}
         <form action="{{route('admin.sale.check_customer')}}" method="post">
             @csrf <!-- Add Laravel CSRF token field -->
             <div class="form-group">
@@ -60,7 +51,7 @@
                 @enderror
             </div>
             <div class="mt-4 text-center">
-                <button type="submit" name="submit" class="btn btn-success text-white px-4 py-2 rounded">Check
+                <button type="submit" name="submit" class="btn btn-success text-green px-4 py-2 rounded">Check
                 </button>
             </div>
         </form>
@@ -83,11 +74,7 @@
                 <div class="form-group">
                     <label for="mySelect">Select a product:</label>
                     <select id="mySelect" class="w-full p-2 border rounded focus:ring focus:ring-blue-300">
-                        <option value="">Select a product</option>
-                        @foreach ($products as $product)
-                            <option value="{{ json_encode($product) }}">({{ $product->id }})
-                                - {{ $product->name }}</option>
-                        @endforeach
+
                     </select>
                 </div>
                 <div class="container-fluid">
@@ -131,7 +118,7 @@
                 <input type="hidden" name="customer" value="{{session('customer')}}">
             @endif
             <div class="mt-4 text-center">
-                <button type="submit" name="submit" class="btn btn-primary text-white px-4 py-2 rounded">Submit
+                <button type="submit" name="submit" class="btn btn-primary text-primary px-4 py-2 rounded">Submit
                     Order
                 </button>
             </div>

@@ -11,21 +11,24 @@ use QH\Product\Http\Services\Service;
 use QH\Product\Models\Product\Product;
 use QH\Product\Repositories\Category\Interface\CategoryRepositoryInterface;
 use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
+use QH\Warehouse\Repositories\Warehouse\Interfaces\WarehouseRepositoryInterface;
 
 class ProductController extends Controller
 {
     protected $productRepo;
     protected $uploadService;
     protected $categoryRepository;
+    protected $warehouseRepository;
 
     public $service;
 
-    public function __construct(ProductRepositoryInterface $productRepo, CategoryRepositoryInterface $categoryRepository, UploadService $uploadService, Service $service)
+    public function __construct(WarehouseRepositoryInterface $warehouseRepository,ProductRepositoryInterface $productRepo, CategoryRepositoryInterface $categoryRepository, UploadService $uploadService, Service $service)
     {
         $this->service = $service;
         $this->productRepo = $productRepo;
         $this->uploadService = $uploadService;
         $this->categoryRepository = $categoryRepository;
+        $this->warehouseRepository = $warehouseRepository;
 
     }
 
@@ -46,7 +49,8 @@ class ProductController extends Controller
         return view('admin.product.add', [
             'title' => 'Thêm sản phẩm mới',
             'categories' => $categories,
-            'users' => $users
+            'users' => $users,
+            'warehouses' => $this->warehouseRepository->getActive()
         ]);
     }
 
@@ -54,6 +58,7 @@ class ProductController extends Controller
     {
         try {
             $request = $this->uploadService->uploadImage($request);
+            $request = $this->uploadService->uploadImages($request);
             $data = $request;
             $data['slug'] = $this->service->createSlug($request->input('name'));
             $result = $this->productRepo->createProduct($data);
@@ -77,22 +82,33 @@ class ProductController extends Controller
             'title' => 'Sửa sản phẩm',
             'product' => $product,
             'categories' => $categories,
-            'users' => $users
+            'users' => $users,
+//            'warehouses' => $this->warehouseRepository->getActive()
+
         ]);
     }
 
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request;
+//        dd($data);
 
         if ($request->hasFile('file')) {
             $data = $this->uploadService->uploadImage($data); // Modify the data using your service
-        } else {
+        } elseif(empty($request->hasFile('file'))) {
             unset($data['thumb']); // Remove the 'thumb' key from the data
         }
+
+        if ($request->hasFile('images')) {
+            $data = $this->uploadService->uploadImages($data);
+        } elseif(empty($request->hasFile('images'))) {
+            unset($data['thumbs']); // Remove the 'thumbs' key from the data
+        }
+
         unset($data['_token']); // Remove the '_token' key from the data
 
         $data = $data->all(); // Verify the modified data
+//        dd($data);
         try {
             $data['slug'] = $this->service->createSlug($request->input('name'));
             $this->productRepo->updateProduct($product, $data);

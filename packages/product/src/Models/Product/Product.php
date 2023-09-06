@@ -20,6 +20,7 @@ class Product extends Model
         'name',
         'thumb',
         'price',
+        'price_sale',
         'qty',
         'content',
         'category_id',
@@ -27,6 +28,7 @@ class Product extends Model
         'author_type',
         'status',
         'slug',
+        'thumbs'
     ];
 
     public function category()

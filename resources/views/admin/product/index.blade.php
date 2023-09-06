@@ -1,12 +1,13 @@
 @extends('admin.layouts.main')
 @section('content')
-    <table class="table">
+    <table class="table table-striped" id="product-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>Price</th>
+                <th>Sale Price</th>
                 <th>Quantity</th>
                 <th>Category</th>
                 <th>Thumb</th>
@@ -22,6 +23,7 @@
                     <td>{{ $product->name }}</td>
                     <td>{!! \QH\Product\Helpers\Helper::status($product->status)  !!}</td>
                     <td>{{ $product->price }}</td>
+                    <td>{{ $product->price_sale }}</td>
                     <td>{{ $product->qty }}</td>
                     <td>{{ $product->category->name }}</td>
                     <td><img src="{{ $product->thumb }}"
@@ -34,7 +36,7 @@
                         <form id="deleteForm{{ $product->id }}" method="POST" action="{{ route('admin.product.destroy', $product) }}" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger btn-sm" onclick="removeRow({{ $product->id }})"><i class="fa fa-trash"></i></button>
+                            <button type="button" class="btn btn-danger text-danger btn-sm" onclick="removeRow({{ $product->id }})"><i class="fa fa-trash"></i></button>
                         </form>
 
                     </td>
@@ -42,8 +44,12 @@
             @endforeach
         </tbody>
     </table>
+@endsection
 
-    <div class="card-footer clearfix">
-        {!! $products->links("admin.layouts.pagination") !!}
-    </div>
+@section('footer')
+    <script>
+        $(document).ready(function () {
+            $('#product-table').DataTable();
+        });
+    </script>
 @endsection

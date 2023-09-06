@@ -14,6 +14,9 @@ Route::middleware(['auth:admin', 'web'])->group(function () {
             Route::get('edit/{store}', [StoreController::class, 'show'])->name('admin.stores.edit');
             Route::put('edit/{store}', [StoreController::class, 'update']);
             Route::delete('destroy/{store}', [StoreController::class, 'destroy'])->name('admin.stores.destroy');
+
+            Route::get('fetch', [StoreController::class, 'fetchProducts'])->name('admin.stores.fetch');
+
         });
 
         // Warehouse

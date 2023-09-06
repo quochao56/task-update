@@ -16,7 +16,8 @@ class PostsService
             'slug' => $slug,
             'content' => $request->input('content'),
             'thumb' => $newImageName,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->guard('admin')->user()->id,
+            'author_name' => auth()->guard('admin')->user()->name
         ];
         return $data;
     }
@@ -31,7 +32,8 @@ class PostsService
             'slug' => $newSlug,
             'content' => $request->input('content'),
             'status' => $request->input('status'),
-            'user_id' => $request->input('user_id')
+            'user_id' => $request->input('user_id'),
+            'author_name' => $request->input('author_name')
         ];
         return $data;
     }

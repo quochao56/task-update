@@ -27,7 +27,7 @@
                     <form id="deleteForm{{ $category->id }}" method="POST" action="{{ route('admin.category.destroy', $category) }}" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow({{ $category->id }})"><i class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger text-danger btn-sm" onclick="removeRow({{ $category->id }})"><i class="fa fa-trash"></i></button>
                     </form>
 
                 </td>

@@ -12,7 +12,7 @@
     </div>
 
     <div class="w-4/5 m-auto container">
-        <p>Created on {{date('jS M Y', strtotime($post->updated_at))}}</p>
+        <p>Created by <span class="font-weight-bold font-italic">{{$post->author_name}}</span>, on {{date('jS M Y', strtotime($post->updated_at))}}</p>
 
         <p>{!!$post->content!!}</p>
     </div>

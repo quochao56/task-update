@@ -18,7 +18,7 @@ Route::middleware('web')->prefix("/user")->name('user.')->group(function () {
         Route::view('/dashboard', 'user.login.home')->name('home');
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     });
-});
+});+
 Route::middleware('web')->prefix("/admin")->name('admin.')->group(function () {
 //    guest calls RedirectIfAuthenticated
     Route::middleware(['guest:admin'])->group(function () {

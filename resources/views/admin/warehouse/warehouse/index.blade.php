@@ -29,7 +29,7 @@
                     <form id="deleteForm{{ $warehouse->id }}" method="POST" action="{{ route('admin.warehouses.destroy', $warehouse) }}" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow({{ $warehouse->id }})"><i class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger text-danger btn-sm" onclick="removeRow({{ $warehouse->id }})"><i class="fa fa-trash"></i></button>
                     </form>
 
                 </td>

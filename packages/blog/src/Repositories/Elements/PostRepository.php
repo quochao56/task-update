@@ -20,6 +20,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return $this->model->with('user')->orderBy('updated_at', 'DESC')->paginate(5);
 
     }
+    public function getAllPostsA()
+    {
+        return $this->model->with('user')->orderBy('updated_at', 'DESC')->get();
+
+    }
 
     public function getSomePosts()
     {

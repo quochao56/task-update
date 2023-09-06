@@ -5,9 +5,9 @@
         <form action="{{ route('admin.orders.store') }}" method="POST" id="orderForm">
             @csrf <!-- Add Laravel CSRF token field -->
 
-            <div class="max-w-md mx-auto bg-white p-4 rounded shadow mb-4">
+            <div class="max-w-md mx-auto bg-white p-4 rounded shadow mb-4 form-group">
                 <label for="mySelect" class="block text-gray-700 font-semibold mb-2">Select a product:</label>
-                <select id="mySelect" class="w-full p-2 border rounded focus:ring focus:ring-blue-300">
+                <select id="mySelect" class="w-full p-2 border rounded focus:ring focus:ring-blue-300 form-group">
                     <option value="">Select a product</option>
                     @foreach ($products as $product)
                         <option value="{{ json_encode($product) }}">({{ $product->id }}) - {{ $product->name }}</option>
@@ -18,15 +18,7 @@
             <div class="container-fluid">
                 <table class="table table-responsive-xl mt-4 bg-white p-4 rounded shadow">
                     <thead>
-                    <tr>
-                        <th class="col-1 border px-4 py-2">ID</th>
-                        <th class="col-2 border px-4 py-2">Name</th>
-                        <th class="col-2 border px-4 py-2">Price</th>
-                        <th class="col-1 border px-4 py-2">Quantity</th>
-                        <th class="col-2 border px-4 py-2">Total</th>
-                        <th class="col-2 border px-4 py-2">Warehouse</th>
-                        <th class="col-2 border px-4 py-2">Action</th>
-                    </tr>
+
                     </thead>
                     <tbody id="selectedOptionsTableBody">
                     <!-- Selected options will be added here -->
@@ -45,7 +37,9 @@
                 <textarea name="note" id="note" class="form-control"></textarea>
             </div>
             <div class="mt-4 text-center">
-                <button type="submit" name="submit" class="btn btn-primary text-white px-4 py-2 rounded">Submit Order</button>
+                <button type="submit" name="submit" class="btn btn-primary text-primary px-4 py-2 rounded">Submit
+                    Order
+                </button>
             </div>
         </form>
     </div>
@@ -66,6 +60,18 @@
                 totalEnd = 0;
                 totalQuantity = 0;
 
+                // initial
+                $('thead').html(
+                    '<tr>' +
+                    '<th class="col-1 border px-4 py-2">ID</th>' +
+                    '<th class="col-2 border px-4 py-2">Name</th>' +
+                    '<th class="col-2 border px-4 py-2">Price</th>' +
+                    '<th class="col-1 border px-4 py-2">Quantity</th>' +
+                    '<th class="col-2 border px-4 py-2">Total</th>' +
+                    '<th class="col-2 border px-4 py-2">Warehouse</th>' +
+                    '<th class="col-2 border px-4 py-2">Action</th>' +
+                    '</tr>'
+                );
                 // Loop through each row in the table
                 $('#selectedOptionsTableBody tr').each(function () {
                     var quantity = parseInt($(this).find('input[name="num_product[]"]').val());
@@ -154,5 +160,6 @@
                 }
             });
         });
+
     </script>
 @endsection

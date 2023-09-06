@@ -64,7 +64,7 @@
             </div>
             <div class="mb-3">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-info rounded-pill">Submit</button>
+                    <button type="submit" class="btn btn-info text-info rounded-pill">Submit</button>
                 </div>
             </div>
         </form>

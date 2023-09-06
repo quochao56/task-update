@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 
 @section('content')
-    <form action="" method="POST">
-        @csrf
-        @method("POST")
-        <div class="card-body">
+    <div class="card-body">
+        <form action="" method="POST">
+            @csrf
+            @method("POST")
             <div class="form-group">
                 <label for="menu">Tên Cửa hàng</label>
                 <input type="text" name="name" class="form-control @error("name") border border-danger @enderror"
@@ -16,7 +16,8 @@
 
             <div class="form-group">
                 <label>Phone</label>
-                <input type="text"  name="phone" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
+                <input type="text" name="phone" placeholder="Phone"
+                       class="form-control @error("phone") border border-danger @enderror"
                        value="{{ old('phone') }}"></input>
                 @error("phone")
                 <p class="text-danger">{{$message}}</p>
@@ -24,7 +25,8 @@
             </div>
             <div class="form-group">
                 <label>Địa chỉ</label>
-                <textarea type="text" name="location" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
+                <textarea type="text" name="location" placeholder="Location"
+                          class="form-control @error("location") border border-danger @enderror"
                 >{{ old('location') }}</textarea>
                 @error("location")
                 <p class="text-danger">{{$message}}</p>
@@ -45,12 +47,12 @@
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
-        </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Tạo Kho</button>
-        </div>
+            <div>
+                <button type="submit" class="btn btn-primary text-primary">Tạo Kho</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 @endsection
 

@@ -18,7 +18,7 @@ class HistoryController extends Controller
     {
         return view('admin.warehouse.history.index', [
             'title' => 'Histories',
-            'histories' => $this->historyRepo->getAllHistories()
+            'histories' => $this->historyRepo->getAll()
         ]);
     }
 }

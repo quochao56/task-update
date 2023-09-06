@@ -4,11 +4,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=EB+Garamond&display=swap" rel="stylesheet">
+@vite('resources/css/app.css')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @yield('head')
 <style>
-
-
     /* Footer */
     footer {
         background-color: #1f4a6f;

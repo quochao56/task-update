@@ -31,11 +31,9 @@ class SaleController extends Controller
 
     public function index()
     {
-        $products = $this->productRepo->getActive();
 
         return view('admin.sale.index', [
             'title' => 'Danh sánh sản phẩm',
-            'products' => $products,
             'warehouses' => $this->warehouseRepo->getActive(),
         ]);
     }

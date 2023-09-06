@@ -19,10 +19,14 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => ['required',Rule::unique('products', 'name')->ignore($product)],
             'file' => 'image|mimes:jpg,jpeg,png',
+            'images' => 'array',
+            'images.*' => 'image|mimes:jpg,jpeg,png',
             'price' => 'required|numeric|gt:0',
             'qty' => 'required|numeric|gt:0',
             'content' => 'required',
             'category_id' => 'required',
+            'price_sale' => 'numeric|lt:price',
+
         ];
     }
 
@@ -41,8 +45,16 @@ class UpdateProductRequest extends FormRequest
                 'gt:0' => ':attribute phải lớn hơn 0',
                 'numeric' => ':attribute phải là số và lớn hơn 0',
             ],
+            'price_sale' => [
+                'lt' => ':attribute phải nhỏ hơn giá sản phẩm',
+                'numeric' => ':attribute phải là số và lớn hơn 0',
+            ],
             'file' => [
                 'image' => ':attribute phải là một hình ảnh',
+                'mimes' => ':attribute không hợp lệ',
+            ],
+            'images' => [
+                'image' => ':attribute phải là một trong jpg,jpeg,png',
                 'mimes' => ':attribute không hợp lệ',
             ],
 
@@ -58,7 +70,9 @@ class UpdateProductRequest extends FormRequest
             'qty' => "Số lượng",
             'content' => "Nội dung",
             'category_id' => "Danh mục",
-            'file' => 'File'
+            'file' => 'File',
+            'images' => 'Hình ảnh',
+            'price_sale' => 'Giá giảm'
         ];
     }
 }

@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 @section('content')
-    <table class="table">
+    <table class="table table-striped" id="sale-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -33,7 +33,11 @@
 
         </tbody>
     </table>
-    <div class="card-footer clearfix  d-flex justify-content-center align-items-center">
-        {!! $sales->links('admin.layouts.pagination') !!}
-    </div>
+@endsection
+@section('footer')
+    <script>
+        $(document).ready(function () {
+            $('#sale-table').DataTable();
+        });
+    </script>
 @endsection

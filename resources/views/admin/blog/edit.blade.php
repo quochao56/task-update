@@ -20,6 +20,23 @@
             </div>
             <div class="mb-3">
                 <div class="form-group">
+                    <label>Original Author name</label>
+                    <input type="text" value="{{$post->user->name}}" placeholder="Author" readonly
+                           class="form-control">
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                    <label for="author_name">Author name</label>
+                    <input type="text" name="author_name" value="{{$post->author_name}}" placeholder="Author"
+                           class="form-control">
+                </div>
+                @error('author_name')
+                <p class="text-danger">{{$message}}</p>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
                     <label for="description">Description</label>
                     <textarea name="description" placeholder="Description" class="form-control">
                         {{$post->description}}
@@ -63,7 +80,7 @@
             <input type="hidden" name="user_id" value="{{$post->user->id}}">
             <div class="mb-3">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-info rounded-pill">Submit</button>
+                    <button type="submit" class="btn btn-info text-info rounded-pill">Submit</button>
                 </div>
             </div>
         </form>

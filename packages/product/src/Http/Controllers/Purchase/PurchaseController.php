@@ -38,7 +38,7 @@ class PurchaseController extends Controller
     }
 
     public function list(){
-        $purchases = $this->purchaseRepo->getAllPurchases();
+        $purchases = $this->purchaseRepo->getAll();
         return view('admin.purchase.list', [
             'title' => 'Danh sánh nhập hàng',
             'purchases' => $purchases

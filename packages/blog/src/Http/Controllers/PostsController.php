@@ -32,7 +32,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = $this->postRepository->getAllPosts();
+        $posts = $this->postRepository->getAllPostsA();
         return view('admin.blog.index', [
             'title' => "Danh sách bài viết",
             "posts" => $posts
@@ -112,6 +112,7 @@ class PostsController extends Controller
             'content' => 'required',
             'status' => 'required',
             'description' => 'required',
+            'author_name' => 'required'
         ]);
         try {
             $data = $this->postService->updatePost($request);

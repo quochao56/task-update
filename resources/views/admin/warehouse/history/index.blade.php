@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 @section('content')
-    <table class="table">
+    <table class="table table-striped" id="history-table">
         <thead>
         <tr>
             <th>ID</th>
@@ -33,7 +33,11 @@
 
         </tbody>
     </table>
-    <div>
-        {!! $histories->links('admin.layouts.pagination') !!}
-    </div>
+@endsection
+@section('footer')
+    <script>
+        $(document).ready(function () {
+            $('#history-table').DataTable();
+        });
+    </script>
 @endsection

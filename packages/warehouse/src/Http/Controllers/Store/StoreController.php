@@ -5,6 +5,9 @@ namespace QH\Warehouse\Http\Controllers\Store;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
+use QH\Product\Models\Product\Product;
+use QH\Product\Repositories\Product\Interface\ProductRepositoryInterface;
 use QH\Warehouse\Http\Requests\StoreRequest;
 use QH\Warehouse\Http\Services\Store\StoreService;
 use QH\Warehouse\Models\Store;
@@ -16,30 +19,40 @@ class StoreController extends Controller
     protected $storeService;
     protected $warehouseRepo;
     protected $storeRepo;
+    protected $productRepository;
 
-    public function __construct(WarehouseRepositoryInterface $warehouseRepository, StoreService $storeService, StoreRepositoryInterface $storeRepository)
+    public function __construct(ProductRepositoryInterface $productRepository,WarehouseRepositoryInterface $warehouseRepository, StoreService $storeService, StoreRepositoryInterface $storeRepository)
     {
         $this->storeRepo = $storeRepository;
         $this->storeService = $storeService;
         $this->warehouseRepo = $warehouseRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function list(Request $request)
     {
-
-        // Get the current query parameters, including warehouse and store
-        $queryParameters = $request->query();
-
-        $warehouseId = $request->input('warehouse', '1');
-        $storeId = $request->input('store', '1');
-
         return view('admin.warehouse.store.list', [
             'title' => 'Danh sánh sản phẩm',
-            'warehouses' => $this->warehouseRepo->getAll(),
+            'warehouses' => $this->warehouseRepo->getAllA(),
             'stores' => $this->storeRepo->getAll(),
-            'products' => $this->warehouseRepo->getProductsInWarehouse($warehouseId)->appends($queryParameters),
+            'total' => $this->productRepository->getTotal(),
+
         ]);
     }
+
+
+    public function fetchProducts(Request $request)
+    {
+        $warehouseId = $request->input('warehouse');
+        $productsData = $this->warehouseRepo->getProductsInWarehouse($warehouseId);
+
+        return response()->json([
+            'products' => $productsData['products'],
+            'totalWQuantity' => $productsData['totalWQuantity'], // Include totalQuantity in the JSON response
+        ]);
+    }
+
+
 
     public function index()
     {

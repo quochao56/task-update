@@ -1,4 +1,5 @@
 @extends('admin.layouts.main')
+
 @section('content')
     <style>
         .summary-info {
@@ -28,7 +29,7 @@
                     <select id="warehouse" name="warehouse" class="form-select">
                         <option value="1">Chọn kho</option>
                         @foreach($warehouses as $wh)
-                            <option value="{{$wh->id}}">{{$wh->name}}</option>
+                            <option value="{{$wh->id}}">({{$wh->id}}) - {{$wh->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -44,87 +45,88 @@
             </div>
         </form>
     </div>
-
-    <table class="table">
+    <div class="container m-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-info">
+                    <span class="font-weight-bold">Total Products:</span>
+                    <span class="product-count" id="total-products">{{$total}}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-info">
+                    <span class="font-weight-bold">Total Products in Warehouse:</span>
+                    <span class="product-count" id="total-products-in-warehouse">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="container">
+    <table class="table table-striped" id="product-warehouse-table">
         <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Total Quantity</th>
+            <th>Warehouse Quantity</th>
             <th>Category</th>
             <th>Thumb</th>
         </tr>
         </thead>
+
         <tbody>
-        @foreach ($products as $product)
-            <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->price }}</td>
-                <td>{{ $product->productWarehouses->first()->qty }}</td>
-                <td>{{ $product->category->name }}</td>
-                <td><img src="{{ $product->thumb }}" width="60" alt=""></td>
-            </tr>
-        @endforeach
+        <!-- Content loaded via AJAX -->
         </tbody>
     </table>
+</div>
 
-    <div class="card-footer clearfix">
-        {!! $products->links('admin.layouts.pagination') !!}
-    </div>
 @endsection
 
 @section('footer')
     <script>
-        $(function() {
-            // Function to get the current query parameters as an object
-            function getUrlParams() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const params = {};
-                for (const [key, value] of urlParams) {
-                    params[key] = value;
-                }
-                return params;
-            }
-
-            // Function to update the selected option in a <select> element
-            function updateSelectValue(selectElement, value) {
-                selectElement.val(value);
-            }
-
-            const warehouseSelect = $('select[name="warehouse"]');
-            const storeSelect = $('select[name="store"]');
-            const urlParams = getUrlParams();
-
-            // Update the selected options based on the URL parameters
-            if (urlParams.warehouse) {
-                updateSelectValue(warehouseSelect, urlParams.warehouse);
-            }
-            if (urlParams.store) {
-                updateSelectValue(storeSelect, urlParams.store);
-            }
-
-            // Event handler for changing the warehouse <select>
-            warehouseSelect.on('change', function() {
-                const selectedWarehouseId = $(this).val();
-                urlParams.warehouse = selectedWarehouseId; // Update the warehouse query parameter
-                const queryString = $.param(urlParams);
-                const newUrl = `?${queryString}`;
-
-                // Redirect to the new URL
-                window.location.href = newUrl;
+        $(document).ready(function () {
+            const productTable = $('#product-warehouse-table').DataTable({
+                // Define columns for your DataTable
+                columns: [
+                    { data: 'id' },
+                    { data: 'name' },
+                    { data: 'price' },
+                    { data: 'qty' }, // Assuming 'qty' is the total quantity
+                    { data: 'productQuantity', defaultContent: '0' }, // Warehouse Quantity
+                    { data: 'category.name' }, // Assuming 'category' is the relationship
+                    {
+                        data: 'thumb',
+                        render: function (data) {
+                            return '<img src="' + data + '" width="60" alt="">';
+                        },
+                    },
+                ],
             });
+            const warehouseSelect = $('#warehouse');
 
-            // Event handler for changing the store <select>
-            storeSelect.on('change', function() {
-                const selectedStoreId = $(this).val();
-                urlParams.store = selectedStoreId; // Update the store query parameter
-                const queryString = $.param(urlParams);
-                const newUrl = `?${queryString}`;
+            // Event handler for changing the warehouse selection
+            warehouseSelect.on('change', function () {
+                const selectedWarehouseId = $(this).val();
 
-                // Redirect to the new URL
-                window.location.href = newUrl;
+                // Make an AJAX request to fetch products for the selected warehouse
+                $.ajax({
+                    url: "{{ route('admin.stores.fetch') }}",
+                    method: "GET",
+                    data: { warehouse: selectedWarehouseId },
+                    success: function (data) {
+                        // Update the totalQuantity in the view
+                        $('#total-products-in-warehouse').text(data.totalWQuantity);
+                        // Clear the existing DataTable content
+                        productTable.clear();
+
+                        // Add the new products to the DataTable directly from 'data.products'
+                        productTable.rows.add(data.products).draw();
+                    },
+                    error: function (error) {
+                        console.error('Error fetching products:', error);
+                    },
+                });
             });
         });
     </script>

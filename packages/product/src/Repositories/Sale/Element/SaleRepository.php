@@ -40,6 +40,10 @@ class SaleRepository extends BaseRepository implements SaleRepositoryInterface
 
     public function getAllSales()
     {
+        return $this->model->with('customer')->orderByDesc('created_at')->get();
+    }
+    public function getAllSalesP()
+    {
         return $this->model->with('customer')->orderByDesc('created_at')->paginate(15);
     }
 

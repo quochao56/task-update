@@ -20,4 +20,30 @@ class UploadService
         $request['thumb'] = $url;
         return $request;
     }
+
+    public function uploadImages($request)
+    {
+        $uploadedImages = [];
+
+        if ($request->hasFile('images')) {
+
+            foreach ($request->file('images') as $file) {
+                $name = $file->getClientOriginalName();
+                $pathFull = 'uploads/' . Carbon::now()->timestamp;
+
+                $file->storeAs(
+                    'public/' . $pathFull . '.' . $name
+                );
+
+                $url = '/storage/' . $pathFull . '.' . $name;
+                $uploadedImages[] = $url;
+            }
+        }
+
+        $request['thumbs'] = $uploadedImages;
+
+        return $request;
+    }
+
+
 }

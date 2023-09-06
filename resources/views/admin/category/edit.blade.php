@@ -42,7 +42,7 @@
         </div>
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Sửa Danh Mục</button>
+            <button type="submit" class="btn btn-primary text-primary">Sửa Danh Mục</button>
         </div>
 
     </form>

@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 
 @section('content')
-    <form action="" method="POST">
-        @csrf
-        @method("PUT")
-        <div class="card-body">
+    <div class="card-body">
+        <form action="" method="POST">
+            @csrf
+            @method("PUT")
             <div class="form-group">
                 <label for="menu">Tên kho</label>
                 <input type="text" name="name" class="form-control @error("name") border border-danger @enderror"
@@ -16,7 +16,8 @@
 
             <div class="form-group">
                 <label>Phone</label>
-                <input type="text" name="phone" placeholder="Phone" class="form-control @error("phone") border border-danger @enderror"
+                <input type="text" name="phone" placeholder="Phone"
+                       class="form-control @error("phone") border border-danger @enderror"
                        value="{{ $warehouse->phone }}"></input>
                 @error("phone")
                 <p class="text-danger">{{$message}}</p>
@@ -24,8 +25,9 @@
             </div>
             <div class="form-group">
                 <label>Địa chỉ</label>
-                <textarea type="text" name="location" placeholder="Location" class="form-control @error("location") border border-danger @enderror"
-                          >{{ $warehouse->location }}</textarea>
+                <textarea type="text" name="location" placeholder="Location"
+                          class="form-control @error("location") border border-danger @enderror"
+                >{{ $warehouse->location }}</textarea>
                 @error("location")
                 <p class="text-danger">{{$message}}</p>
                 @enderror
@@ -47,12 +49,12 @@
                 <p class="text-danger">{{$message}}</p>
                 @enderror
             </div>
-        </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Sửa Kho</button>
-        </div>
+            <div>
+                <button type="submit" class="btn btn-primary text-primary">Sửa Kho</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 @endsection
 
